@@ -48,4 +48,4 @@ var MapsLib = {
         new google.maps.InfoWindow(options);
         map.setCenter(options.position);
     }
-}
+};
