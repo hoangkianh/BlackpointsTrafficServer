@@ -42,20 +42,7 @@ body {
     background:#E95B37;
     color:#333;
 }
-/*---------- FORMS ----------*/
 
-input[type=text], input[type=submit], textarea {
-    width: 100%;
-    padding: 0.5em;
-    font-size: 1em;
-    margin-bottom: 1.5em;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-input, button, select, textarea {
-    font-family: 'Open Sans', serif;
-}
 /* ---------------------------------------------------------------------------------------------------------- 
 02 Typography -----------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------- */
@@ -88,7 +75,7 @@ a:link, a:visited {
 }
 a:hover, a:active {
     color: #F1505A;
-    text-decoration: underline;
+    text-decoration: blink;
 }
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal; /* reset default browser weight for our webfonts */
@@ -215,8 +202,7 @@ em {
     min-height: 4.75em;
 }
 .navbar-inverse .navbar-inner {
-    background-repeat: repeat;
-    background-color: #2A3335;
+    background-color: #252E30;
     border-color: #E95B37;
 }
 .navbar-wrapper {
@@ -251,6 +237,9 @@ ul#menu-main > li > a.first-link{
 ul#menu-main > li > a.second-link{
     color: #E95B37;
 }
+ul#menu-main > li > a span{
+    text-transform: lowercase;
+}
 .navbar-inverse .brand, .navbar-inverse .nav > li > a {
     text-shadow: none;
 }
@@ -266,7 +255,7 @@ ul#menu-main > li > a.second-link{
     background-size: cover;
     min-height: 600px;
     margin-top: -30px;
-    padding-top:160px;
+    padding-top: 200px;
     text-align:center;
 }
 
@@ -323,45 +312,7 @@ ul#menu-main > li > a.second-link{
     font-weight: 800;
     text-transform: uppercase;
 }
-#headerwrap input[type=text] {
-    background: rgba(227, 231, 228, 1);
-    font-family: 'Open Sans', sans serif;
-    font-size: 1.3125em;
-    border: 0;
-    text-align: center;
-    vertical-align: middle;
-    margin-bottom:0 !important;
-}
-#headerwrap input[type=text]:focus {
-    background: #43413e;
-    color: #eff1ef;
-    transition: background 0.25 ease-in;
-    -moz-transition: background 0.25 ease-in;
-    -webkit-transition: background 0.25 ease-in;
-}
-#headerwrap input[type=text] {
-    height: 2.9em;
-    width:50%;
-}
-#headerwrap input[type=submit] {
-    font-family: 'Open Sans', cursive;
-    color: #fff;
-    width: 185px;
-    height: 2.9em;
-    font-size: 1.3125em; /* 21px */
-    padding:0.5em;
-    letter-spacing: 0.05em;
-    margin: 0;
-    border: 0;
-    text-transform: none;
-    background: #E95B37 !important;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-}
-#headerwrap input[type=submit]:hover, #headerwrap input[type=submit]:active {
-    background: #43413e !important;
-}
+
 section.single-page {
     padding: 4em 0;
 }
@@ -419,60 +370,18 @@ section#map .align {
     margin-top:10px;
     font-size:6em;
 }
-
+section#map .row{
+    color: #E95B37;
+    padding-bottom: 10px;
+}
 #map-canvas{
     width: 100%;
-    height: 450px;
+    height: 50%;
 }
 #map-canvas img{
     max-width: none;
 }
-
-/* Services */
-
-section#help {
-    padding-bottom: 9.5em;
-}
-#help h1 {
-    font-size: 3em;
-    margin-bottom: 1em;
-    margin-top: 0.5em;
-}
-section#help h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    margin-top: 10px;
-    text-align:center;
-}
-section#help p {
-    margin:10px;
-}
-section#help .align {
-    text-align:center;
-    margin-top:10px;
-    font-size: 6em;
-}
-section#help .align .sev_icon {
-    text-align:center;
-    margin:10px 0 20px 0;
-    font-size: 0.6em;
-    color:#E95B37;
-}
-section#help .span3 {
-    background:#e9e9e9;
-    padding: 20px 0;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-section#help .span3:hover {
-    background:#e3e3e3;
-    box-shadow: 1px 1px 6px #C1BAC1;
-}
 /* Description */
-
 section#description {
     height:  500px;
     background: #1c2224 repeat-x 0 0;
@@ -503,80 +412,12 @@ blockquote.mega .cite {
     text-align: left;
     font-weight:300;
 }
-/* Donwload */
-section#download {
-    background: url("../img/grey-cardboard-bg.png") repeat 0 0;
-}
-section#download .align {
-    font-size: 6em;
-    text-align: center;
-}
-#download h1 {
-    font-size: 3em;
-    margin-bottom: 1em;
-    margin-top: 0.5em;
-}
-#download h2 {
-    font-size: 21px;
-    margin-top: 24px;
-    margin-bottom: 16px;
-    color: #0B333F;
-    clear: right;
-}
-/* Team and FAQs */
 
-section#team, section#faq {
-    color: #e4e5e2;
-    background:#1C2224;
-}
-section#team .align, section#faq .align {
-    font-size: 6em;
-    text-align: center;
-}
-#team h1, #faq h1 {
-    font-size: 3em;
-    margin-bottom: 1em;
-    margin-top: 0.5em;
-}
-#faq, #team {
-    padding-top: 4.75em;
-}
-#team {
-    padding-bottom: 0;
-}
-#faq {
-    padding-bottom: 0;
-}
-/* team */
-
-#team h3 {
-    font-size: 26px;
-    margin-top: 24px;
-    margin-bottom: 0px;
-}
-#team h3, .job-position {
-    text-align: center;
-}
-#team .featurette {
-    text-align: center;
-    font-size: 21px;
-}
-#team h2.featurette-heading {
-    margin-bottom: 24px;
-}
-.teamalign {
-    text-align:center
-}
-.team-thumb {
-    margin-top: 26px;
-    text-align:center;
-}
-.job-position {
-    font-family: 'Open Sans', sans-serif;
-    margin-bottom: .46155em;
+/* Map view */
+#map-wrapper {
+    padding: 2em 0;
 }
 /* Contact Form */
-
 #theme-form {
     position: relative;
     z-index: 999;
@@ -652,23 +493,10 @@ div.cform-response-output {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
-/* Featurettes */
-
-
-
-hr.featurette-divider {
-    margin: 3em 0;
-    border-width: 0;
-    height: 9px;
-    background: url("../img/dot-row-3-lt.png") repeat-x;
-}
 /* ---------------------------------------------------------------------------------------------------------- 
 06 Footer ------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------- */
 
-#map-wrapper {
-    margin-top: 20px;
-}
 footer {
     text-align: center;
     color: #1a1a1a;
@@ -785,7 +613,6 @@ footer p {
 /* ---------------------------------------------------------------------------------------------------------- 
 09 Media queries --------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------- */
-
 
 /* RESPONSIVE 
 -------------------------------------------------- */

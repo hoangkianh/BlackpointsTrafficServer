@@ -3,8 +3,6 @@
 <!DOCTYPE struts-config PUBLIC
           "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
-
-
 <struts-config>
     <form-beans>
     
@@ -19,7 +17,8 @@
     </global-forwards>
 
     <action-mappings>
-        
+        <action path="/viewMap" forward="/includes/map.jsp" />
+        <action path="/backHome" forward="/index.jsp" />
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
