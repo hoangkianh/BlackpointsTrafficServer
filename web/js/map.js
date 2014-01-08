@@ -1,6 +1,5 @@
 google.maps.visualRefresh = true;
 
-var MapsLib = MapsLib || {};
 var MapsLib = {
     googleApiKey: "AIzaSyDe8Ei4PYk28xZa4GfP-7ClfCvWxX4YB_8",
     map_centroid: new google.maps.LatLng(21.0333330, 105.8500000),

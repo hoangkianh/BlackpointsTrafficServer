@@ -2,6 +2,8 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@taglib  uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:html lang="true">
     <!DOCTYPE HTML>
@@ -26,14 +28,20 @@
                                     <a class="first-link" href="#top"><bean:message key="navbar.home"/></a>
                                     <a class="second-link" href="#top"><bean:message key="navbar.home"/></a>
                                 </li>
-                                <li>
-                                    <a class="first-link" href="#map"><bean:message key="navbar.map"/></a>
-                                    <a class="second-link" href="#map"><bean:message key="navbar.map"/></a>
-                                </li>
-                                <li>
-                                    <a class="first-link" href="#login"><i class="fa fa-lock"></i> <bean:message key="navbar.login"/></a>
-                                    <a class="second-link" href="#login"><i class="fa fa-lock"></i> <bean:message key="navbar.login"/></a>
-                                </li>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.userName}">
+                                        <li>
+                                            <a class="first-link" href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
+                                            <a class="second-link" href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <a class="first-link" href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
+                                            <a class="second-link" href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
                             </ul>
                         </nav>
                     </div>

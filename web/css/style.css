@@ -255,7 +255,7 @@ ul#menu-main > li > a span{
     background-size: cover;
     min-height: 600px;
     margin-top: -30px;
-    padding-top: 150px;
+    padding-top: 210px;
     text-align:center;
 }
 
@@ -282,39 +282,31 @@ ul#menu-main > li > a span{
     margin: 0.5em 0;
     text-shadow: 1px 1px 1px #000;
 }
+headerwrap h1 span, #headerwrap h3 span {
+    color:#E95B37;
+    font-weight: 800;
+    text-transform: uppercase;
+}
 #headerwrap p#p-arrow{
     font-size: 3em;
-    height: 3em;
-    overflow: hidden;
-}
-#headerwrap p#p-arrow a.first-link{
-    margin-top: -3em;
-}
-#headerwrap p#p-arrow:hover a.first-link{
-    margin-top: 0;
+    padding-top: 20px;
 }
 #headerwrap p#p-arrow a{
-    display: block;
     color: #FFFFFF;
 }
-#headerwrap p#p-arrow a.first-link{
+#headerwrap p#p-arrow a:hover{
+    color: #E95B37;
+}
+#headerwrap p#p-arrow a{
     -webkit-transition: 0.4s;
     -moz-transition: 0.4s;
     -ms-transition: 0.4s;
     -o-transition: 0.4s;
     transition: 0.4s;     
 }
-#headerwrap p#p-arrow a.first-link{
-    color: #E95B37;
-}
-#headerwrap h1 span, #headerwrap h3 span {
-    color:#E95B37;
-    font-weight: 800;
-    text-transform: uppercase;
-}
 
 section.single-page {
-    padding: 2em 0;
+    padding: 4em 0;
 }
 section.single-page h1 {
     font-family: 'Open Sans',cursive;
@@ -351,8 +343,8 @@ section#map {
 }
 section#map h1 {
     font-size: 3em;
-    margin-bottom: 0.25em;
-    margin-top: 0.5em;
+    margin-bottom: 0;
+    margin-top: 0.25em;
 }
 section#map hgroup h2 {
     margin-top: 1em;
@@ -368,15 +360,15 @@ section#map .entry-content {
 section#map .align {
     text-align:center;
     margin-top: 0;
-    font-size: 5em;
+    font-size: 6em;
 }
 section#map .row{
     color: #E95B37;
-    padding-bottom: 10px;
+    padding-bottom: 1em;
 }
 #map-canvas{
     width: 100%;
-    height: 50%;
+    height: 60%;
 }
 #map-canvas img{
     max-width: none;
@@ -435,8 +427,8 @@ blockquote.mega .cite {
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-    transition: background 0.25 ease-in;
-    -moz-transition: background 0.25 ease-in;
+    transition: background 0.25s ease-in;
+    -moz-transition: background 0.25s ease-in;
     -webkit-transition: background 0.25 ease-in;
 }
 #theme-form input[type=text] {

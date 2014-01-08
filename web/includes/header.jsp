@@ -9,8 +9,7 @@
             <h3><bean:message key="headerwrap.studentName"/></h3>
             <h3><bean:message key="headerwrap.teacherName"/></span></h3>
             <p id="p-arrow">
-                <a class="first-link" href="#map" title="Xem bản đồ điểm đen tai nạn giao thông"><i class="fa fa-arrow-circle-down fa-3x"></i></a>
-                <a class="second-link" href="#map"><i class="fa fa-arrow-circle-down fa-3x"></i></a>
+                <a href="#map" title="Xem bản đồ điểm đen tai nạn giao thông"><i class="fa fa-arrow-circle-down fa-3x"></i></a>
             </p>
         </div>
     </header>

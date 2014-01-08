@@ -11,4 +11,3 @@
 <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
