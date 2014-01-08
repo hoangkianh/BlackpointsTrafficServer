@@ -20,9 +20,10 @@ var MapsLib = {
         });
     },
     calculateCenter: function() {
+        var pos;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             }, function() {
                 handleNoGeolocation(true);
             });

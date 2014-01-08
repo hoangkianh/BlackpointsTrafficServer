@@ -255,7 +255,7 @@ ul#menu-main > li > a span{
     background-size: cover;
     min-height: 600px;
     margin-top: -30px;
-    padding-top: 210px;
+    padding-top: 160px;
     text-align:center;
 }
 
@@ -306,7 +306,7 @@ headerwrap h1 span, #headerwrap h3 span {
 }
 
 section.single-page {
-    padding: 4em 0;
+    padding: 1em 0;
 }
 section.single-page h1 {
     font-family: 'Open Sans',cursive;
@@ -342,9 +342,9 @@ section#map {
     padding-bottom: 0;
 }
 section#map h1 {
-    font-size: 3em;
+    font-size: 2em;
     margin-bottom: 0;
-    margin-top: 0.25em;
+    margin-top: 0em;
 }
 section#map hgroup h2 {
     margin-top: 1em;
@@ -360,7 +360,7 @@ section#map .entry-content {
 section#map .align {
     text-align:center;
     margin-top: 0;
-    font-size: 6em;
+    font-size: 5em;
 }
 section#map .row{
     color: #E95B37;
