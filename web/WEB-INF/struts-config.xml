@@ -5,6 +5,12 @@
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 <struts-config>
     <form-beans>
+        <form-bean name="UserGroupForm" type="com.blackpoints.struts.UserGroupForm"/>
+        <form-bean name="UserForm" type="com.blackpoints.struts.UserForm"/>
+        <form-bean name="TempPOIForm" type="com.blackpoints.struts.TempPOIForm"/>
+        <form-bean name="POIPropertyDAO" type="com.blackpoints.struts.POIPropertyDAO"/>
+        <form-bean name="POIForm" type="com.blackpoints.struts.POIForm"/>
+        <form-bean name="CategoryForm" type="com.blackpoints.struts.CategoryForm"/>
     
     </form-beans>
     
@@ -23,7 +29,7 @@
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
 
-    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    <message-resources parameter="com/blackpoints/struts/ApplicationResource"/>    
     
     <!-- ========================= Tiles plugin ===============================-->
     <!--
