@@ -20,10 +20,9 @@ var MapsLib = {
         });
     },
     calculateCenter: function() {
-        var pos;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+               var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             }, function() {
                 handleNoGeolocation(true);
             });
@@ -33,10 +32,11 @@ var MapsLib = {
         return pos;
     },
     handleNoGeolocation: function(errorFlag) {
+        var content; 
         if (errorFlag) {
-            var content = 'Error: The Geolocation service failed.';
+            content = 'Error: The Geolocation service failed.';
         } else {
-            var content = 'Error: Your browser doesn\'t support geolocation.';
+            content = 'Error: Your browser doesn\'t support geolocation.';
         }
 
         var options = {
