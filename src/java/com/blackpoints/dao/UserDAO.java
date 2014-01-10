@@ -32,6 +32,7 @@ public class UserDAO {
                 u.setUserName(rs.getString("userName"));
                 u.setPassword(rs.getString("password"));
                 u.setDisplayName(rs.getString("displayName"));
+                u.setDescription(rs.getString("description"));
                 u.setEmail(rs.getString("email"));
                 u.setPhoto(rs.getString("photo"));
                 u.setGroupID(rs.getInt("groupID"));
@@ -66,6 +67,7 @@ public class UserDAO {
                 u.setUserName(rs.getString("userName"));
                 u.setPassword(rs.getString("password"));
                 u.setDisplayName(rs.getString("displayName"));
+                u.setDescription(rs.getString("description"));
                 u.setEmail(rs.getString("email"));
                 u.setPhoto(rs.getString("photo"));
                 u.setGroupID(rs.getInt("groupID"));
@@ -87,16 +89,17 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("INSERT INTO user (userName, password"
-                    + ", displayName, email, photo, groupID, createdOnDate)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?)");
+            stm = conn.prepareCall("INSERT INTO user (userName, password, displayName"
+                    + ", description, email, photo, groupID, createdOnDate)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             stm.setString(1, u.getUserName());
             stm.setString(2, u.getPassword());
             stm.setString(3, u.getDisplayName());
-            stm.setString(4, u.getEmail());
-            stm.setString(5, u.getPhoto());
-            stm.setInt(6, u.getGroupID());
-            stm.setString(7, u.getCreatedOnDate());
+            stm.setString(4, u.getDescription());
+            stm.setString(5, u.getEmail());
+            stm.setString(6, u.getPhoto());
+            stm.setInt(7, u.getGroupID());
+            stm.setString(8, u.getCreatedOnDate());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -114,17 +117,18 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("UPDATE user SET userName=?, password=?"
-                    + ", displayName=?, email=?, photo=?, groupID=?, updatedOnDate=?"
+            stm = conn.prepareCall("UPDATE user SET userName=?, password=?, displayName=?"
+                    + ", description=?, email=?, photo=?, groupID=?, updatedOnDate=?"
                     + " WHERE userID=?");
             stm.setString(1, u.getUserName());
             stm.setString(2, u.getPassword());
             stm.setString(3, u.getDisplayName());
-            stm.setString(4, u.getEmail());
-            stm.setString(5, u.getPhoto());
-            stm.setInt(6, u.getGroupID());
-            stm.setString(7, u.getUpdatedOnDate());
-            stm.setInt(8, u.getUserID());
+            stm.setString(4, u.getDescription());
+            stm.setString(5, u.getEmail());
+            stm.setString(6, u.getPhoto());
+            stm.setInt(7, u.getGroupID());
+            stm.setString(8, u.getUpdatedOnDate());
+            stm.setInt(9, u.getUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -164,7 +168,7 @@ public class UserDAO {
         try {
             stm = conn.prepareCall("SELECT * FROM user WHERE userName=? AND password=?");
             stm.setString(1, userName);
-            stm.setString(1, password);
+            stm.setString(2, password);
             rs = stm.executeQuery();
 
             if (rs.next()) {
@@ -173,6 +177,7 @@ public class UserDAO {
                 u.setUserName(rs.getString("userName"));
                 u.setPassword(rs.getString("password"));
                 u.setDisplayName(rs.getString("displayName"));
+                u.setDescription(rs.getString("description"));
                 u.setEmail(rs.getString("email"));
                 u.setPhoto(rs.getString("photo"));
                 u.setGroupID(rs.getInt("groupID"));

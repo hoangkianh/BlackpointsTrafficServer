@@ -72,18 +72,18 @@ public class CategoryDAO {
             stm = conn.prepareStatement("INSERT INTO category (name, description) VALUES (? ,?)");
             stm.setString(1, c.getName());
             stm.setString(2, c.getDescription());
-            
+
             if (stm.executeUpdate() > 0) {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());            
-        } finally{
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
             DBUtil.closeAll(conn, stm, null);
         }
         return kq;
     }
-    
+
     public boolean updateCategory(Category c) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
@@ -92,19 +92,19 @@ public class CategoryDAO {
             stm = conn.prepareStatement("UPDATE category SET name=?, description=? WHERE categoryID=?");
             stm.setString(1, c.getName());
             stm.setString(2, c.getDescription());
-            stm.setInt(2, c.getCategoryID());
-            
+            stm.setInt(3, c.getCategoryID());
+
             if (stm.executeUpdate() > 0) {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());            
-        } finally{
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
             DBUtil.closeAll(conn, stm, null);
         }
         return kq;
     }
-    
+
     public boolean deleteCategory(int id) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
@@ -112,13 +112,13 @@ public class CategoryDAO {
         try {
             stm = conn.prepareStatement("DELETE FROM category WHERE categoryID=?");
             stm.setInt(1, id);
-            
+
             if (stm.executeUpdate() > 0) {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());            
-        } finally{
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
             DBUtil.closeAll(conn, stm, null);
         }
         return kq;

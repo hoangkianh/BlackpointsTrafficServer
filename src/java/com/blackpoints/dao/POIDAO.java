@@ -181,7 +181,7 @@ public class POIDAO {
             stm = conn.prepareStatement("UPDATE poi SET isDeleted=True"
                     + ", deletedOnDate=?, deletedByUserID=? WHERE id=?");
             stm.setString(1, p.getDeletedOnDate());
-            stm.setInt(1, p.getDeletedByUserID());
+            stm.setInt(2, p.getDeletedByUserID());
             stm.setInt(3, p.getId());
 
             if (stm.executeUpdate() > 0) {
@@ -203,7 +203,7 @@ public class POIDAO {
             stm = conn.prepareStatement("UPDATE poi SET isDeleted=False"
                     + ", restoreOnDate=?, restoreByUserID=? WHERE id=?");
             stm.setString(1, p.getRestoreOnDate());
-            stm.setInt(1, p.getRestoreByUserID());
+            stm.setInt(2, p.getRestoreByUserID());
             stm.setInt(3, p.getId());
 
             if (stm.executeUpdate() > 0) {

@@ -5,9 +5,11 @@ package com.blackpoints.classes;
  * @author hka
  */
 public class POIProperty {
+
     private int poiID;
     private String key;
     private String value;
+    private String description;
 
     public int getPoiID() {
         return poiID;
@@ -32,5 +34,12 @@ public class POIProperty {
     public void setValue(String value) {
         this.value = value;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

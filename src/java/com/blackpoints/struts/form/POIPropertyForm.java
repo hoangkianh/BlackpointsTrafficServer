@@ -1,5 +1,7 @@
 package com.blackpoints.struts.form;
 
+import com.blackpoints.classes.POIProperty;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
@@ -11,59 +13,71 @@ import org.apache.struts.action.ActionMessage;
  * @author hka
  */
 public class POIPropertyForm extends org.apache.struts.action.ActionForm {
-    
-    private String name;
 
-    private int number;
+    private int poiID;
+    private String key;
+    private String value;
+    private String description;
+    private List<POIProperty> propertyList;
 
-    /**
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String string) {
-        name = string;
-    }
-
-    /**
-     * @return
-     */
-    public int getNumber() {
-        return number;
-    }
-
-    /**
-     * @param i
-     */
-    public void setNumber(int i) {
-        number = i;
-    }
-
-    /**
-     *
-     */
-    public POIPropertyForm() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * This is the action called from the Struts framework.
-     * @param mapping The ActionMapping used to select this instance.
-     * @param request The HTTP Request we are processing.
-     * @return
-     */
+    @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        if (getName() == null || getName().length() < 1) {
-            errors.add("name", new ActionMessage("error.name.required"));
-            // TODO: add 'error.name.required' key to your resources
+        ActionErrors err = new ActionErrors();
+        if (key == null || key.trim().length() == 0) {
+            err.add("key", new ActionMessage("errors.required", "Tên thuộc tính"));
         }
-        return errors;
+        if (key.trim().length() < 10 || key.trim().length() > 100) {
+            err.add("key", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "10", "100", "kí tự"));
+        }
+        if (value == null || value.trim().length() == 0) {
+            err.add("value", new ActionMessage("errors.required", "Giá trị thuộc tính"));
+        }
+        if (value.trim().length() > 100) {
+            err.add("value", new ActionMessage("errors.maxlength", "Giá trị thuộc tính", "100"));
+        }
+        if (description.trim().length() > 200) {
+            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
+        }
+        return err;
+    }
+
+    public int getPoiID() {
+        return poiID;
+    }
+
+    public void setPoiID(int poiID) {
+        this.poiID = poiID;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<POIProperty> getPropertyList() {
+        return propertyList;
+    }
+
+    public void setPropertyList(List<POIProperty> propertyList) {
+        this.propertyList = propertyList;
     }
 }

@@ -5,10 +5,12 @@ package com.blackpoints.classes;
  * @author hka
  */
 public class User {
+
     private int userID;
     private String userName;
     private String password;
     private String displayName;
+    private String description;
     private String email;
     private String photo;
     private String lastLogin;
@@ -46,6 +48,14 @@ public class User {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEmail() {
@@ -95,6 +105,5 @@ public class User {
     public void setUpdatedOnDate(String updatedOnDate) {
         this.updatedOnDate = updatedOnDate;
     }
-    
-    
+
 }

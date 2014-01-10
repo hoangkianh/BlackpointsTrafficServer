@@ -5,6 +5,7 @@ package com.blackpoints.classes;
  * @author hka
  */
 public class POI {
+
     private int id;
     private String name;
     private String names;

@@ -5,6 +5,7 @@ package com.blackpoints.classes;
  * @author hka
  */
 public class Category {
+
     private int categoryID;
     private String name;
     private String description;

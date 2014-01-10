@@ -29,6 +29,7 @@ public class POIPropertyDAO {
                 p.setPoiID(rs.getInt("poiID"));
                 p.setKey(rs.getString("key"));
                 p.setValue(rs.getString("value"));
+                p.setDescription(rs.getString("description"));
 
                 list.add(p);
             }
@@ -56,6 +57,7 @@ public class POIPropertyDAO {
                 p.setPoiID(id);
                 p.setKey(key);
                 p.setValue(rs.getString("value"));
+                p.setDescription(rs.getString("description"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
@@ -70,10 +72,11 @@ public class POIPropertyDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO property (poiID, key, value) VALUES (? ,?, ?)");
+            stm = conn.prepareStatement("INSERT INTO property (poiID, key, value, description) VALUES (? ,?, ?, ?)");
             stm.setInt(1, p.getPoiID());
             stm.setString(2, p.getKey());
-            stm.setString(2, p.getValue());
+            stm.setString(3, p.getValue());
+            stm.setString(4, p.getDescription());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -91,10 +94,11 @@ public class POIPropertyDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE property SET value=? WHERE poiID=? AND key=?");
+            stm = conn.prepareStatement("UPDATE property SET value=?, description=? WHERE poiID=? AND key=?");
             stm.setString(1, p.getValue());
-            stm.setInt(2, p.getPoiID());
-            stm.setString(3, p.getKey());
+            stm.setString(2, p.getDescription());
+            stm.setInt(3, p.getPoiID());
+            stm.setString(4, p.getKey());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -114,7 +118,7 @@ public class POIPropertyDAO {
         try {
             stm = conn.prepareStatement("DELETE FROM property WHERE poiID=? AND key=?");
             stm.setInt(1, PoiID);
-            stm.setString(1, key);
+            stm.setString(2, key);
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

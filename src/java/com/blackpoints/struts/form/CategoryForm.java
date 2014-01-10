@@ -1,5 +1,7 @@
 package com.blackpoints.struts.form;
 
+import com.blackpoints.classes.Category;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
@@ -11,60 +13,56 @@ import org.apache.struts.action.ActionMessage;
  * @author hka
  */
 public class CategoryForm extends org.apache.struts.action.ActionForm {
-    
-    private String name;
-    
-    private int number;
 
-    /**
-     * @return
-     */
+    private int categoryID;
+    private String name;
+    private String description;
+    private List<Category> categoryList;
+
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors err = new ActionErrors();
+        if (name == null || name.trim().length() == 0) {
+            err.add("name", new ActionMessage("errors.required", "Tên kiểu điểm đen"));
+        }
+        if (name.trim().length() < 4 || name.trim().length() > 50) {
+            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "4", "50", "kí tự"));
+        }
+        if (description.trim().length() > 100) {
+            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "100"));
+        }
+        return err;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * @param string
-     */
-    public void setName(String string) {
-        name = string;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * @return
-     */
-    public int getNumber() {
-        return number;
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * @param i
-     */
-    public void setNumber(int i) {
-        number = i;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    /**
-     *
-     */
-    public CategoryForm() {
-        super();
-        // TODO Auto-generated constructor stub
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
-    /**
-     * This is the action called from the Struts framework.
-     *
-     * @param mapping The ActionMapping used to select this instance.
-     * @param request The HTTP Request we are processing.
-     * @return
-     */
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        if (getName() == null || getName().length() < 1) {
-            errors.add("name", new ActionMessage("error.name.required"));
-            // TODO: add 'error.name.required' key to your resources
-        }
-        return errors;
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 }

@@ -31,6 +31,7 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUserGroupID(rs.getInt("userGroupID"));
                 ug.setName(rs.getString("name"));
                 ug.setLevel(rs.getInt("level"));
+                ug.setDescription(rs.getString("description"));
                 ug.setCreatedByUserID(rs.getInt("createdByUserID"));
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));                
 
@@ -63,6 +64,7 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUserGroupID(rs.getInt("userGroupID"));
                 ug.setName(rs.getString("name"));
                 ug.setLevel(rs.getInt("level"));
+                ug.setDescription(rs.getString("description"));
                 ug.setCreatedByUserID(rs.getInt("createdByUserID"));
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
@@ -83,12 +85,13 @@ public List<UserGroup> getAllUserGroups() {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("INSERT INTO userGroup (name, level, createdOnDate, createdByUserID)"
-                    + " VALUES(?, ?, ?, ?)");
+            stm = conn.prepareCall("INSERT INTO userGroup (name, level, description, createdOnDate, createdByUserID)"
+                    + " VALUES(?, ?, ?, ?, ?)");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
-            stm.setString(3, ug.getCreatedOnDate());
-            stm.setInt(4, ug.getCreatedByUserID());
+            stm.setString(3, ug.getDescription());
+            stm.setString(4, ug.getCreatedOnDate());
+            stm.setInt(5, ug.getCreatedByUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -106,13 +109,14 @@ public List<UserGroup> getAllUserGroups() {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("UPDATE userGroup SET name=?, level=?"
+            stm = conn.prepareCall("UPDATE userGroup SET name=?, level=?, description=?"
                     + ", updatedByUserID=?, updatedOnDate=? WHERE userGroupID=?");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
-            stm.setInt(3, ug.getUpdatedByUserID());
-            stm.setString(4, ug.getUpdatedOnDate());
-            stm.setInt(5, ug.getUserGroupID());
+            stm.setString(3, ug.getDescription());
+            stm.setInt(4, ug.getUpdatedByUserID());
+            stm.setString(5, ug.getUpdatedOnDate());
+            stm.setInt(6, ug.getUserGroupID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

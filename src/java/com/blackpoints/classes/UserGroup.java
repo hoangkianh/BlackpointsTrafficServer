@@ -5,9 +5,11 @@ package com.blackpoints.classes;
  * @author hka
  */
 public class UserGroup {
+
     private int userGroupID;
     private String name;
     private int level;
+    private String description;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
@@ -35,6 +37,14 @@ public class UserGroup {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreatedOnDate() {
@@ -68,6 +78,5 @@ public class UserGroup {
     public void setUpdatedByUserID(int updatedByUserID) {
         this.updatedByUserID = updatedByUserID;
     }
-    
-    
+
 }
