@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class POIDAO {
 
-   public List<POI> getAllPOIs() {
+    public List<POI> getAllPOIs() {
         List<POI> list = new ArrayList<POI>();
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             stm = conn.prepareStatement("SELECT id, name, names, description"
-                    + ", AsText(geometry), categoryID, rating, bbox, geoJson"
+                    + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
                     + " FROM poi");
@@ -48,10 +48,22 @@ public class POIDAO {
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                p.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                p.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
-                p.setDeletedOnDate(sdf.format(new Date(rs.getDate("deletedOnDate").getTime())));
-                p.setRestoreOnDate(sdf.format(new Date(rs.getDate("restoreOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
+                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
+                if (createdDateSQL != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
+                if (deletedDateSQL != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                }
+                if (restoreDateSQL != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                }
 
                 list.add(p);
             }
@@ -70,7 +82,7 @@ public class POIDAO {
         ResultSet rs = null;
         try {
             stm = conn.prepareStatement("SELECT id, name, names, description"
-                    + ", AsText(geometry), categoryID, rating, bbox, geoJson"
+                    + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
                     + " FROM poi WHERE id=?");
@@ -95,10 +107,22 @@ public class POIDAO {
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                p.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                p.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
-                p.setDeletedOnDate(sdf.format(new Date(rs.getDate("deletedOnDate").getTime())));
-                p.setRestoreOnDate(sdf.format(new Date(rs.getDate("restoreOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
+                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
+                if (createdDateSQL != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
+                if (deletedDateSQL != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                }
+                if (restoreDateSQL != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());

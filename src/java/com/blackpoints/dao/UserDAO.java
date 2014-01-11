@@ -38,8 +38,14 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                u.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                u.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
 
                 list.add(u);
             }
@@ -73,8 +79,14 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                u.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                u.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
@@ -183,8 +195,14 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                u.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                u.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());

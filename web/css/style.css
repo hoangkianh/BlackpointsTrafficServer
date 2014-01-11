@@ -573,14 +573,13 @@ footer p {
 .btn {
     font-family: 'Open Sans', cursive;
     color: #fff;
-    width: 185px;
+    width: 30%;
     height: 20px;
     text-shadow: none;
-    font-size: 1.3125em; /* 21px */
-    padding: 1em 0.5em;
+    padding: 0.5em;
     letter-spacing: 0.05em;
-    margin: 4.5em auto 0;
-    display: block;
+    margin: 0;
+    display: inline-block;
     border: 0;
     text-transform: none;
     background: #E95B37 !important;

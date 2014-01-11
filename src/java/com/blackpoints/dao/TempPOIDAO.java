@@ -16,7 +16,7 @@ import java.util.List;
  * @author hka
  */
 public class TempPOIDAO {
-    
+
     public List<TempPOI> getAllTempPOIs() {
         List<TempPOI> list = new ArrayList<TempPOI>();
         Connection conn = DBUtil.getConnection();
@@ -38,11 +38,17 @@ public class TempPOIDAO {
                 tp.setCount(rs.getInt("count"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
-                
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                tp.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                tp.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
 
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    tp.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    tp.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
+                
                 list.add(tp);
             }
         } catch (SQLException ex) {
@@ -76,10 +82,16 @@ public class TempPOIDAO {
                 tp.setCount(rs.getInt("count"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
-                
+
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                tp.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                tp.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));                
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    tp.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    tp.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());

@@ -36,8 +36,14 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));                
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                ug.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                ug.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    ug.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    ug.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
 
                 list.add(ug);
             }
@@ -69,8 +75,14 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                ug.setCreatedOnDate(sdf.format(new Date(rs.getDate("createdOnDate").getTime())));
-                ug.setUpdatedOnDate(sdf.format(new Date(rs.getDate("updatedOnDate").getTime())));
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    ug.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    ug.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());

@@ -25,8 +25,8 @@
                         <nav class="pull-right nav-collapse collapse">
                             <ul id="menu-main" class="nav">                                
                                 <li>
-                                    <a class="first-link" href="#top"><bean:message key="navbar.home"/></a>
-                                    <a class="second-link" href="#top"><bean:message key="navbar.home"/></a>
+                                    <html:link action="/backHome" styleClass="first-link"><bean:message key="navbar.home"/></html:link>
+                                    <html:link action="/backHome" styleClass="second-link"><bean:message key="navbar.home"/></html:link>
                                 </li>
                                 <c:choose>
                                     <c:when test="${empty sessionScope.userName}">
@@ -54,9 +54,9 @@
                     <div class="span4">
                         <p><bean:message key="map.intro"/></p>
                         <div class="well">
-                            <bean:message key="map.address"/>&nbsp;&nbsp;
+                            <span><bean:message key="map.address"/></span>
                             <small> 
-                                (<a id='find_me' href='#' title="<bean:message key='map.findme'/>">
+                                (<a id="find_me" href="#" title="<bean:message key="map.findme"/>">
                                     <i class="fa fa-map-marker fa-2x"></i> <bean:message key="map.where"/>
                                 </a>)
                             </small>
@@ -66,7 +66,7 @@
                             <p>
                                 <label>
                                     <bean:message key="map.within"/>
-                                    <select id='search_radius'>
+                                    <select id="search_radius">
                                         <option value='500'>500 m</option>
                                         <option value='1000'>1 km</option>
                                         <option value='2000'>2 km</option>
@@ -83,6 +83,12 @@
                                     </select>
                                 </label>
                             </p>
+                            <a class="btn" id="search" href="#">
+                                <i class="fa fa-search"></i> <bean:message key="map.search"/>
+                            </a>
+                            <a class="btn" id="reset" href='#'>
+                                <i class="fa fa-repeat"></i> <bean:message key="map.reset"/>
+                            </a>
                         </div>                                
                     </div>
                     <div class="span8">
