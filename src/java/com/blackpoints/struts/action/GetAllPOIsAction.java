@@ -30,7 +30,7 @@ public class GetAllPOIsAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         POIForm pf = (POIForm) form;
-        List<POI> list = new POIDAO().getAllPOIs();
+        List<POI> list = new POIDAO().getAllPOIs(true);
         pf.setPoiList(list);
         return mapping.findForward("getAllPOIsOK");
     }

@@ -373,6 +373,17 @@ section#map .row{
 #map-canvas img{
     max-width: none;
 }
+#map-canvas h1, h2{
+    margin-top: 0;
+}
+#map-canvas p{
+    margin-top: 1em;
+}
+#map-canvas #content{
+    line-height:1.35;
+    overflow:hidden;
+    white-space:nowrap;
+}
 /* Description */
 section#description {
     height:  500px;
@@ -753,16 +764,6 @@ footer p {
     #about-badge {
         /*	display: none; */
     }
-
-    /* Portfolio & News */
-
-    #download h1 {
-        background: transparent;
-    }
-    #download h1 span {
-        background: transparent;
-        padding: 0;
-    }
     #map .container {
         top: 0 !important;
     }
@@ -785,49 +786,13 @@ footer p {
         margin-top: 1.5em;
     }
 
-    /* Helo */
-
-    #help h1 {
-        background: transparent;
-    }
-    #help h1 span {
-        background: transparent;
-        padding: 0;
-    }
-    section#help h2 {
-        margin-bottom: 0.25em;
-    }
-    section#help h2, section#help ul {
-        text-align: center;
-    }
-
-
     /* Description */
 
     section#description { /*display: none;*/
     }
-
-    /* team */
-
-    #team .team-thumb {
-        margin-right: auto;
-        margin-left: auto;
-        width: 150px;
-        display: block;
-        text-align:center
-    }
     .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
         margin-left: auto;
         margin-right: auto;
-    }
-
-    /* Contact Form */
-
-    #theme-form {
-        overflow: hidden;
-    }
-    #theme-form input[type=submit] {
-        width: 100%;
     }
 }
 

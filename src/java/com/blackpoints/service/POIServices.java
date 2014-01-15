@@ -23,14 +23,14 @@ public class POIServices {
     }
 
     /**
-     * Retrieves representation of an instance of com.blackpoints.service.POIServices
-     * @return an instance of java.lang.String
+     * Get all not deleted POI in database
+     * @return json string
      */
     @GET
     @Path("getAll")
     @Produces("application/json")
-    public String getAll() {
-        List<POI> pois = new POIDAO().getAllPOIs();
+    public String getAll() {        
+        List<POI> pois = new POIDAO().getAllPOIs(false);
         String json = new Gson().toJson(pois);
         return json;
     }

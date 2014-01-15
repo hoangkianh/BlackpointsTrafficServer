@@ -17,17 +17,21 @@ import java.util.List;
  */
 public class POIDAO {
 
-    public List<POI> getAllPOIs() {
+    public List<POI> getAllPOIs(boolean getAllFlag) {
         List<POI> list = new ArrayList<POI>();
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
-        try {
-            stm = conn.prepareStatement("SELECT id, name, names, description"
+        String query = "SELECT id, name, names, description"
                     + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
-                    + " FROM poi");
+                    + " FROM poi";
+        if (!getAllFlag) {
+            query += " WHERE isDeleted = False";
+        }
+        try {
+            stm = conn.prepareStatement(query);
             rs = stm.executeQuery();
 
             while (rs.next()) {

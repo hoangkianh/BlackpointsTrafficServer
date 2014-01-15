@@ -5,11 +5,18 @@ var MapsLib = {
     searchRadius: 500,
     defaultZoom: 16,
     addrMarkerImage: "img/marker.png",
+    TYPE_POINT: "POINT",
+    TYPE_LINE: "LINESTRING",
+    TYPE_POLYGON: "POLYGON",
     initialize: function() {
         geocoder = new google.maps.Geocoder();
 
         var mapOptions = {
             scaleControl: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.LARGE
+            },
             zoom: MapsLib.defaultZoom,
             center: MapsLib.map_centroid,
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -19,7 +26,7 @@ var MapsLib = {
         // reset
         $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
         var loadRadius = MapsLib.convertToPlainString($.address.parameter('radius'));
-        if (loadRadius != "") {
+        if (loadRadius !== "") {
             $("#search_radius").val(loadRadius);
         }
         else {
@@ -27,6 +34,197 @@ var MapsLib = {
         }
         MapsLib.findMe();
         MapsLib.doSearch();
+    },
+    doSearch: function() {
+
+        MapsLib.clearSearch();
+        MapsLib.address = $("#search_address").val();
+        MapsLib.searchRadius = $("#search_radius").val();
+
+        if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
+            return;
+        }
+
+        if (MapsLib.oldaddress !== MapsLib.address) {
+            MapsLib.newPinpoint = null;
+        }
+
+        if (MapsLib.address !== "") {
+            geocoder.geocode({'address': MapsLib.address}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    MapsLib.currentPinpoint = results[0].geometry.location;
+
+                    if (MapsLib.newPinpoint !== null) {
+                        MapsLib.currentPinpoint = MapsLib.newPinpoint;
+                    }
+
+                    $.address.parameter('address', encodeURIComponent(MapsLib.address));
+                    $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
+                    map.setCenter(MapsLib.currentPinpoint);
+                    map.setZoom(MapsLib.caculateZoom());
+
+                    MapsLib.addrMarker = new google.maps.Marker({
+                        position: MapsLib.currentPinpoint,
+                        map: map,
+                        draggable: true,
+                        title: MapsLib.address,
+                        animation: google.maps.Animation.DROP
+                    });
+                    var info = new google.maps.InfoWindow({
+                        content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
+                    });
+                    google.maps.event.addListener(MapsLib.addrMarker, 'drag', function() {
+                        MapsLib.searchRadiusCircle.setMap(null);
+                        MapsLib.newPinpoint = MapsLib.addrMarker.getPosition();
+                        MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
+                    });
+                    google.maps.event.addListener(MapsLib.addrMarker, 'dragend', function() {
+                        MapsLib.addrFromLatLng(MapsLib.newPinpoint);
+                    });
+                    google.maps.event.addListener(MapsLib.addrMarker, 'click', function() {
+                        if (info.getMap() === undefined || info.getMap() === null) {
+                            info.open(map, MapsLib.addrMarker);
+                        } else {
+                            info.close();
+                        }
+                    });
+
+                    MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
+//                        MapsLib.submitSearch(whereClause, map, MapsLib.currentPinpoint);
+                }
+                else {
+                    alert("We could not find your address: " + status);
+                }
+            });
+        }
+        else {
+//                MapsLib.submitSearch(whereClause, map);
+        }
+    },
+    submitSearch: function() {
+        $.ajax({
+            type: "GET",
+            url: "service/POI/getAll",
+            dataType: "json",
+            success: function(json) {
+                $.each(json, function(idx, obj) {
+                    var name = obj.name;
+                    var description = obj.description;
+                    if (description === undefined) {
+                        description = "Chưa có mô tả";
+                    }
+                    var rating = obj.rating;
+                    var createdOnDate = obj.createdOnDate;
+                    var geometry = obj.geometry;
+                    var parsed_geometry = MapsLib.parseGeomString(geometry);
+                    var type = MapsLib.TYPE_POINT;
+                    if (geometry.indexOf(MapsLib.TYPE_LINE) !== -1) {
+                        type = MapsLib.TYPE_LINE;
+                    } else {
+                        if (geometry.indexOf(MapsLib.TYPE_POLYGON) !== -1) {
+                            type = MapsLib.TYPE_POLYGON;
+                        }
+                    }
+                    MapsLib.drawBlackpoint(type, parsed_geometry, name, description, rating, createdOnDate);
+                });
+            }
+        });
+    },
+    parseGeomString: function(geomString) {
+        var i, j, lat, lng, tmp, tmpArr;
+        latLngArr = [];
+        m = geomString.match(/\([^\(\)]+\)/g);
+
+        if (m !== null) {
+            for (i = 0; i < m.length; i++) {
+                tmp = m[i].match(/-?\d+\.?\d*/g);
+
+                if (tmp !== null) {
+                    for (j = 0, tmpArr = []; j < tmp.length; j += 2) {
+                        lng = Number(tmp[j]);
+                        lat = Number(tmp[j + 1]);
+                        tmpArr.push(new google.maps.LatLng(lat, lng));
+                    }
+                    latLngArr.push(tmpArr);
+                }
+            }
+        }
+        return latLngArr;
+    },
+    drawBlackpoint: function(type, geometry, name, description, rating, createdOnDate) {
+        var content = "<div id='content'>" +
+                "<h2>" + name + "</h2>" +
+                "<p><ul><li><b>Mô tả: </b>" + description + "</li>" +
+                "<li><b>Mức độ nguy hiểm: </b>" + rating + "</li>" +
+                "<li><b>Thêm vào từ ngày: </b>" + createdOnDate + "</li>" +
+                "</ul></p>" +
+                "</div>";
+        var info = new google.maps.InfoWindow({
+            content: content,
+            maxWidth: 400
+        });
+
+        switch (type) {
+            case MapsLib.TYPE_POINT:
+                var marker = new google.maps.Marker({
+                    position: geometry[0][0],
+                    map: map,
+                    title: name,
+                    icon: MapsLib.addrMarkerImage
+                });
+                google.maps.event.addListener(marker, 'click', function() {
+                    if (info.getMap() === undefined || info.getMap() === null) {
+                        info.open(map, marker);
+                    }
+                    else {
+                        info.close();
+                    }
+                });
+                break;
+            case MapsLib.TYPE_LINE:
+                var line = new google.maps.Polyline({
+                    path: geometry[0],
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 8,
+                    map: map,
+                    title: name
+                });
+
+                google.maps.event.addListener(line, 'click', function(event) {
+                    info.setPosition(event.latLng);
+                    info.open(map);
+                });
+                break;
+            case MapsLib.TYPE_POLYGON:
+                var polygon = new google.maps.Polygon({
+                    paths: geometry,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.0,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    title: name
+                });
+
+                google.maps.event.addListener(polygon, 'click', function(event) {
+                    info.setPosition(event.latLng);
+                    info.open(map);
+                });
+                break;
+        }
+    },
+    clearSearch: function() {
+        MapsLib.oldaddress = MapsLib.address;
+
+//        if (MapsLib.searchrecords != undefined)
+//            MapsLib.searchrecords.setMap(null);
+        if (MapsLib.addrMarker !== undefined)
+            MapsLib.addrMarker.setMap(null);
+        if (MapsLib.searchRadiusCircle !== undefined)
+            MapsLib.searchRadiusCircle.setMap(null);
     },
     handleNoGeolocation: function(errorFlag) {
         var content;
@@ -45,84 +243,6 @@ var MapsLib = {
         new google.maps.InfoWindow(options);
         map.setCenter(options.position);
     },
-    doSearch: function() {
-
-        MapsLib.clearSearch();
-        MapsLib.address = $("#search_address").val();
-        MapsLib.searchRadius = $("#search_radius").val();
-
-        if (MapsLib.address == undefined && MapsLib.searchRadius == undefined) {
-            return;
-        }
-
-        if (MapsLib.oldaddress != MapsLib.address) {
-            MapsLib.newPinpoint = null;
-        }
-
-        if (MapsLib.address != "") {
-            geocoder.geocode({'address': MapsLib.address}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    MapsLib.currentPinpoint = results[0].geometry.location;
-
-                    if (MapsLib.newPinpoint != null) {
-                        MapsLib.currentPinpoint = MapsLib.newPinpoint;
-                        MapsLib.newPinpoint = null;
-                    }
-
-                    $.address.parameter('address', encodeURIComponent(MapsLib.address));
-                    $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
-                    map.setCenter(MapsLib.currentPinpoint);
-                    map.setZoom(MapsLib.caculateZoom());
-
-                    MapsLib.addrMarker = new google.maps.Marker({
-                        position: MapsLib.currentPinpoint,
-                        map: map,
-                        draggable: true,
-                        icon: MapsLib.addrMarkerImage,
-                        animation: google.maps.Animation.DROP,
-                        title: MapsLib.address
-                    });
-                    google.maps.event.addListener(MapsLib.addrMarker, 'drag', function() {
-                        MapsLib.searchRadiusCircle.setMap(null);
-                        MapsLib.newPinpoint = MapsLib.addrMarker.getPosition();
-                        MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
-                    });
-
-                    MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
-//                        MapsLib.submitSearch(whereClause, map, MapsLib.currentPinpoint);
-                }
-                else {
-                    alert("We could not find your address: " + status);
-                }
-            });
-        }
-        else {
-//                MapsLib.submitSearch(whereClause, map);
-        }
-    },
-    submitSearch: function(whereClause, map, location) {
-        MapsLib.searchrecords = new google.maps.FusionTablesLayer({
-            query: {
-                from: MapsLib.fusionTableId,
-                select: MapsLib.locationColumn,
-                where: whereClause
-            },
-            styleId: 2,
-            templateId: 2
-        });
-        MapsLib.searchrecords.setMap(map);
-        MapsLib.getCount(whereClause);
-    },
-    clearSearch: function() {
-        MapsLib.oldaddress = MapsLib.address;
-
-//        if (MapsLib.searchrecords != null)
-//            MapsLib.searchrecords.setMap(null);
-        if (MapsLib.addrMarker != null)
-            MapsLib.addrMarker.setMap(null);
-        if (MapsLib.searchRadiusCircle != null)
-            MapsLib.searchRadiusCircle.setMap(null);
-    },
     findMe: function() {
         var foundLocation;
         if (navigator.geolocation) {
@@ -139,7 +259,7 @@ var MapsLib = {
     },
     addrFromLatLng: function(latLngPoint) {
         geocoder.geocode({'latLng': latLngPoint}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
+            if (status === google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
                     $('#search_address').val(results[1].formatted_address);
                     MapsLib.doSearch();
@@ -169,7 +289,7 @@ var MapsLib = {
     },
     //converts a slug or query string in to readable text
     convertToPlainString: function(text) {
-        if (text == undefined)
+        if (text === undefined)
             return '';
         return decodeURIComponent(text);
     },
@@ -202,5 +322,5 @@ var MapsLib = {
                 break;
         }
         return zoom;
-    },
+    }
 };

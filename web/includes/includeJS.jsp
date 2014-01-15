@@ -33,15 +33,6 @@
                 return false;
             }
         });
-        $.ajax({
-            type: "GET",
-            url: "service/POI/getAll",
-            dataType: "json",
-            success: function(json) {
-                $.each(json, function(idx, obj) {
-                    console.log(obj.geometry);
-                });
-            }
-        });
+        MapsLib.submitSearch();
     });
 </script>

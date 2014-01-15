@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
-            <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/web/includes/map.jsp</file>
             <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/POIDAO.java</file>
-            <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/web/css/style.css</file>
             <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/web/includes/includeJS.jsp</file>
             <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/web/js/map.js</file>
+            <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/classes/GeoLocation.java</file>
             <file>file:/media/sda7/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/service/POIServices.java</file>
         </group>
     </open-files>

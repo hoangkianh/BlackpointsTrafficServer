@@ -27,7 +27,7 @@
                                 <li>
                                     <html:link action="/backHome" styleClass="first-link"><bean:message key="navbar.home"/></html:link>
                                     <html:link action="/backHome" styleClass="second-link"><bean:message key="navbar.home"/></html:link>
-                                </li>
+                                    </li>
                                 <c:choose>
                                     <c:when test="${empty sessionScope.userName}">
                                         <li>
@@ -52,7 +52,10 @@
             <div class="container">
                 <div class="row">
                     <div class="span4">
-                        <p><bean:message key="map.intro"/></p>
+                        <p>
+                            <bean:message key="map.intro"/><br/>
+                            <i class="fa fa-question-circle" title="<bean:message key="map.intro.note"/>"></i>
+                        </p>
                         <div class="well">
                             <span><bean:message key="map.address"/></span>
                             <small> 
