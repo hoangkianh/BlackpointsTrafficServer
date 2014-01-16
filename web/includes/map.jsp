@@ -54,8 +54,8 @@
                     <div class="span4">
                         <p>
                             <bean:message key="map.intro"/><br/>
-                            <i class="fa fa-question-circle" title="<bean:message key="map.intro.note"/>"></i>
                         </p>
+                        <h1><i class="fa fa-question-circle" title="<bean:message key="map.intro.note"/>"></i></h1>
                         <div class="well">
                             <span><bean:message key="map.address"/></span>
                             <small> 
@@ -73,7 +73,7 @@
                                         <option value='500'>500 m</option>
                                         <option value='1000'>1 km</option>
                                         <option value='2000'>2 km</option>
-                                        <option value='5000'>5 km</option>
+                                        <option value='5000' selected="selected">5 km</option>
                                         <option value='10000'>10 km</option>
                                         <option value='15000'>15 km</option>                  
                                         <option value='20000'>20 km</option>

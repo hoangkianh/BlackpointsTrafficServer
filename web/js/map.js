@@ -2,12 +2,15 @@ google.maps.visualRefresh = true;
 
 var MapsLib = {
     map_centroid: new google.maps.LatLng(21.0333330, 105.8500000),
-    searchRadius: 500,
+    searchRadius: 5000,
     defaultZoom: 16,
     addrMarkerImage: "img/marker.png",
     TYPE_POINT: "POINT",
     TYPE_LINE: "LINESTRING",
     TYPE_POLYGON: "POLYGON",
+    markerArr: [],
+    polyLineArr: [],
+    polygonArr: [],
     initialize: function() {
         geocoder = new google.maps.Geocoder();
 
@@ -42,6 +45,7 @@ var MapsLib = {
         MapsLib.searchRadius = $("#search_radius").val();
 
         if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
+            MapsLib.submitSearch();
             return;
         }
 
@@ -90,7 +94,7 @@ var MapsLib = {
                     });
 
                     MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
-//                        MapsLib.submitSearch(whereClause, map, MapsLib.currentPinpoint);
+                    MapsLib.submitSearch();
                 }
                 else {
                     alert("We could not find your address: " + status);
@@ -98,13 +102,28 @@ var MapsLib = {
             });
         }
         else {
-//                MapsLib.submitSearch(whereClause, map);
+            MapsLib.submitSearch();
         }
     },
     submitSearch: function() {
+        var lat;
+        var lng;
+        var radius = 5000;
+
+        if (MapsLib.currentPinpoint !== undefined) {
+            lat = MapsLib.currentPinpoint.lat();
+            lng = MapsLib.currentPinpoint.lng();
+        }else{
+            lat = MapsLib.map_centroid.lat();
+            lng = MapsLib.map_centroid.lng();
+        }
+        
+        if (MapsLib.searchRadius !== undefined) {
+            radius = MapsLib.searchRadius;
+        }
         $.ajax({
             type: "GET",
-            url: "service/POI/getAll",
+            url: "service/POI/getPOIinRadius/" + lat + "/" + lng + "/" + radius,
             dataType: "json",
             success: function(json) {
                 $.each(json, function(idx, obj) {
@@ -134,7 +153,6 @@ var MapsLib = {
         var i, j, lat, lng, tmp, tmpArr;
         latLngArr = [];
         m = geomString.match(/\([^\(\)]+\)/g);
-
         if (m !== null) {
             for (i = 0; i < m.length; i++) {
                 tmp = m[i].match(/-?\d+\.?\d*/g);
@@ -180,9 +198,10 @@ var MapsLib = {
                         info.close();
                     }
                 });
+                MapsLib.markerArr.push(marker);
                 break;
             case MapsLib.TYPE_LINE:
-                var line = new google.maps.Polyline({
+                var polyLine = new google.maps.Polyline({
                     path: geometry[0],
                     geodesic: true,
                     strokeColor: '#FF0000',
@@ -192,10 +211,11 @@ var MapsLib = {
                     title: name
                 });
 
-                google.maps.event.addListener(line, 'click', function(event) {
+                google.maps.event.addListener(polyLine, 'click', function(event) {
                     info.setPosition(event.latLng);
                     info.open(map);
                 });
+                MapsLib.polyLineArr.push(polyLine);
                 break;
             case MapsLib.TYPE_POLYGON:
                 var polygon = new google.maps.Polygon({
@@ -213,18 +233,28 @@ var MapsLib = {
                     info.setPosition(event.latLng);
                     info.open(map);
                 });
+                MapsLib.polygonArr.push(polygon);
                 break;
         }
     },
     clearSearch: function() {
         MapsLib.oldaddress = MapsLib.address;
 
-//        if (MapsLib.searchrecords != undefined)
-//            MapsLib.searchrecords.setMap(null);
-        if (MapsLib.addrMarker !== undefined)
+        if (MapsLib.addrMarker !== undefined) {
             MapsLib.addrMarker.setMap(null);
-        if (MapsLib.searchRadiusCircle !== undefined)
+        }
+        if (MapsLib.searchRadiusCircle !== undefined) {
             MapsLib.searchRadiusCircle.setMap(null);
+        }
+        for (i = 0; i < MapsLib.markerArr.length; i++) {
+            MapsLib.markerArr[i].setMap(null);
+        }
+        for (i = 0; i < MapsLib.polyLineArr.length; i++) {
+            MapsLib.polyLineArr[i].setMap(null);
+        }
+        for (i = 0; i < MapsLib.polygonArr.length; i++) {
+            MapsLib.polygonArr[i].setMap(null);
+        }
     },
     handleNoGeolocation: function(errorFlag) {
         var content;
