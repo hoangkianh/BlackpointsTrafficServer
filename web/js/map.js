@@ -113,11 +113,11 @@ var MapsLib = {
         if (MapsLib.currentPinpoint !== undefined) {
             lat = MapsLib.currentPinpoint.lat();
             lng = MapsLib.currentPinpoint.lng();
-        }else{
+        } else {
             lat = MapsLib.map_centroid.lat();
             lng = MapsLib.map_centroid.lng();
         }
-        
+
         if (MapsLib.searchRadius !== undefined) {
             radius = MapsLib.searchRadius;
         }
