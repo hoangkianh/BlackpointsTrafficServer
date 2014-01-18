@@ -34,26 +34,26 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     private List<POI> poiList;
 
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors err = new ActionErrors();
-        if (name == null || name.trim().length() == 0) {
-            err.add("name", new ActionMessage("errors.required", "Tên (hoặc địa chỉ) điểm đen"));
-        }
-        if (name.trim().length() < 10 || name.trim().length() > 100) {
-            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "10", "100", "kí tự"));
-        }
-        if (description.trim().length() > 200) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
-        }
-        if (geometry == null || geometry.trim().length() == 0) {
-            err.add("geometry", new ActionMessage("errors.select", "điểm đen trên bản đồ"));
-        }
-        if (categoryID <= 0) {
-            err.add("categoryID", new ActionMessage("errors.select", "kiểu điểm đen"));
-        }
-        return err;
-    }
+//    @Override
+//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+//        ActionErrors err = new ActionErrors();
+//        if (name == null || name.trim().length() == 0) {
+//            err.add("name", new ActionMessage("errors.required", "Tên (hoặc địa chỉ) điểm đen"));
+//        }
+//        if (name.trim().length() < 10 || name.trim().length() > 100) {
+//            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "10", "100", "kí tự"));
+//        }
+//        if (description.trim().length() > 200) {
+//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
+//        }
+//        if (geometry == null || geometry.trim().length() == 0) {
+//            err.add("geometry", new ActionMessage("errors.select", "điểm đen trên bản đồ"));
+//        }
+//        if (categoryID <= 0) {
+//            err.add("categoryID", new ActionMessage("errors.select", "kiểu điểm đen"));
+//        }
+//        return err;
+//    }
 
     public int getId() {
         return id;

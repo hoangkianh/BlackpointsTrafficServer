@@ -29,42 +29,42 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String updatedOnDate;
     private List<User> userList;
 
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors err = new ActionErrors();
-        if (userName == null || userName.trim().length() == 0) {
-            err.add("userName", new ActionMessage("errors.required", "Tên đăng nhập"));
-        }
-        if (userName.trim().length() < 6 || userName.trim().length() > 30) {
-            err.add("userName", new ActionMessage("errors.range", "Tên đăng nhập có độ dài", "6", "30", "kí tự"));
-        }
-        if (password == null || password.trim().length() == 0) {
-            err.add("password", new ActionMessage("errors.required", "Mật khẩu"));
-        }
-        if (password.trim().length() < 6 || password.trim().length() > 30) {
-            err.add("password", new ActionMessage("errors.range", "Mật khẩu có độ dài", "6", "30", "kí tự"));
-        }
-        if (displayName.trim().length() > 30) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
-        }
-        if (email == null || email.trim().length() == 0) {
-            err.add("email", new ActionMessage("errors.required", "Email"));
-        }
-        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) {
-            err.add("email", new ActionMessage("errors.email", email));
-        }
-        if (groupID <= 0) {
-            err.add("groupID", new ActionMessage("errors.required", "nhóm người dùng"));
-        }
-        if (description.trim().length() > 200) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
-        }
-        return err;
-    }
+//    @Override
+//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+//        ActionErrors err = new ActionErrors();
+//        if (userName == null || userName.trim().length() == 0) {
+//            err.add("userName", new ActionMessage("errors.required", "Tên đăng nhập"));
+//        }
+//        if (userName.trim().length() < 6 || userName.trim().length() > 30) {
+//            err.add("userName", new ActionMessage("errors.range", "Tên đăng nhập có độ dài", "6", "30", "kí tự"));
+//        }
+//        if (password == null || password.trim().length() == 0) {
+//            err.add("password", new ActionMessage("errors.required", "Mật khẩu"));
+//        }
+//        if (password.trim().length() < 6 || password.trim().length() > 30) {
+//            err.add("password", new ActionMessage("errors.range", "Mật khẩu có độ dài", "6", "30", "kí tự"));
+//        }
+//        if (displayName != null && displayName.trim().length() > 30) {
+//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
+//        }
+//        if (email == null || email.trim().length() == 0) {
+//            err.add("email", new ActionMessage("errors.required", "Email"));
+//        }
+//        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+//                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(email);
+//        if (!matcher.matches()) {
+//            err.add("email", new ActionMessage("errors.email", email));
+//        }
+//        if (groupID <= 0) {
+//            err.add("groupID", new ActionMessage("errors.required", "nhóm người dùng"));
+//        }
+//        if (description.trim().length() > 200) {
+//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
+//        }
+//        return err;
+//    }
 
     public int getUserID() {
         return userID;

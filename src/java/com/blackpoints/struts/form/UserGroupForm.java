@@ -24,23 +24,23 @@ public class UserGroupForm extends org.apache.struts.action.ActionForm {
     private int updatedByUserID;
     private List<UserGroup> userGroupList;
 
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors err = new ActionErrors();
-        if (name == null || name.trim().length() == 0) {
-            err.add("name", new ActionMessage("errors.required", "Tên nhóm người dùng"));
-        }
-        if (name.trim().length() < 4 || name.trim().length() > 30) {
-            err.add("name", new ActionMessage("errors.range", "Tên nhóm người dùng có độ dài", "4", "30", "kí tự"));
-        }
-        if (level <= 0) {
-            err.add("level", new ActionMessage("errors.select", "level cho nhóm người dùng"));
-        }
-        if (description.trim().length() > 200) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
-        }
-        return err;
-    }
+//    @Override
+//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+//        ActionErrors err = new ActionErrors();
+//        if (name == null || name.trim().length() == 0) {
+//            err.add("name", new ActionMessage("errors.required", "Tên nhóm người dùng"));
+//        }
+//        if (name.trim().length() < 4 || name.trim().length() > 30) {
+//            err.add("name", new ActionMessage("errors.range", "Tên nhóm người dùng có độ dài", "4", "30", "kí tự"));
+//        }
+//        if (level <= 0) {
+//            err.add("level", new ActionMessage("errors.select", "level cho nhóm người dùng"));
+//        }
+//        if (description.trim().length() > 200) {
+//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
+//        }
+//        return err;
+//    }
 
     public int getUserGroupID() {
         return userGroupID;

@@ -19,20 +19,20 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
     private String description;
     private List<Category> categoryList;
 
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors err = new ActionErrors();
-        if (name == null || name.trim().length() == 0) {
-            err.add("name", new ActionMessage("errors.required", "Tên kiểu điểm đen"));
-        }
-        if (name.trim().length() < 4 || name.trim().length() > 50) {
-            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "4", "50", "kí tự"));
-        }
-        if (description.trim().length() > 100) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "100"));
-        }
-        return err;
-    }
+//    @Override
+//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+//        ActionErrors err = new ActionErrors();
+//        if (name == null || name.trim().length() == 0) {
+//            err.add("name", new ActionMessage("errors.required", "Tên kiểu điểm đen"));
+//        }
+//        if (name.trim().length() < 4 || name.trim().length() > 50) {
+//            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "4", "50", "kí tự"));
+//        }
+//        if (description.trim().length() > 100) {
+//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "100"));
+//        }
+//        return err;
+//    }
 
     public int getCategoryID() {
         return categoryID;
