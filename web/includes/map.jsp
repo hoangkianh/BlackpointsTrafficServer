@@ -21,24 +21,23 @@
                         <a class="btn btn-navbar"  data-toggle="collapse" data-target=".nav-collapse">
                             <i class="fa fa-bars"></i>
                         </a>
-                        <h1 class="brand"><a href="#top"><bean:message key="navbar.weblogo"/></a></h1>
+                        <h1 class="brand">
+                            <html:link action="/backHome"><bean:message key="navbar.weblogo"/></html:link>
+                        </h1>
                         <nav class="pull-right nav-collapse collapse">
                             <ul id="menu-main" class="nav">                                
                                 <li>
-                                    <html:link action="/backHome" styleClass="first-link"><bean:message key="navbar.home"/></html:link>
-                                    <html:link action="/backHome" styleClass="second-link"><bean:message key="navbar.home"/></html:link>
-                                    </li>
+                                    <html:link action="/backHome" ><bean:message key="navbar.home"/></html:link>
+                                </li>
                                 <c:choose>
                                     <c:when test="${empty sessionScope.userName}">
                                         <li>
-                                            <a class="first-link" href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
-                                            <a class="second-link" href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
+                                            <a href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>
-                                            <a class="first-link" href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
-                                            <a class="second-link" href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
+                                            <a href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>

@@ -27,7 +27,9 @@
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
+        <action input="/" name="UserForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction"/>
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
+        <action path="/login" forward="/includes/login.jsp" />
         <action path="/viewMap" forward="/includes/map.jsp" />
         <action path="/backHome" forward="/index.jsp" />
     </action-mappings>

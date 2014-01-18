@@ -13,14 +13,14 @@
         <%@include file="includes/includeCSS.jsp" %>
     </head>
     <body>
-        <!-- ****************** NAV BAR ****************** -->
+        <%-- ****************** NAV BAR ****************** --%>
         <%@include file="includes/navbar.jsp" %>
         <div id="top"></div>
-        <!-- ******************** HeaderWrap ********************-->
+        <%-- ******************** HeaderWrap ********************--%>
         <%@include file="includes/header.jsp" %>        
-        <!-- ******************** About ********************-->
+        <%-- ******************** About ********************--%>
         <%@include file="includes/about.jsp" %>        
-        <!-- ******************** Map Section ********************-->
+        <%-- ******************** Map Section ********************--%>
         <section id="map" class="single-page scrollblock">
             <div class="container">
                 <div class="align"><i class="fa fa-map-marker"></i></div>

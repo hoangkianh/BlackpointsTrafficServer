@@ -11,6 +11,7 @@ CONTENTS:
 07 Bootstrap Carousel
 08 Buttons
 09 Media queries 
+10 Loginform
 ===========================
 */
 
@@ -215,8 +216,8 @@ ul#menu-main > li {
     overflow: hidden;
     height: 2em;
 }
-ul#menu-main > li:hover a.first-link{
-    margin-top: -3.25em;
+ul#menu-main > li:hover a{
+    color: #E95B37;
 }
 ul#menu-main > li > a {
     font-family: 'Open Sans', cursive;
@@ -226,16 +227,6 @@ ul#menu-main > li > a {
     text-transform: uppercase;
     color: #fff;
     display: block;
-}
-ul#menu-main > li > a.first-link{
-    -webkit-transition: 0.3s;
-    -moz-transition: 0.3s;
-    -ms-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;     
-}
-ul#menu-main > li > a.second-link{
-    color: #E95B37;
 }
 ul#menu-main > li > a span{
     text-transform: lowercase;
@@ -585,7 +576,6 @@ footer p {
     font-family: 'Open Sans', cursive;
     color: #fff;
     width: 30%;
-    height: 20px;
     text-shadow: none;
     padding: 0.5em;
     letter-spacing: 0.05em;
@@ -593,7 +583,7 @@ footer p {
     display: inline-block;
     border: 0;
     text-transform: none;
-    background: #E95B37 !important;
+    background: #E95B37 !important; 
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -606,6 +596,7 @@ footer p {
 }
 .btn:hover {
     background: #0B333F !important;
+    color:#fff;
 }
 .navbar-inverse .btn-navbar {
     width: auto;
@@ -840,4 +831,9 @@ footer p {
 /* Desktops and laptops ----------- */
 @media only screen  and (min-width : 1224px) {
     /* Styles */
+}
+
+#login-form input[type=text], input[type=password] {
+    width: 90%;
+    height: 25px;
 }
