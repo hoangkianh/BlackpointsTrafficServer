@@ -23,7 +23,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareCall("SELECT * FROM user");
+            stm = conn.prepareStatement("SELECT * FROM user");
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareCall("SELECT * FROM user WHERE userID=?");
+            stm = conn.prepareStatement("SELECT * FROM user WHERE userID=?");
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -101,7 +101,7 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("INSERT INTO user (userName, password, displayName"
+            stm = conn.prepareStatement("INSERT INTO user (userName, password, displayName"
                     + ", description, email, photo, groupID, createdOnDate)"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             stm.setString(1, u.getUserName());
@@ -129,7 +129,7 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("UPDATE user SET userName=?, password=?, displayName=?"
+            stm = conn.prepareStatement("UPDATE user SET userName=?, password=?, displayName=?"
                     + ", description=?, email=?, photo=?, groupID=?, updatedOnDate=?"
                     + " WHERE userID=?");
             stm.setString(1, u.getUserName());
@@ -158,7 +158,7 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("DELETE FROM user WHERE userID=?");
+            stm = conn.prepareStatement("DELETE FROM user WHERE userID=?");
             stm.setInt(1, id);
 
             if (stm.executeUpdate() > 0) {
@@ -178,7 +178,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareCall("SELECT * FROM user WHERE userName=? AND password=?");
+            stm = conn.prepareStatement("SELECT * FROM blackpointstraffic_db.`user` WHERE userName=? AND password=?");
             stm.setString(1, userName);
             stm.setString(2, password);
             rs = stm.executeQuery();

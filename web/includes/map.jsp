@@ -2,7 +2,6 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@taglib  uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:html lang="true">
@@ -22,22 +21,34 @@
                             <i class="fa fa-bars"></i>
                         </a>
                         <h1 class="brand">
-                            <html:link action="/backHome"><bean:message key="navbar.weblogo"/></html:link>
-                        </h1>
-                        <nav class="pull-right nav-collapse collapse">
-                            <ul id="menu-main" class="nav">                                
-                                <li>
-                                    <html:link action="/backHome" ><bean:message key="navbar.home"/></html:link>
-                                </li>
+                            <html:link action="/home"><bean:message key="navbar.weblogo"/></html:link>
+                            </h1>
+                            <nav class="pull-right nav-collapse collapse">
+                                <ul id="menu-main" class="nav">                                
+                                    <li>
+                                    <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
+                                    </li>
                                 <c:choose>
-                                    <c:when test="${empty sessionScope.userName}">
+                                    <c:when test="${empty sessionScope.userName and empty cookie.userName}">
                                         <li>
-                                            <a href="#login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></a>
-                                        </li>
+                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                            </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>
-                                            <a href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
+                                            <a href="#login">
+                                                <i class="fa fa-sign-out"></i>
+                                                <c:choose>
+                                                    <c:when test="${not empty sessionScope.userName}">
+                                                        ${sessionScope.displayName}
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:if test="${not empty cookie.userName}">
+                                                            ${cookie.displayName.value} 
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>

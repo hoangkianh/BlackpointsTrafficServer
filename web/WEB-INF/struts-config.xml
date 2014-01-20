@@ -22,16 +22,20 @@
     </global-forwards>
 
     <action-mappings>
+        <action input="/" name="UserForm" path="/LogoutAction" scope="session" type="com.blackpoints.struts.action.LogoutAction"/>
         <action input="/" name="CategoryForm" path="/GetAllCategoriesAction" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction"/>
         <action input="/" name="POIForm" path="/GetAllPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction"/>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
-        <action input="/" name="UserForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction"/>
+        <action input="/" name="UserForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
+            <forward name="loginSuccess" path="/" redirect="true" />
+            <forward name="loginFailure" path="/includes/login.jsp" />
+        </action>
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
         <action path="/login" forward="/includes/login.jsp" />
         <action path="/viewMap" forward="/includes/map.jsp" />
-        <action path="/backHome" forward="/index.jsp" />
+        <action path="/home" forward="/" />
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

@@ -23,7 +23,7 @@ public List<UserGroup> getAllUserGroups() {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareCall("SELECT * FROM userGroup");
+            stm = conn.prepareStatement("SELECT * FROM userGroup");
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -61,7 +61,7 @@ public List<UserGroup> getAllUserGroups() {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareCall("SELECT * FROM userGroup WHERE userGroupID=?");
+            stm = conn.prepareStatement("SELECT * FROM userGroup WHERE userGroupID=?");
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -97,7 +97,7 @@ public List<UserGroup> getAllUserGroups() {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("INSERT INTO userGroup (name, level, description, createdOnDate, createdByUserID)"
+            stm = conn.prepareStatement("INSERT INTO userGroup (name, level, description, createdOnDate, createdByUserID)"
                     + " VALUES(?, ?, ?, ?, ?)");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
@@ -121,7 +121,7 @@ public List<UserGroup> getAllUserGroups() {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("UPDATE userGroup SET name=?, level=?, description=?"
+            stm = conn.prepareStatement("UPDATE userGroup SET name=?, level=?, description=?"
                     + ", updatedByUserID=?, updatedOnDate=? WHERE userGroupID=?");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
@@ -146,7 +146,7 @@ public List<UserGroup> getAllUserGroups() {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareCall("DELETE FROM userGroup WHERE userGroupID=?");
+            stm = conn.prepareStatement("DELETE FROM userGroup WHERE userGroupID=?");
             stm.setInt(1, id);
 
             if (stm.executeUpdate() > 0) {

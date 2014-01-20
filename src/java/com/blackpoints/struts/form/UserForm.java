@@ -2,13 +2,6 @@ package com.blackpoints.struts.form;
 
 import com.blackpoints.classes.User;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 
 /**
  *
@@ -28,6 +21,8 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String createdOnDate;
     private String updatedOnDate;
     private List<User> userList;
+    private String error;
+    private boolean rememberMe;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -160,5 +155,21 @@ public class UserForm extends org.apache.struts.action.ActionForm {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

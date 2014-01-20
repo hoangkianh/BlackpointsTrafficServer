@@ -16,17 +16,29 @@
                             <a href="#top"><bean:message key="navbar.home"/></a>
                         </li>
                         <li>
-                           <a href="#map"><bean:message key="navbar.map"/></a>                                
+                            <a href="#map"><bean:message key="navbar.map"/></a>                                
                         </li>
                         <c:choose>
-                            <c:when test="${empty sessionScope.userName}">
+                            <c:when test="${empty sessionScope.userName and empty cookie.userName}">
                                 <li>
                                     <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                </li>
+                                    </li>
                             </c:when>
                             <c:otherwise>
                                 <li>
-                                    <a href="#login"><i class="fa fa-sign-out"></i> <bean:message key="navbar.hello"/></a>
+                                    <a href="#login">
+                                        <i class="fa fa-sign-out"></i>
+                                        <c:choose>
+                                            <c:when test="${not empty sessionScope.userName}">
+                                                ${sessionScope.displayName}
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${not empty cookie.userName}">
+                                                    ${cookie.displayName.value}
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
