@@ -10,7 +10,7 @@
         <title><bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <%@include file="includeCSS.jsp" %>
+        <%@include file="../includes/includeCSS.jsp" %>
     </head>
     <body>
         <div class="navbar-wrapper">
@@ -29,7 +29,7 @@
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
                                 <c:choose>
-                                    <c:when test="${empty sessionScope.userName and empty cookie.userName}">
+                                    <c:when test="${empty sessionScope.BPT_userName and empty cookie.BPT_userName}">
                                         <li>
                                             <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
                                             </li>
@@ -39,12 +39,12 @@
                                             <a href="#login">
                                                 <i class="fa fa-sign-out"></i>
                                                 <c:choose>
-                                                    <c:when test="${not empty sessionScope.userName}">
-                                                        ${sessionScope.displayName}
+                                                    <c:when test="${not empty sessionScope.BPT_userName}">
+                                                        ${sessionScope.BPT_displayName}
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:if test="${not empty cookie.userName}">
-                                                            ${cookie.displayName.value} 
+                                                        <c:if test="${not empty cookie.BPT_userName}">
+                                                            ${cookie.BPT_displayName.value} 
                                                         </c:if>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -110,6 +110,6 @@
                 </div>
             </div>
         </section>
-        <%@include file="includeJS.jsp" %>
+        <%@include file="../includes/includeJS.jsp" %>
     </body>
 </html:html>

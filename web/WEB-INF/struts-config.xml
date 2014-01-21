@@ -5,6 +5,8 @@
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 <struts-config>
     <form-beans>
+        <form-bean name="LoginForm" type="com.blackpoints.struts.form.LoginForm"/>
+        <form-bean name="RegisterForm" type="com.blackpoints.struts.form.RegisterForm"/>
         <form-bean name="CategoryForm" type="com.blackpoints.struts.form.CategoryForm"/>    
         <form-bean name="POIForm" type="com.blackpoints.struts.form.POIForm"/>
         <form-bean name="POIPropertyForm" type="com.blackpoints.struts.form.POIPropertyForm"/>
@@ -28,13 +30,14 @@
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
-        <action input="/" name="UserForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
+        <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
             <forward name="loginSuccess" path="/" redirect="true" />
-            <forward name="loginFailure" path="/includes/login.jsp" />
+            <forward name="loginFailure" path="/pages/login.jsp" />
         </action>
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
-        <action path="/login" forward="/includes/login.jsp" />
-        <action path="/viewMap" forward="/includes/map.jsp" />
+        <action path="/login" forward="/pages/login.jsp" />
+        <action path="/register" forward="/pages/register.jsp" />
+        <action path="/viewMap" forward="/pages/map.jsp" />
         <action path="/home" forward="/" />
     </action-mappings>
     

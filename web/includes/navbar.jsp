@@ -19,22 +19,22 @@
                             <a href="#map"><bean:message key="navbar.map"/></a>                                
                         </li>
                         <c:choose>
-                            <c:when test="${empty sessionScope.userName and empty cookie.userName}">
+                            <c:when test="${empty sessionScope.BPT_userName and empty cookie.BPT_userName}">
                                 <li>
                                     <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
                                     </li>
                             </c:when>
                             <c:otherwise>
-                                <li>
-                                    <a href="#login">
+                                <li>                                    
+                                    <a href="#">
                                         <i class="fa fa-sign-out"></i>
                                         <c:choose>
-                                            <c:when test="${not empty sessionScope.userName}">
-                                                ${sessionScope.displayName}
+                                            <c:when test="${not empty sessionScope.BPT_userName}">
+                                                ${sessionScope.BPT_displayName}
                                             </c:when>
                                             <c:otherwise>
-                                                <c:if test="${not empty cookie.userName}">
-                                                    ${cookie.displayName.value}
+                                                <c:if test="${not empty cookie.BPT_userName}">
+                                                    ${cookie.BPT_displayName.value}
                                                 </c:if>
                                             </c:otherwise>
                                         </c:choose>

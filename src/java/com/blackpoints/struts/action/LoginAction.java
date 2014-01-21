@@ -2,6 +2,7 @@ package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
 import com.blackpoints.dao.UserDAO;
+import com.blackpoints.struts.form.LoginForm;
 import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.util.MD5Hashing;
 import java.util.Locale;
@@ -35,27 +36,27 @@ public class LoginAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        UserForm userForm = (UserForm) form;
+        LoginForm loginForm = (LoginForm) form;
         HttpSession session = request.getSession(true);
         MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
         Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
 
-        User u = new UserDAO().login(userForm.getUserName(), MD5Hashing.encryptPassword(userForm.getPassword()));
+        User u = new UserDAO().login(loginForm.getUserName(), MD5Hashing.encryptPassword(loginForm.getPassword()));
 
         if (u == null) {
-            userForm.setError("<p>" + mr.getMessage(locale, "login.failure") + "</p>");
+            loginForm.setError("<p>" + mr.getMessage(locale, "login.failure") + "</p>");
             return mapping.findForward("loginFailure");
         }
 
-        session.setAttribute("userName", u.getUserName());
-        session.setAttribute("displayName", u.getDisplayName());
-        session.setAttribute("userID", u.getUserID());
+        session.setAttribute("BPT_userName", u.getUserName());
+        session.setAttribute("BPT_displayName", u.getDisplayName());
+        session.setAttribute("BPT_userID", u.getUserID());
 
-        if (userForm.isRememberMe()) {
-            Cookie c = new Cookie("userName", u.getUserName());
+        if (loginForm.isRememberMe()) {
+            Cookie c = new Cookie("BPT_userName", u.getUserName());
             c.setMaxAge(7 * 24 * 60 * 60);
             response.addCookie(c);
-            c = new Cookie("displayName", u.getDisplayName());
+            c = new Cookie("BPT_displayName", u.getDisplayName());
             c.setMaxAge(7 * 24 * 60 * 60);
             response.addCookie(c);
         }

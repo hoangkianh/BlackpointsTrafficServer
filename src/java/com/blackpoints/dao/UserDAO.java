@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -95,7 +97,7 @@ public class UserDAO {
         }
         return u;
     }
-    
+
     public boolean addNewUser(User u) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
@@ -152,7 +154,7 @@ public class UserDAO {
         }
         return kq;
     }
-    
+
     public boolean deleteUser(int id) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
@@ -171,14 +173,19 @@ public class UserDAO {
         }
         return kq;
     }
-    
+
     public User login(String userName, String password) {
         User u = null;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
+
+        String findUserQuery = "SELECT * FROM user WHERE userName=? AND password=?";
+        String updateLoginDateQuery = "UPDATE user SET lastLogin=NOW() WHERE userID=?";
+
         try {
-            stm = conn.prepareStatement("SELECT * FROM blackpointstraffic_db.`user` WHERE userName=? AND password=?");
+            conn.setAutoCommit(false);
+            stm = conn.prepareStatement(findUserQuery);
             stm.setString(1, userName);
             stm.setString(2, password);
             rs = stm.executeQuery();
@@ -203,12 +210,25 @@ public class UserDAO {
                 if (updatedDateSQL != null) {
                     u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
                 }
+
+                stm = conn.prepareStatement(updateLoginDateQuery);
+                stm.setInt(1, u.getUserID());
+                stm.executeUpdate();
+
+                conn.commit();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
+            try {
+                if (!conn.getAutoCommit()) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            }
             DBUtil.closeAll(conn, stm, rs);
         }
         return u;
-    }    
+    }
 }
