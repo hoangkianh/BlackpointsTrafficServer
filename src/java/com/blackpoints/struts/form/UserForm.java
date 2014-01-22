@@ -21,6 +21,7 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String createdOnDate;
     private String updatedOnDate;
     private List<User> userList;
+    private int level;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -153,5 +154,13 @@ public class UserForm extends org.apache.struts.action.ActionForm {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

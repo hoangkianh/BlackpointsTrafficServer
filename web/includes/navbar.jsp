@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="navbar-wrapper">    
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -39,6 +40,11 @@
                                         </c:choose>
                                     </a>
                                 </li>
+                                <logic:notEqual name="LoginForm" property="level" value="3">
+                                    <li>
+                                        <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlpanel"/></a>
+                                    </li>
+                                </logic:notEqual>
                                 <li>
                                     <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
                                 </li>

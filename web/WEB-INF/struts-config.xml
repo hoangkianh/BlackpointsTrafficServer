@@ -20,7 +20,6 @@
     </global-exceptions>
 
     <global-forwards>
-        
     </global-forwards>
 
     <action-mappings>
@@ -30,8 +29,9 @@
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
-            <forward name="loginSuccess" path="/" redirect="true" />
-            <forward name="loginFailure" path="/pages/login.jsp" />
+            <forward name="normalUser_loginSuccess" path="/" redirect="true" />
+            <forward name="admin_loginSuccess" path="/admin.do" redirect="true" />
+            <forward name="loginFailure" path="/login.do" />
         </action>
         <action input="/" name="UserForm" path="/LogoutAction" scope="session" type="com.blackpoints.struts.action.LogoutAction">
             <forward name="logoutSuccess" path="/" redirect="true" />
@@ -40,6 +40,8 @@
         <action path="/login" forward="/pages/login.jsp" />
         <action path="/register" forward="/pages/register.jsp" />
         <action path="/viewMap" forward="/pages/map.jsp" />
+        <action path="/admin" forward="/admin/admin.jsp" />
+        <action path="/error" forward="/pages/error.jsp" />
         <action path="/home" forward="/" />
     </action-mappings>
     

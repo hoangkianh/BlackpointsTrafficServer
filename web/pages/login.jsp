@@ -5,7 +5,12 @@
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${not empty sessionScope.BPT_userName or not empty cookie.BPT_userName}">
-    <c:redirect url="/" />
+    <logic:notEqual name="LoginForm" property="level" value="3">
+        <c:redirect url="/admin.do" />
+    </logic:notEqual>
+    <logic:equal name="LoginForm" property="level" value="3">
+        <c:redirect url="/" />
+    </logic:equal>
 </c:if>
 
 <!DOCTYPE html>

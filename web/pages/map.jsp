@@ -2,6 +2,7 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:html lang="true">
@@ -49,9 +50,14 @@
                                                 </c:choose>
                                             </a>
                                         </li>
+                                        <logic:notEqual name="LoginForm" property="level" value="3">
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlpanel"/></a>
+                                            </li>
+                                        </logic:notEqual>
                                         <li>
                                             <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
-                                            </li>
+                                        </li>
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
@@ -99,13 +105,9 @@
                             <a class="btn" id="reset" href='#'>
                                 <i class="fa fa-repeat"></i> <bean:message key="map.reset"/>
                             </a>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="span 12">
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            <p>
+                                <bean:message key="map.login" />
+                            </p>
                         </div>                                
                     </div>
                     <div class="span8">

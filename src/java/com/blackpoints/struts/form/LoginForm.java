@@ -10,6 +10,7 @@ public class LoginForm extends org.apache.struts.action.ActionForm {
     private String password;
     private String error;
     private boolean rememberMe;
+    private int level;
 
     public String getUserName() {
         return userName;
@@ -41,5 +42,13 @@ public class LoginForm extends org.apache.struts.action.ActionForm {
 
     public void setRememberMe(boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

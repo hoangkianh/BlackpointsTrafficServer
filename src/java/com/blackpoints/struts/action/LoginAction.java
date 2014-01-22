@@ -1,7 +1,9 @@
 package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
+import com.blackpoints.classes.UserGroup;
 import com.blackpoints.dao.UserDAO;
+import com.blackpoints.dao.UserGroupDAO;
 import com.blackpoints.struts.form.LoginForm;
 import com.blackpoints.util.MD5Hashing;
 import java.util.Locale;
@@ -59,7 +61,10 @@ public class LoginAction extends org.apache.struts.action.Action {
             c.setMaxAge(7 * 24 * 60 * 60);
             response.addCookie(c);
         }
+        
+        UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
+        loginForm.setLevel(ug.getLevel());
 
-        return mapping.findForward("loginSuccess");
+        return ug.getLevel() == 3 ? mapping.findForward("normalUser_loginSuccess") : mapping.findForward("admin_loginSuccess");
     }
 }
