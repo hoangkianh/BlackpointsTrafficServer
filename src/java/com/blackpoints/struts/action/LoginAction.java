@@ -3,7 +3,6 @@ package com.blackpoints.struts.action;
 import com.blackpoints.classes.User;
 import com.blackpoints.dao.UserDAO;
 import com.blackpoints.struts.form.LoginForm;
-import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.util.MD5Hashing;
 import java.util.Locale;
 import javax.servlet.http.Cookie;

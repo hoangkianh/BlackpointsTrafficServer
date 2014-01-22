@@ -25,9 +25,8 @@
                                     </li>
                             </c:when>
                             <c:otherwise>
-                                <li>                                    
+                                <li>
                                     <a href="#">
-                                        <i class="fa fa-sign-out"></i>
                                         <c:choose>
                                             <c:when test="${not empty sessionScope.BPT_userName}">
                                                 ${sessionScope.BPT_displayName}
@@ -39,6 +38,9 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </a>
+                                </li>
+                                <li>
+                                    <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
                                 </li>
                             </c:otherwise>
                         </c:choose>

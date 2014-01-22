@@ -36,20 +36,22 @@
                                     </c:when>
                                     <c:otherwise>
                                         <li>
-                                            <a href="#login">
-                                                <i class="fa fa-sign-out"></i>
+                                            <a href="#">
                                                 <c:choose>
                                                     <c:when test="${not empty sessionScope.BPT_userName}">
                                                         ${sessionScope.BPT_displayName}
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:if test="${not empty cookie.BPT_userName}">
-                                                            ${cookie.BPT_displayName.value} 
+                                                            ${cookie.BPT_displayName.value}
                                                         </c:if>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </a>
                                         </li>
+                                        <li>
+                                            <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
+                                            </li>
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
@@ -102,6 +104,13 @@
                             <a class="btn" id="reset" href='#'>
                                 <i class="fa fa-repeat"></i> <bean:message key="map.reset"/>
                             </a>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="span 12">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>                                
                     </div>
                     <div class="span8">
