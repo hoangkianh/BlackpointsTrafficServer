@@ -70,11 +70,6 @@
                         <h1><i class="fa fa-question-circle" title="<bean:message key="map.intro.note"/>"></i></h1>
                         <div class="well">
                             <span><bean:message key="map.address"/></span>
-                            <small> 
-                                (<a id="find_me" href="#" title="<bean:message key="map.findme"/>">
-                                    <i class="fa fa-map-marker fa-2x"></i> <bean:message key="map.where"/>
-                                </a>)
-                            </small>
                             <p>
                                 <input id="search_address" placeholder="<bean:message key='map.enteraddress'/>" type="text" />
                             </p>

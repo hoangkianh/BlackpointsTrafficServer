@@ -39,8 +39,8 @@ var MapsLib = {
         MapsLib.doSearch();
     },
     doSearch: function() {
-
         MapsLib.clearSearch();
+
         MapsLib.address = $("#search_address").val();
         MapsLib.searchRadius = $("#search_radius").val();
 
@@ -74,6 +74,7 @@ var MapsLib = {
                         title: MapsLib.address,
                         animation: google.maps.Animation.DROP
                     });
+
                     var info = new google.maps.InfoWindow({
                         content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
                     });
@@ -100,9 +101,6 @@ var MapsLib = {
                     alert("We could not find your address: " + status);
                 }
             });
-        }
-        else {
-            MapsLib.submitSearch();
         }
     },
     submitSearch: function() {
