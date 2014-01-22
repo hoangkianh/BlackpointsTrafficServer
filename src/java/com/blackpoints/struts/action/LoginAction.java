@@ -48,7 +48,8 @@ public class LoginAction extends org.apache.struts.action.Action {
             loginForm.setError("<p>" + mr.getMessage(locale, "login.failure") + "</p>");
             return mapping.findForward("loginFailure");
         }
-
+        
+        loginForm.setError("");
         session.setAttribute("BPT_userName", u.getUserName());
         session.setAttribute("BPT_displayName", u.getDisplayName());
         session.setAttribute("BPT_userID", u.getUserID());
