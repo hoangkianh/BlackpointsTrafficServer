@@ -10,7 +10,7 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <i class="fa fa-bars"></i>
                 </a>
-                <h1 class="brand"><a href="#top"><bean:message key="navbar.weblogo"/></a></h1>
+                <h1 class="brand"><a href="#top"><bean:message key="navbar.webLogo"/></a></h1>
                 <nav class="pull-right nav-collapse collapse">
                     <ul id="menu-main" class="nav">                                
                         <li>
@@ -42,7 +42,7 @@
                                 </li>
                                 <logic:notEqual name="LoginForm" property="level" value="3">
                                     <li>
-                                        <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlpanel"/></a>
+                                        <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                     </li>
                                 </logic:notEqual>
                                 <li>

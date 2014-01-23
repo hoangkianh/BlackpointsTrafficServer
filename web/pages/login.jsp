@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/></title>
+        <title><bean:message key="welcome.title"/> - <bean:message key="login.header" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -24,7 +24,7 @@
     <body>
         <%-- ************* **** LOGIN FORM ***************** --%>
         <div class="modal">
-            <html:form action="/LoginAction" method="POST" styleClass="form-horizontal" styleId="login-form">
+            <html:form action="/LoginAction" method="POST" styleClass="form-horizontal my-form">
                 <div class="modal-header">
                     <h3><i class='fa fa-sign-in'></i> <bean:message key="login.header" /></h3>
                 </div>
@@ -38,12 +38,17 @@
                         </logic:notEmpty>
                     </div>
                     <div class="control-group">
-                        <input type="text" name="userName" placeholder="<bean:message key="login.userName" />"
-                               value="<bean:write name="LoginForm" property="userName" />" />
+                        <label class="control-label" for="userName"><bean:message key="register.userName" /></label>
+                        <div class="controls">
+                        <input type="text" id="userName" name="userName" placeholder="<bean:message key="login.userName" />"
+                               value="<bean:write name="LoginForm" property="userName" />"/>
+                        </div>
                     </div>
                     <div class="control-group">
-                        <input type="password" name="password" placeholder="<bean:message key="login.password" />"
-                               value="<bean:write name="LoginForm" property="password" />" />
+                        <label class="control-label" for="password"><bean:message key="register.userName" /></label>
+                        <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="<bean:message key="login.password" />" />
+                        </div>
                     </div>
                     <label class="checkbox">
                         <input type="checkbox" name="rememberMe" >
@@ -52,7 +57,7 @@
                     <a href="#" class="pull-right"><bean:message key="login.forgotpass"/></a>
                 </div>
                 <div class="modal-footer">
-                    <html:link action="register" styleClass="pull-left"><bean:message key="register" /></html:link>
+                    <html:link action="register" styleClass="pull-left"><bean:message key="login.registerLabel" /></html:link>
                     <input type="submit" class="btn btn-primary" value="<bean:message key="login.btnLogin" />"/>
                 </div>
             </html:form>

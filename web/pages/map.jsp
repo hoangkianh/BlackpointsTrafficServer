@@ -22,7 +22,7 @@
                             <i class="fa fa-bars"></i>
                         </a>
                         <h1 class="brand">
-                            <html:link action="/home"><bean:message key="navbar.weblogo"/></html:link>
+                            <html:link action="/home"><bean:message key="navbar.webLogo"/></html:link>
                             </h1>
                             <nav class="pull-right nav-collapse collapse">
                                 <ul id="menu-main" class="nav">                                
@@ -52,7 +52,7 @@
                                         </li>
                                         <logic:notEqual name="LoginForm" property="level" value="3">
                                             <li>
-                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlpanel"/></a>
+                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                             </li>
                                         </logic:notEqual>
                                         <li>
@@ -99,7 +99,7 @@
                                     </select>
                                 </label>
                             </p>
-                            <a class="btn" id="search" href="#">
+                            <a class="btn btn-primary" id="search" href="#">
                                 <i class="fa fa-search"></i> <bean:message key="map.search"/>
                             </a>
                             <a class="btn" id="reset" href='#'>

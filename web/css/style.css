@@ -583,7 +583,7 @@ footer p {
     display: inline-block;
     border: 0;
     text-transform: none;
-    background: #E95B37 !important; 
+    background: #F2BAAC !important; 
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -601,6 +601,11 @@ footer p {
 .navbar-inverse .btn-navbar {
     width: auto;
     height: auto;
+}
+
+.btn-primary {
+    color: #fff;
+    background: #E95B37 !important;     
 }
 
 /* ---------------------------------------------------------------------------------------------------------- 
@@ -833,7 +838,33 @@ footer p {
     /* Styles */
 }
 
-#login-form input[type=text], input[type=password] {
+.modal {
+    position: relative;
+    top: 50px;
+}
+
+.modal-body {
+    max-height: 550px;
+}
+
+.my-form input[type=text], input[type=password] {
     width: 90%;
     height: 25px;
+}
+
+.my-form textarea {
+    width: 90%;
+    height: 70px;
+    resize: none;
+}
+
+.my-form input[type=text].error, input[type=password].error, textarea.error {
+    border-color: #FF0000;
+    color: #FF0000;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.asterisk, .error {
+    color: #FF0000;
 }
