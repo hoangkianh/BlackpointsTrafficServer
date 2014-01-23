@@ -5,11 +5,6 @@
           "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
 
 <form-validation>
-
-<!--
-     This is a minimal Validator form file with a couple of examples.
--->
-
     <global>
 
         <!-- An example global constant
@@ -24,7 +19,7 @@
     <formset>
 
         <!-- An example form -->
-        <form name="logonForm">
+<!--        <form name="logonForm">
             <field
                 property="username"
                 depends="required">
@@ -39,20 +34,32 @@
                         <var-value>^[0-9a-zA-Z]*$</var-value>
                     </var>
             </field>
+        </form>-->
+        <form name="RegisterForm">
+            <field property="userName" depends="required, minlength, maxlength">
+                <arg name="required" key="register.userName" />
+                
+                <arg0 name="minlength" key="register.userName" />
+                <arg1 name="minlength" key="${var:minlength}" resource="false" />
+                
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
         </form>
-
     </formset>
 
     <!-- An example formset for another locale -->
     <formset language="fr">
 
-        <constant>
+<!--        <constant>
             <constant-name>postalCode</constant-name>
             <constant-value>^[0-9a-zA-Z]*$</constant-value>
-        </constant>
+        </constant>-->
 
         <!-- An example form -->
-        <form name="logonForm">
+<!--        <form name="logonForm">
             <field
                 property="username"
                 depends="required">
@@ -67,7 +74,7 @@
                         <var-value>^[0-9a-zA-Z]*$</var-value>
                     </var>
             </field>
-        </form>
+        </form>-->
 
    </formset>
 

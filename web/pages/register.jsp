@@ -105,12 +105,17 @@
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>        
         <script type="text/javascript">
+            $.validator.addMethod("userNameRegex", function(value, element, regex) {
+                return this.optional(element) || regex.test(value);
+            }, "<bean:message key="register.regexValidation" arg0="Tên đăng nhập" />");
+            
             $("#registerForm").validate({
                 rules: {
                     userName: {
                         required: true,
                         maxlength: 30,
-                        minlength: 6
+                        minlength: 6,
+                        userNameRegex: /^[a-zA-Z0-9_]*$/
                     },
                     displayName: {
                         required: true,
