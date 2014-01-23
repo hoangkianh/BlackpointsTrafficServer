@@ -11,10 +11,10 @@ import org.apache.struts.action.ActionMapping;
 public class RegisterForm extends org.apache.struts.action.ActionForm {
     
     private String userName;
-    private String password;
     private String displayName;
-    private String description;
     private String email;
+    private String password;
+    private String description;
     private String photo;
     private String error;
     
