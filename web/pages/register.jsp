@@ -108,14 +108,15 @@
             $.validator.addMethod("userNameRegex", function(value, element, regex) {
                 return this.optional(element) || regex.test(value);
             }, "<bean:message key="register.regexValidation" arg0="Tên đăng nhập" />");
-            
+
             $("#registerForm").validate({
                 rules: {
                     userName: {
                         required: true,
                         maxlength: 30,
                         minlength: 6,
-                        userNameRegex: /^[a-zA-Z0-9_]*$/
+                        userNameRegex: /^[a-zA-Z0-9_]*$/,
+                        remote: "CheckUserExistAction.do"
                     },
                     displayName: {
                         required: true,
@@ -124,7 +125,8 @@
                     },
                     email: {
                         required: true,
-                        email: true
+                        email: true,
+                        remote: "CheckEmailExistAction.do"
                     },
                     password: {
                         required: true,
@@ -139,7 +141,8 @@
                     userName: {
                         required: "<bean:message key="errors.required" arg0="Tên đăng nhập" />",
                         maxlength: "<bean:message key="errors.maxlength" arg0="Tên đăng nhập" arg1="30" />",
-                        minlength: "<bean:message key="errors.minlength" arg0="Tên đăng nhập" arg1="6" />"
+                        minlength: "<bean:message key="errors.minlength" arg0="Tên đăng nhập" arg1="6" />",
+                        remote: "<bean:message key="errors.isExist" arg0="Tên đăng nhập" />"
                     },
                     displayName: {
                         required: "<bean:message key="errors.required" arg0="Tên hiển thị" />",
@@ -148,7 +151,8 @@
                     },
                     email: {
                         required: "<bean:message key="errors.required" arg0="Email" />",
-                        email: "<bean:message key="errors.email" />"
+                        email: "<bean:message key="errors.email" />",
+                        remote: "<bean:message key="errors.isExist" arg0="Email" />"
                     },
                     password: {
                         required: "<bean:message key="errors.required" arg0="Mật khẩu" />",

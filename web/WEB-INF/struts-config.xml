@@ -40,6 +40,8 @@
             <forward name="registerSuccess" path="/" />
             <forward name="registerFailure" path="/pages/register.jsp" />
         </action>
+        <action input="/pages/register.jsp" name="RegisterForm" path="/CheckUserExistAction" scope="session" type="com.blackpoints.struts.action.CheckUserExistAction"/>
+        <action input="/pages/register.jsp" name="RegisterForm" path="/CheckEmailExistAction" scope="session" type="com.blackpoints.struts.action.CheckEmailExistAction" />
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
         <action path="/login" forward="/pages/login.jsp" />
         <action path="/register" forward="/pages/register.jsp" />

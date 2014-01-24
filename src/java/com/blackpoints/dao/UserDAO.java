@@ -238,4 +238,44 @@ public class UserDAO {
         }
         return u;
     }
+    
+    public boolean emailIsExist (String email) {
+        boolean isExist = false;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT email FROM user WHERE email = ?");
+            stm.setString(1, email);
+            rs = stm.executeQuery();
+            
+            isExist = rs.next();
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        
+        return isExist;
+    }
+    
+    public boolean userNameIsExist (String userName) {
+        boolean isExist = false;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT userName FROM user WHERE userName = ?");
+            stm.setString(1, userName);
+            rs = stm.executeQuery();
+            
+            isExist = rs.next();
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        
+        return isExist;
+    }
 }

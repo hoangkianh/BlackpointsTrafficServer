@@ -5,6 +5,8 @@
         <group>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/UserForm.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/register.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/UserDAO.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/CheckEmailExistAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/struts-config.xml</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/RegisterAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/validation.xml</file>
