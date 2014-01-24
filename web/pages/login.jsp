@@ -38,14 +38,14 @@
                         </logic:notEmpty>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="userName"><bean:message key="register.userName" /></label>
+                        <label class="control-label" for="userName"><bean:message key="login.userNameorEmail" /></label>
                         <div class="controls">
-                        <input type="text" id="userName" name="userName" placeholder="<bean:message key="login.userName" />"
+                        <input type="text" id="userName" name="userName" placeholder="<bean:message key="login.userNameorEmail" />"
                                value="<bean:write name="LoginForm" property="userName" />"/>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="password"><bean:message key="register.userName" /></label>
+                        <label class="control-label" for="password"><bean:message key="register.password" /></label>
                         <div class="controls">
                         <input type="password" id="password" name="password" placeholder="<bean:message key="login.password" />" />
                         </div>

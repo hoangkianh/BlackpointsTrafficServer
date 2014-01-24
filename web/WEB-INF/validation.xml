@@ -51,15 +51,15 @@
     </formset>
 
     <!-- An example formset for another locale -->
-    <formset language="fr">
+<!--    <formset language="fr">
 
-<!--        <constant>
+        <constant>
             <constant-name>postalCode</constant-name>
             <constant-value>^[0-9a-zA-Z]*$</constant-value>
-        </constant>-->
+        </constant>
 
-        <!-- An example form -->
-<!--        <form name="logonForm">
+         An example form 
+        <form name="logonForm">
             <field
                 property="username"
                 depends="required">
@@ -74,8 +74,8 @@
                         <var-value>^[0-9a-zA-Z]*$</var-value>
                     </var>
             </field>
-        </form>-->
+        </form>
 
-   </formset>
+   </formset>-->
 
 </form-validation>

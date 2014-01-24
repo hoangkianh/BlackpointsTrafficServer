@@ -179,6 +179,7 @@ public class UserDAO {
         ResultSet rs = null;
 
         String findUserQuery = "SELECT * FROM user WHERE userName=? AND password=?";
+        String findEmailQuery = "SELECT * FROM user WHERE email=? AND password=?";
         String updateLoginDateQuery = "UPDATE user SET lastLogin=NOW() WHERE userID=?";
 
         try {
@@ -187,6 +188,14 @@ public class UserDAO {
             stm.setString(1, userName);
             stm.setString(2, password);
             rs = stm.executeQuery();
+
+            if (!rs.next()) {
+                // find user by email
+                stm = conn.prepareStatement(findEmailQuery);
+                stm.setString(1, userName);
+                stm.setString(2, password);
+                rs = stm.executeQuery();
+            }
 
             if (rs.next()) {
                 u = new User();
