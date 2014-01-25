@@ -1,7 +1,10 @@
 package com.blackpoints.struts.action;
 
+import com.blackpoints.classes.User;
+import com.blackpoints.struts.form.RegisterForm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,6 +29,9 @@ public class RegisterAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        RegisterForm rf = (RegisterForm) form;
+        User u = new User();
+        BeanUtils.copyProperties(u, rf);
         
         return mapping.findForward("registerSuccess");
     }

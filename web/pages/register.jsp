@@ -30,12 +30,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert-holder">
-                        <logic:notEmpty name="RegisterForm" property="error">
-                            <div class="alert alert-block alert-error fade in">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <bean:write name="RegisterForm" property="error" filter="false" />                            
-                            </div>
-                        </logic:notEmpty>
+                        <div class="alert alert-block alert-holder fade in">
+                            <bean:message key="warning.javascript"/>
+                        </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="userName">
@@ -45,6 +42,7 @@
                         <div class="controls">
                             <input type="text" id="userName" name="userName" placeholder="<bean:message key="register.userName" />"
                                    value="<bean:write name="RegisterForm" property="userName" />" />
+                            <label for="userName" class="error"><html:errors property="userName" /></label>
                         </div>
                     </div>
                     <div class="control-group">
@@ -55,19 +53,18 @@
                         <div class="controls">
                             <input type="text" id="displayName" name="displayName" placeholder="<bean:message key="register.displayName" />"
                                    value="<bean:write name="RegisterForm" property="displayName" />" />
+                            <label for="displayName" class="error"><html:errors property="displayName" /></label>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="email">
-                            <font color="red">
-                            <html:errors/>
-                            </font>
                             <bean:message key="register.email" />
                             <span class="asterisk">*</span>
                         </label>
                         <div class="controls">
                             <input type="text" id="email" name="email" placeholder="<bean:message key="register.email" />"
                                    value="<bean:write name="RegisterForm" property="email" />" />
+                            <label for="email" class="error"><html:errors property="email" /></label>
                         </div>
                     </div>
                     <div class="control-group">
@@ -78,6 +75,7 @@
                         <div class="controls">
                             <input type="password" id="password" name="password" placeholder="<bean:message key="register.password" />"
                                    value="<bean:write name="RegisterForm" property="password" />" />
+                            <label for="password" class="error"><html:errors property="password" /></label>
                         </div>
                     </div>
                     <div class="control-group">
@@ -87,13 +85,15 @@
                         </label>
                         <div class="controls">
                             <input type="password" id="password2" name="password2" placeholder="<bean:message key="register.password2" />"
-                                   value="<bean:write name="RegisterForm" property="password" />" />
+                                   value="<bean:write name="RegisterForm" property="password2" />" />
+                            <label for="password2" class="error"><html:errors property="password2" /></label>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="description"><bean:message key="register.description" /></label>
                         <div class="controls">
                             <textarea id="description" name="description" placeholder="<bean:message key="register.description" />"><bean:write name="RegisterForm" property="description" /></textarea>
+                            <label for="description" class="error"><html:errors property="description" /></label>
                         </div>
                     </div>
                 </div>
@@ -108,9 +108,11 @@
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>        
         <script type="text/javascript">
+            $(".alert-holder").remove();
+            
             $.validator.addMethod("userNameRegex", function(value, element, regex) {
                 return this.optional(element) || regex.test(value);
-            }, "<bean:message key="register.regexValidation" arg0="Tên đăng nhập" />");
+            }, "<bean:message key="errors.userName" />");
 
             $("#registerForm").validate({
                 errorClass: "error",
@@ -127,7 +129,8 @@
                     $(element).parent().find("label[for=" + element.id + "]")
                             .removeClass(errorClass)
                             .addClass(validClass)
-                            .html("<i class='fa fa-check valid'></i>").css("display", "block");
+                            .html("<i class='fa fa-check valid'></i>")
+                            .css("display", "block");
                 },
                 rules: {
                     userName: {
@@ -154,6 +157,9 @@
                     },
                     password2: {
                         equalTo: "#password"
+                    },
+                    description: {
+                        maxlength: 200
                     }
                 },
                 messages: {
@@ -180,6 +186,9 @@
                     },
                     password2: {
                         equalTo: "<bean:message key="errors.equal" arg0="Mật khẩu" arg1="mật khẩu nhập lại" />"
+                    },
+                    description: {
+                        maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="200" />"
                     }
                 }
             });

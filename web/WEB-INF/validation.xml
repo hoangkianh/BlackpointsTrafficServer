@@ -5,6 +5,11 @@
           "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
 
 <form-validation>
+
+<!--
+     This is a minimal Validator form file with a couple of examples.
+-->
+
     <global>
 
         <!-- An example global constant
@@ -19,46 +24,6 @@
     <formset>
 
         <!-- An example form -->
-<!--        <form name="logonForm">
-            <field
-                property="username"
-                depends="required">
-                    <arg key="logonForm.username"/>
-            </field>
-            <field
-                property="password"
-                depends="required,mask">
-                    <arg key="logonForm.password"/>
-                    <var>
-                        <var-name>mask</var-name>
-                        <var-value>^[0-9a-zA-Z]*$</var-value>
-                    </var>
-            </field>
-        </form>-->
-        <form name="RegisterForm">
-            <field property="userName" depends="required, minlength, maxlength">
-                <arg name="required" key="register.userName" />
-                
-                <arg0 name="minlength" key="register.userName" />
-                <arg1 name="minlength" key="${var:minlength}" resource="false" />
-                
-                <var>
-                    <var-name>minlength</var-name>
-                    <var-value>6</var-value>
-                </var>
-            </field>
-        </form>
-    </formset>
-
-    <!-- An example formset for another locale -->
-<!--    <formset language="fr">
-
-        <constant>
-            <constant-name>postalCode</constant-name>
-            <constant-value>^[0-9a-zA-Z]*$</constant-value>
-        </constant>
-
-         An example form 
         <form name="logonForm">
             <field
                 property="username"
@@ -76,6 +41,34 @@
             </field>
         </form>
 
-   </formset>-->
+    </formset>
+
+    <!-- An example formset for another locale -->
+    <formset language="fr">
+
+        <constant>
+            <constant-name>postalCode</constant-name>
+            <constant-value>^[0-9a-zA-Z]*$</constant-value>
+        </constant>
+
+        <!-- An example form -->
+        <form name="logonForm">
+            <field
+                property="username"
+                depends="required">
+                    <arg key="logonForm.username"/>
+            </field>
+            <field
+                property="password"
+                depends="required,mask">
+                    <arg key="logonForm.password"/>
+                    <var>
+                        <var-name>mask</var-name>
+                        <var-value>^[0-9a-zA-Z]*$</var-value>
+                    </var>
+            </field>
+        </form>
+
+   </formset>
 
 </form-validation>

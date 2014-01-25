@@ -852,6 +852,11 @@ footer p {
     height: 25px;
 }
 
+.my-form ul li {
+    margin-left: 5%;
+    font-size: 14px;
+}
+
 .my-form textarea {
     width: 90%;
     height: 70px;
