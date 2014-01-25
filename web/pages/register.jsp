@@ -59,6 +59,9 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="email">
+                            <font color="red">
+                            <html:errors/>
+                            </font>
                             <bean:message key="register.email" />
                             <span class="asterisk">*</span>
                         </label>
@@ -110,6 +113,22 @@
             }, "<bean:message key="register.regexValidation" arg0="Tên đăng nhập" />");
 
             $("#registerForm").validate({
+                errorClass: "error",
+                validClass: "valid",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass(errorClass);
+                    $(element).parent().find("label[for=" + element.id + "]")
+                            .removeClass(validClass)
+                            .addClass(errorClass)
+                            .css("display", "block");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass(errorClass);
+                    $(element).parent().find("label[for=" + element.id + "]")
+                            .removeClass(errorClass)
+                            .addClass(validClass)
+                            .html("<i class='fa fa-check valid'></i>").css("display", "block");
+                },
                 rules: {
                     userName: {
                         required: true,

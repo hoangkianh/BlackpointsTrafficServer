@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/UserForm.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/register.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/UserDAO.java</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/CheckEmailExistAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/struts-config.xml</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/RegisterAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/validation.xml</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/RegisterForm.java</file>
         </group>
     </open-files>
 </project-private>

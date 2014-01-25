@@ -36,9 +36,9 @@
         <action input="/" name="UserForm" path="/LogoutAction" scope="session" type="com.blackpoints.struts.action.LogoutAction">
             <forward name="logoutSuccess" path="/" redirect="true" />
         </action>
-        <action input="/pages/register.jsp" validate="true" name="RegisterForm" path="/RegisterAction" scope="session" type="com.blackpoints.struts.action.RegisterAction">
+        <action input="/pages/register.jsp" name="RegisterForm" path="/RegisterAction" scope="session" type="com.blackpoints.struts.action.RegisterAction">
             <forward name="registerSuccess" path="/" />
-            <forward name="registerFailure" path="/pages/register.jsp" />
+            <!--<forward name="registerFailure" path="/pages/register.jsp" />-->
         </action>
         <action input="/pages/register.jsp" name="RegisterForm" path="/CheckUserExistAction" scope="session" type="com.blackpoints.struts.action.CheckUserExistAction"/>
         <action input="/pages/register.jsp" name="RegisterForm" path="/CheckEmailExistAction" scope="session" type="com.blackpoints.struts.action.CheckEmailExistAction" />

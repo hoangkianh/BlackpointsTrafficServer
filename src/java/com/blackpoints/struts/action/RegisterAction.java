@@ -12,9 +12,6 @@ import org.apache.struts.action.ActionMapping;
  */
 public class RegisterAction extends org.apache.struts.action.Action {
 
-    /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-
     /**
      * This is the action called from the Struts framework.
      *
@@ -30,6 +27,6 @@ public class RegisterAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         
-        return mapping.findForward(SUCCESS);
+        return mapping.findForward("registerSuccess");
     }
 }

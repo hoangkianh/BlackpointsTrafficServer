@@ -868,3 +868,7 @@ footer p {
 .asterisk, .error {
     color: #FF0000;
 }
+
+.valid {
+    color: #468847;
+}
