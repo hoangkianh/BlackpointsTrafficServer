@@ -196,6 +196,8 @@ public class UserDAO {
                 stm.setString(2, password);
                 rs = stm.executeQuery();
             }
+            
+            rs.beforeFirst();
 
             if (rs.next()) {
                 u = new User();
