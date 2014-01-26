@@ -70,7 +70,7 @@ public class RegisterForm extends org.apache.struts.action.ActionForm {
         }
 
         // validate confirm password
-        if (!password2.equals(password)) {
+        if (password2 != null && !password2.equals(password)) {
             err.add("password2", new ActionMessage("errors.equal", "Mật khẩu", "mật khẩu nhập lại"));
         }
 

@@ -42,6 +42,7 @@
                         <div class="controls">
                             <input type="text" id="userName" name="userName" placeholder="<bean:message key="register.userName" />"
                                    value="<bean:write name="RegisterForm" property="userName" />" />
+<!--                                   value="<bean:write name="RegisterForm" property="userName" />" onkeyup="checkUserExist()" />-->
                             <label for="userName" class="error"><html:errors property="userName" /></label>
                         </div>
                     </div>
@@ -109,10 +110,46 @@
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>        
         <script type="text/javascript">
             $(".alert-holder").remove();
-            
+
             $.validator.addMethod("userNameRegex", function(value, element, regex) {
                 return this.optional(element) || regex.test(value);
             }, "<bean:message key="errors.userName" />");
+
+            $.validator.addMethod("checkUserExist", function(value, element) {
+                var exist;
+                $.ajax({
+                    type: 'POST',
+                    url: "service/checkExist/checkUserExist/" + value,
+                    dataType: "text",
+                    async: false,
+                    success: function(data) {
+                        if (data === "true") {
+                            exist = true;
+                        } else {
+                            exist = false;
+                        }
+                    }
+                });
+                return this.optional(element) || exist;
+            }, "<bean:message key="errors.isExist" arg0="Tên đăng nhập" />");
+            
+            $.validator.addMethod("checkEmailExist", function(value, element) {
+                var exist;
+                $.ajax({
+                    type: 'POST',
+                    url: "service/checkExist/checkEmailExist/" + value,
+                    dataType: "text",
+                    async: false,
+                    success: function(data) {
+                        if (data === "true") {
+                            exist = true;
+                        } else {
+                            exist = false;
+                        }
+                    }
+                });
+                return this.optional(element) || exist;
+            }, "<bean:message key="errors.isExist" arg0="Email" />");
 
             $("#registerForm").validate({
                 errorClass: "error",
@@ -138,7 +175,7 @@
                         maxlength: 30,
                         minlength: 6,
                         userNameRegex: /^[a-zA-Z0-9_]*$/,
-                        remote: "CheckUserExistAction.do"
+                        checkUserExist: true
                     },
                     displayName: {
                         required: true,
@@ -148,7 +185,7 @@
                     email: {
                         required: true,
                         email: true,
-                        remote: "CheckEmailExistAction.do"
+                        checkEmailExist: true
                     },
                     password: {
                         required: true,
@@ -166,8 +203,7 @@
                     userName: {
                         required: "<bean:message key="errors.required" arg0="Tên đăng nhập" />",
                         maxlength: "<bean:message key="errors.maxlength" arg0="Tên đăng nhập" arg1="30" />",
-                        minlength: "<bean:message key="errors.minlength" arg0="Tên đăng nhập" arg1="6" />",
-                        remote: "<bean:message key="errors.isExist" arg0="Tên đăng nhập" />"
+                        minlength: "<bean:message key="errors.minlength" arg0="Tên đăng nhập" arg1="6" />"
                     },
                     displayName: {
                         required: "<bean:message key="errors.required" arg0="Tên hiển thị" />",
@@ -176,8 +212,7 @@
                     },
                     email: {
                         required: "<bean:message key="errors.required" arg0="Email" />",
-                        email: "<bean:message key="errors.email" />",
-                        remote: "<bean:message key="errors.isExist" arg0="Email" />"
+                        email: "<bean:message key="errors.email" />"
                     },
                     password: {
                         required: "<bean:message key="errors.required" arg0="Mật khẩu" />",
