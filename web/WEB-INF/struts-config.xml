@@ -37,17 +37,21 @@
             <forward name="logoutSuccess" path="/" redirect="true" />
         </action>
         <action input="/register.do" name="RegisterForm" path="/RegisterAction" scope="request" type="com.blackpoints.struts.action.RegisterAction">
-            <forward name="registerSuccess" path="/" redirect="true" />
-            <forward name="registerFailure" path="/pages/register.jsp" />
+            <forward name="registerSuccess" path="/success.do?s=1" />
+            <forward name="registerFailure" path="/failure.do?f=2" />
+            <forward name="sendingEmailFailure" path="/failure.do?f=1" redirect="true" />
         </action>
-        <action input="/pages/register.jsp" name="RegisterForm" path="/CheckUserExistAction" scope="session" type="com.blackpoints.struts.action.CheckUserExistAction"/>
-        <action input="/pages/register.jsp" name="RegisterForm" path="/CheckEmailExistAction" scope="session" type="com.blackpoints.struts.action.CheckEmailExistAction" />
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
         <action path="/login" forward="/pages/login.jsp" />
         <action path="/register" forward="/pages/register.jsp" />
-        <action path="/viewMap" forward="/pages/map.jsp" />
+        <action path="/activate" type="com.blackpoints.struts.action.ActivateAction">
+            <forward name="activateSuccess" path="/success.do?s=2" />
+            <forward name="activateFailure" path="/failure.do?f=3" />
+        </action>
+        <action path="/map" forward="/pages/map.jsp" />
         <action path="/admin" forward="/admin/admin.jsp" />
-        <action path="/error" forward="/pages/error.jsp" />
+        <action path="/success" forward="/pages/success.jsp" />
+        <action path="/failure" forward="/pages/failure.jsp" />
         <action path="/home" forward="/" />
     </action-mappings>
     

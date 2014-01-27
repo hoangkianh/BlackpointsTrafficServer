@@ -18,7 +18,10 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String photo;
     private String lastLogin;
     private int groupID;
+    private String salt;
+    private boolean isActivated;
     private String createdOnDate;
+    private String activatedOnDate;
     private String updatedOnDate;
     private List<User> userList;
     private int level;
@@ -162,5 +165,29 @@ public class UserForm extends org.apache.struts.action.ActionForm {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public boolean isIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    public String getActivatedOnDate() {
+        return activatedOnDate;
+    }
+
+    public void setActivatedOnDate(String activatedOnDate) {
+        this.activatedOnDate = activatedOnDate;
     }
 }

@@ -99,7 +99,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <html:link action="login" styleClass="pull-left"><bean:message key="register.loginLabel" /></html:link>
+                    <html:link action="login" styleClass="pull-left"><bean:message key="register.loginLabel" /></html:link><br/><br/>
+                    <html:link action="home" styleClass="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></html:link>
                     <input type="submit" class="btn btn-primary" value="<bean:message key="register.btnRegister" />"/>
                     <input type="reset" class="btn" value="<bean:message key="register.btnReset" />"/>
                 </div>

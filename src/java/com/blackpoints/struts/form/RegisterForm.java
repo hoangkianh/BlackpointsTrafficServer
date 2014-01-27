@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
-import static org.glassfish.jersey.internal.Errors.error;
 
 /**
  *

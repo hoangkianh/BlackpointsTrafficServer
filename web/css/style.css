@@ -207,7 +207,8 @@ em {
     border-color: #E95B37;
 }
 .navbar-wrapper {
-    overflow:hidden;/* No fixed height, will break collapsible nav */
+    overflow:hidden;/* No fixed height, will break collapsible nav */    
+    z-index: 1000;
 }
 #menu-main {
     margin-top: 1.125em;

@@ -15,7 +15,10 @@ public class User {
     private String photo;
     private String lastLogin;
     private int groupID;
+    private boolean activated;
+    private String salt;
     private String createdOnDate;
+    private String activatedOnDate;
     private String updatedOnDate;
 
     public int getUserID() {
@@ -106,4 +109,27 @@ public class User {
         this.updatedOnDate = updatedOnDate;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getActivatedOnDate() {
+        return activatedOnDate;
+    }
+
+    public void setActivatedOnDate(String activatedOnDate) {
+        this.activatedOnDate = activatedOnDate;
+    }
 }

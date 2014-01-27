@@ -26,7 +26,7 @@
                 <h1><bean:message key="map.title"/></h1>
                 <div class="row">
                     <div class="span12">
-                        <html:link action="viewMap">
+                        <html:link action="map">
                             <i class="fa fa-arrows-alt"></i>
                             <bean:message key="map.largemap"/>
                         </html:link>
