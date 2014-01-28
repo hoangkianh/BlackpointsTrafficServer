@@ -56,9 +56,9 @@ public class RegisterAction extends org.apache.struts.action.Action {
         Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
         String from = mr.getMessage(locale, "emailconfig.from");
         String password = mr.getMessage(locale, "emailconfig.password");
-        String subject = mr.getMessage(locale, "emailconfig.subject");
-        StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.body", u.getDisplayName()));
-        body.append(mr.getMessage(locale, "emailconfig.link", u.getEmail(), u.getSalt()));
+        String subject = mr.getMessage(locale, "emailconfig.activate.subject");
+        StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.activate.body", u.getDisplayName()));
+        body.append(mr.getMessage(locale, "emailconfig.activate.link", u.getEmail(), u.getSalt()));
         body.append(mr.getMessage(locale, "emailconfig.help"));
         body.append(mr.getMessage(locale, "emailconfig.sign"));
         

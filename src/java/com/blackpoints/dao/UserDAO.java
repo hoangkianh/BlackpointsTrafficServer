@@ -63,14 +63,14 @@ public class UserDAO {
         return list;
     }
 
-    public User getUserByID(int id) {
+    public User getUserByEmail(String email) {
         User u = null;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM user WHERE userID=?");
-            stm.setInt(1, id);
+            stm = conn.prepareStatement("SELECT * FROM user WHERE email=?");
+            stm.setString(1, email);
             rs = stm.executeQuery();
 
             if (rs.next()) {
@@ -143,7 +143,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("UPDATE user SET userName=?, password=?, displayName=?"
-                    + ", description=?, email=?, photo=?, groupID=?, updatedOnDate=?"
+                    + ", description=?, email=?, photo=?, groupID=?, salt=?, updatedOnDate=NOW()"
                     + " WHERE userID=?");
             stm.setString(1, u.getUserName());
             stm.setString(2, u.getPassword());
@@ -152,7 +152,7 @@ public class UserDAO {
             stm.setString(5, u.getEmail());
             stm.setString(6, u.getPhoto());
             stm.setInt(7, u.getGroupID());
-            stm.setString(8, u.getUpdatedOnDate());
+            stm.setString(8, u.getSalt());
             stm.setInt(9, u.getUserID());
 
             if (stm.executeUpdate() > 0) {
@@ -166,41 +166,23 @@ public class UserDAO {
         return kq;
     }
 
-    public boolean activateUser(User u) {
+    public boolean activateUser(String email) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
-        ResultSet rs = null;
-        String selectQuery = "SELECT salt FROM user WHERE email=? AND isActivated=?";
-        String updateQuery = "UPDATE user SET isActivated=?, activatedOnDate=NOW() WHERE email=?";
+
         try {
-            conn.setAutoCommit(false);
-            stm = conn.prepareStatement(selectQuery);
-            stm.setString(1, u.getEmail());
-            stm.setBoolean(2, false);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                if (rs.getString("salt").equals(u.getSalt())) {
-                    stm = conn.prepareStatement(updateQuery);
-                    stm.setBoolean(1, true);
-                    stm.setString(2, u.getEmail());
+            stm = conn.prepareStatement("UPDATE user SET isActivated=?, activatedOnDate=NOW() WHERE email=?");
+            stm.setBoolean(1, true);
+            stm.setString(2, email);
 
-                    if (stm.executeUpdate() > 0) {
-                        kq = true;
-                    }
-                }
+            if (stm.executeUpdate() > 0) {
+                kq = true;
             }
-
-            conn.commit();
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
-            try {
-                conn.setAutoCommit(true);
-            } catch (SQLException ex) {
-                System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
-            }
-            DBUtil.closeAll(conn, stm, rs);
+            DBUtil.closeAll(conn, stm, null);
         }
         return kq;
     }

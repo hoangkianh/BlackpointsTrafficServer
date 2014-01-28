@@ -30,14 +30,19 @@ public class ActivateAction extends org.apache.struts.action.Action {
             throws Exception {
         String email = request.getParameter("e");
         String salt = request.getParameter("s");
-        User u = new User();
-        u.setEmail(email);
-        u.setSalt(salt);
-        
-        if (!new UserDAO().activateUser(u)) {
-            return mapping.findForward("activateFailure");            
+        UserDAO userDAO = new UserDAO();
+        User u = userDAO.getUserByEmail(email);
+
+        if (u != null) {
+            if (u.isActivated()) {
+                return mapping.findForward("activateRedirect");
+            }
+            
+            if (salt.equals(u.getSalt()) && userDAO.activateUser(email)) {
+                return mapping.findForward("activateSuccess");
+            }
         }
-        
-        return mapping.findForward("activateSuccess");
+
+        return mapping.findForward("activateFailure");
     }
 }

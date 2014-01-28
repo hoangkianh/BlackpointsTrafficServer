@@ -1,0 +1,105 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:if test="${not empty sessionScope.BPT_userName or not empty cookie.BPT_userName}">
+    <logic:notEqual name="LoginForm" property="level" value="3">
+        <c:redirect url="/admin.do" />
+    </logic:notEqual>
+    <logic:equal name="LoginForm" property="level" value="3">
+        <c:redirect url="/" />
+    </logic:equal>
+</c:if>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><bean:message key="welcome.title"/> - <bean:message key="register.header" /></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@include file="../includes/includeCSS.jsp" %>
+    </head>
+    <body>
+        <div class="navbar-wrapper">
+            <div class="navbar navbar-inverse navbar-static-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <h1 class="brand"><html:link action="/home"><bean:message key="navbar.webLogo"/></html:link></h1>
+                            <nav class="pull-right nav-collapse collapse">
+                                <ul id="menu-main" class="nav">                                
+                                    <li>
+                                    <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
+                                    </li>
+                                    <li>
+                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="headerwrap">
+                <header class="clearfix">
+                    <div class="container">
+                        <div class="modal">
+                        <html:form action="/ReActivateAction" method="POST" styleClass="form-horizontal my-form" styleId="reactiveForm">
+                            <div class="modal-header">
+                                <bean:message key="reactivate.header" />
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <input type="text" id="email" name="email" placeholder="<bean:message key="reactivate.email" />"
+                                           value="<bean:write name="ReActivateForm" property="email" />" />
+                                    <label for="email" class="error"><html:errors property="email" /></label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <html:link action="home" styleClass="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></html:link>
+                                <input type="submit" class="btn btn-primary" value="<bean:message key="reactivate.btnReactivate" />"/>
+                            </div>
+                        </html:form>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/jquery.validate.min.js"></script>        
+        <script type="text/javascript">
+            $.validator.addMethod("checkEmailExist", function(value, element) {
+                var exist;
+                $.ajax({
+                    type: 'POST',
+                    url: "service/checkExist/checkEmailExist/" + value,
+                    dataType: "text",
+                    async: false,
+                    success: function(data) {
+                        if (data === "false") {
+                            exist = true;
+                    } else {
+                        exist = false;
+                    }
+                }
+            });
+            return this.optional(element) || exist;
+            }, "<bean:message key="errors.notExist" arg0="Email" />");
+
+            $("#reactiveForm").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true,
+                        checkEmailExist: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "<bean:message key="errors.required" arg0="Email" />",
+                        email: "<bean:message key="errors.email" />"
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

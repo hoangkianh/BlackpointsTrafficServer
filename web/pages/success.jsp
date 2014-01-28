@@ -16,25 +16,23 @@
                 <div class="navbar-inner">
                     <div class="container">
                         <h1 class="brand"><html:link action="/home"><bean:message key="navbar.webLogo"/></html:link></h1>
-                            <nav class="pull-right nav-collapse collapse">
-                                <ul id="menu-main" class="nav">                                
-                                    <li>
-                                    <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
-                                    </li>
-                                    <li>
-                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        <nav class="pull-right nav-collapse collapse">
+                            <ul id="menu-main" class="nav">                                
+                                <li><html:link action="/home" ><bean:message key="navbar.home"/></html:link></li>
+                                <li>
+                                <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-            <div id="headerwrap">
-                <header class="clearfix">
-                    <div class="container">
-                        <h1><i class="fa fa-check fa-2x"></i></h1>
-                        <c:if test="${param.s eq 1}">
+        </div>
+        <div id="headerwrap">
+            <header class="clearfix">
+                <div class="container">
+                    <h1><i class="fa fa-check fa-2x valid"></i></h1>
+                    <c:if test="${param.s eq 1}">
                         <h1><bean:message key="register.success" /></h1>
                         <h3><bean:message key="success.1" /></h3>
                     </c:if>

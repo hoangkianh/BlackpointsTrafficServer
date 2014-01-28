@@ -33,7 +33,7 @@
             <div id="headerwrap">
                 <header class="clearfix">
                     <div class="container">
-                        <h1><i class="fa fa-exclamation fa-2x"></i></h1>
+                        <h1><i class="fa fa-exclamation fa-2x error"></i></h1>
                         <c:if test="${param.f eq 1}">
                         <h1><bean:message key="register.sendingEmailFailure" /></h1>
                         <h3><bean:message key="failure.1" /></h3>
