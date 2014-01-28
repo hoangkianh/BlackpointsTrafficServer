@@ -63,7 +63,7 @@ public class RegisterAction extends org.apache.struts.action.Action {
         body.append(mr.getMessage(locale, "emailconfig.sign"));
         
         if (!SendingEmail.sendEmail(from, password, rf.getEmail(), subject, body.toString())) {
-            return mapping.findForward("sendingEmailFailure");
+            return mapping.findForward("sendingRegisterEmailFailure");
         }
         
         // insert to database

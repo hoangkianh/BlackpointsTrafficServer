@@ -35,18 +35,26 @@
                     <div class="container">
                         <h1><i class="fa fa-exclamation-triangle fa-2x error"></i></h1>
                         <c:if test="${param.f eq 1}">
-                        <h1><bean:message key="register.sendingEmailFailure" /></h1>
-                        <h3><bean:message key="failure.1" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 2}">
-                        <h1><bean:message key="register.failure" /></h1>
-                        <h3><bean:message key="failure.2" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 3}">
-                        <h1><bean:message key="activate.failure" /></h1>
-                        <h3><bean:message key="failure.3" /></h3>
-                    </c:if>
-                </div>
+                            <h1><bean:message key="register.sendingEmailFailure"/></h1>
+                            <h3><bean:message key="failure.1" /></h3>
+                        </c:if>
+                        <c:if test="${param.f eq 2}">
+                            <h1><bean:message key="register.failure" /></h1>
+                            <h3><bean:message key="failure.2" /></h3>
+                        </c:if>
+                        <c:if test="${param.f eq 3}">
+                            <h1><bean:message key="activate.failure" /></h1>
+                            <h3><bean:message key="failure.3" /></h3>
+                        </c:if>
+                        <c:if test="${param.f eq 4}">
+                            <h1><bean:message key="reactivate.failure" /></h1>
+                            <h3><bean:message key="failure.4" /></h3>
+                        </c:if>
+                        <c:if test="${param.f eq 5}">
+                            <h1><bean:message key="forgotpass.failure" /></h1>
+                            <h3><bean:message key="failure.5" /></h3>
+                        </c:if>
+                    </div>
             </header>
         </div>
     </body>

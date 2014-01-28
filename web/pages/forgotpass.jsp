@@ -43,20 +43,20 @@
                 <header class="clearfix">
                     <div class="container">
                         <div class="modal">
-                        <html:form action="/ReActivateAction" method="POST" styleClass="form-horizontal my-form" styleId="reactiveForm">
+                        <html:form action="/ForgotPassAction" method="POST" styleClass="form-horizontal my-form" styleId="forgotpassForm">
                             <div class="modal-header">
-                                <bean:message key="reactivate.header" />
+                                <bean:message key="forgotpass.header" />
                             </div>
                             <div class="modal-body">
                                 <div class="control-group">
-                                    <input type="text" id="email" name="email" placeholder="<bean:message key="reactivate.email" />"
+                                    <input type="text" id="email" name="email" placeholder="<bean:message key="forgotpass.email" />"
                                            value="<bean:write name="ReActivateForm" property="email" />" />
                                     <label for="email" class="error"><html:errors property="email" /></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <html:link action="home" styleClass="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></html:link>
-                                <input type="submit" class="btn btn-primary" value="<bean:message key="reactivate.btnSend" />"/>
+                                <input type="submit" class="btn btn-primary" value="<bean:message key="forgotpass.btnSend" />"/>
                             </div>
                         </html:form>
                     </div>
@@ -85,7 +85,7 @@
             return this.optional(element) || exist;
             }, "<bean:message key="errors.notExist" arg0="Email" />");
 
-            $("#reactiveForm").validate({
+            $("#forgotpassForm").validate({
                 rules: {
                     email: {
                         required: true,

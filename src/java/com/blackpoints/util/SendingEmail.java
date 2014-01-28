@@ -39,10 +39,11 @@ public class SendingEmail {
                     });
             
             MimeMessage msg = new MimeMessage(session);
+            msg.setContent("", to);
             msg.setFrom(new InternetAddress(from));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             msg.setSubject(subject, "utf-8");
-            msg.setText(body, "utf-8");
+            msg.setContent(body, "text/html; charset=utf-8");
             
             // send email
             Transport.send(msg);

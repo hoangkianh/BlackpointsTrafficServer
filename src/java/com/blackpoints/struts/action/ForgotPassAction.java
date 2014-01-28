@@ -2,13 +2,12 @@ package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
 import com.blackpoints.dao.UserDAO;
-import com.blackpoints.struts.form.ReActivateForm;
+import com.blackpoints.struts.form.ForgotPassForm;
 import com.blackpoints.util.MD5Hashing;
 import com.blackpoints.util.SendingEmail;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.security.SecureRandom;
 import java.util.Locale;
+import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,8 +21,7 @@ import org.apache.struts.util.MessageResources;
  *
  * @author HKA
  */
-public class ReActivateAction extends org.apache.struts.action.Action {
-
+public class ForgotPassAction extends org.apache.struts.action.Action {
     /**
      * This is the action called from the Struts framework.
      *
@@ -38,18 +36,21 @@ public class ReActivateAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ReActivateForm reActivateForm = (ReActivateForm) form;
+        ForgotPassForm forgotPassForm = (ForgotPassForm) form;
         UserDAO userDAO = new UserDAO();
-        User u = userDAO.getUserByEmail(reActivateForm.getEmail());
-
+        User u = userDAO.getUserByEmail(forgotPassForm.getEmail());
+        
         if (u != null) {
-            if (u.isActivated()) {
-                return mapping.findForward("activateRedirect");
+            // generate random password
+            Random random = new SecureRandom();
+            char[] charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".toCharArray();
+            char[] result = new char[10];
+            for (int i = 0; i < 10; i++) {
+                int idx = random.nextInt(charset.length);
+                result[i] = charset[idx];
             }
-            
-            // set new salt
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            u.setSalt(MD5Hashing.encryptPassword(dateFormat.format(new Date())));
+            String newPassword = new String(result);
+            u.setPassword(MD5Hashing.encryptPassword(newPassword));
             
             // send reactive email
             HttpSession session = request.getSession(true);
@@ -57,20 +58,21 @@ public class ReActivateAction extends org.apache.struts.action.Action {
             Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
             String from = mr.getMessage(locale, "emailconfig.from");
             String password = mr.getMessage(locale, "emailconfig.password");
-            String subject = mr.getMessage(locale, "emailconfig.reactivate.subject");
-            StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.reactivate.body", u.getDisplayName(), u.getUserName()));
-            body.append(mr.getMessage(locale, "emailconfig.reactivate.link", u.getEmail(), u.getSalt()));
+            String subject = mr.getMessage(locale, "emailconfig.forgotpass.subject");
+            StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.forgotpass.body", u.getDisplayName(), newPassword));
+            body.append(mr.getMessage(locale, "emailconfig.forgotpass.link", u.getEmail(), u.getSalt()));
             body.append(mr.getMessage(locale, "emailconfig.help"));
             body.append(mr.getMessage(locale, "emailconfig.sign"));
 
-            if (!SendingEmail.sendEmail(from, password, reActivateForm.getEmail(), subject, body.toString())) {
+            if (!SendingEmail.sendEmail(from, password, forgotPassForm.getEmail(), subject, body.toString())) {
                 return mapping.findForward("sendingEmailFailure");
             }
             
             if (userDAO.updateUser(u)) {
-                return mapping.findForward("reactivateSuccess");                
+                return mapping.findForward("forgotPassSuccess");                
             }
         }
-        return mapping.findForward("reactivateFailure");
+        
+        return mapping.findForward("forgotPassFailure");
     }
 }

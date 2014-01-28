@@ -54,7 +54,7 @@
                         <input type="checkbox" name="rememberMe" >
                         <bean:message key="login.remember" />
                     </label>
-                    <a href="#" class="pull-right"><bean:message key="login.forgotpass"/></a>
+                    <a href="forgotpass.do" class="pull-right"><bean:message key="login.forgotpass"/></a>
                 </div>
                 <div class="modal-footer">
                     <html:link action="register" styleClass="pull-left"><bean:message key="login.registerLabel" /></html:link><br/><br/>

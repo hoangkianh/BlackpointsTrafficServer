@@ -5,6 +5,7 @@
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 <struts-config>
     <form-beans>
+        <form-bean name="ForgotPassForm" type="com.blackpoints.struts.form.ForgotPassForm"/>
         <form-bean name="ReActivateForm" type="com.blackpoints.struts.form.ReActivateForm"/>
         <form-bean name="LoginForm" type="com.blackpoints.struts.form.LoginForm"/>
         <form-bean name="RegisterForm" type="com.blackpoints.struts.form.RegisterForm"/>
@@ -40,7 +41,7 @@
         <action input="/register.do" name="RegisterForm" path="/RegisterAction" scope="request" type="com.blackpoints.struts.action.RegisterAction">
             <forward name="registerSuccess" path="/success.do?s=1" />
             <forward name="registerFailure" path="/failure.do?f=2" />
-            <forward name="sendingEmailFailure" path="/failure.do?f=1" redirect="true" />
+            <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
         <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
         <action path="/login" forward="/pages/login.jsp" />
@@ -49,12 +50,20 @@
             <forward name="activateRedirect" path="/" redirect="true" />
             <forward name="activateSuccess" path="/success.do?s=2" />
             <forward name="activateFailure" path="/failure.do?f=3" />
+            <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
         <action input="/reactivate.do" name="ReActivateForm" path="/ReActivateAction" scope="session" type="com.blackpoints.struts.action.ReActivateAction">
             <forward name="activateRedirect" path="/" redirect="true" />
-            <forward name="activateSuccess" path="/success.do?s=2" />
-            <forward name="activateFailure" path="/failure.do?f=3" />
+            <forward name="reactivateSuccess" path="/success.do?s=3" />
+            <forward name="reactivateFailure" path="/failure.do?f=4" />
+            <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
+        <action input="/forgotpass.do" name="ForgotPassForm" path="/ForgotPassAction" scope="session" type="com.blackpoints.struts.action.ForgotPassAction">
+            <forward name="forgotPassSuccess" path="/success.do?s=4" />
+            <forward name="forgotPassFailure" path="/failure.do?f=5" />
+            <forward name="sendingEmailFailure" path="/failure.do?f=1" />
+        </action>
+        <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
         <action path="/map" forward="/pages/map.jsp" />
         <action path="/admin" forward="/admin/admin.jsp" />

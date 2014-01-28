@@ -40,6 +40,14 @@
                         <h1><bean:message key="activate.success" /></h1>
                         <h3><bean:message key="success.2" /></h3>
                     </c:if>
+                    <c:if test="${param.s eq 3}">
+                        <h1><bean:message key="reactivate.success" /></h1>
+                        <h3><bean:message key="success.3" /></h3>
+                    </c:if>
+                    <c:if test="${param.s eq 4}">
+                        <h1><bean:message key="forgotpass.success" /></h1>
+                        <h3><bean:message key="success.4" /></h3>
+                    </c:if>
                 </div>
             </header>
         </div>

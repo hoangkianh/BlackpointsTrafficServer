@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/register.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/success.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/ActivateAction.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/forgotpass.jsp</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/UserDAO.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/struts-config.xml</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/RegisterAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/failure.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/RegisterForm.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/map.jsp</file>
         </group>
     </open-files>
 </project-private>
