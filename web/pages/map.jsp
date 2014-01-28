@@ -57,7 +57,7 @@
                                         </logic:notEqual>
                                         <li>
                                             <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
-                                        </li>
+                                            </li>
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
@@ -77,7 +77,7 @@
                         <div class="well">
                             <span><bean:message key="map.address"/></span>
                             <p>
-                                <input id="search_address" placeholder="<bean:message key='map.enteraddress'/>" type="text" />
+                                <input id="search_address" placeholder="<bean:message key='map.enterAddress'/>" type="text" />
                             </p>
                             <p>
                                 <label>
@@ -106,7 +106,14 @@
                                 <i class="fa fa-repeat"></i> <bean:message key="map.reset"/>
                             </a>
                             <p>
-                                <bean:message key="map.login" />
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.BPT_userName and empty cookie.BPT_userName}">
+                                        <bean:message key="map.login" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <bean:message key="map.addNewPOI" />
+                                    </c:otherwise>
+                                </c:choose>
                             </p>
                         </div>                                
                     </div>
