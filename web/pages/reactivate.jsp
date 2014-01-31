@@ -2,19 +2,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${not empty sessionScope.BPT_userName or not empty cookie.BPT_userName}">
-    <logic:notEqual name="LoginForm" property="level" value="3">
-        <c:redirect url="/admin.do" />
-    </logic:notEqual>
-    <logic:equal name="LoginForm" property="level" value="3">
-        <c:redirect url="/" />
-    </logic:equal>
-</c:if>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/> - <bean:message key="register.header" /></title>
+        <title><bean:message key="welcome.title"/> - <bean:message key="reactivate.header" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -30,27 +24,63 @@
                                     <li>
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
-                                    <li>
-                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
+                                        <li>
+                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                            </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <a href="#">
+                                                <c:choose>
+                                                    <c:when test="${not empty sessionScope.blackpoints}">
+                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:if test="${not empty cookie.blackpoints}">
+                                                            <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                ${userStr[2]}
+                                            </a>
+                                        </li>
+                                        <c:if test="${userStr[3] ne 3}">
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                            </li>
+                                        </c:if>
+                                        <li>
+                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
+                                            </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-            <div id="headerwrap">
-                <header class="clearfix">
-                    <div class="container">
-                        <div class="modal">
+        </div>
+        <div id="headerwrap">
+            <header class="clearfix">
+                <div class="container">
+                    <div class="modal">
                         <html:form action="/ReActivateAction" method="POST" styleClass="form-horizontal my-form" styleId="reactiveForm">
                             <div class="modal-header">
                                 <bean:message key="reactivate.header" />
                             </div>
                             <div class="modal-body">
                                 <div class="control-group">
-                                    <input type="text" id="email" name="email" placeholder="<bean:message key="reactivate.email" />"
-                                           value="<bean:write name="ReActivateForm" property="email" />" />
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
+                                            <input type="text" id="email" name="email" placeholder="<bean:message key="reactivate.email" />" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <html:hidden name="ReActivateAction" property="email" value="${userStr[4]}" />
+                                            <input type="text" id="email" name="email" value="${userStr[4]}" disabled />
+                                        </c:otherwise>
+                                    </c:choose>                                    
                                     <label for="email" class="error"><html:errors property="email" /></label>
                                 </div>
                             </div>
@@ -77,12 +107,12 @@
                     success: function(data) {
                         if (data === "false") {
                             exist = true;
-                    } else {
-                        exist = false;
+                        } else {
+                            exist = false;
+                        }
                     }
-                }
-            });
-            return this.optional(element) || exist;
+                });
+                return this.optional(element) || exist;
             }, "<bean:message key="errors.notExist" arg0="Email" />");
 
             $("#reactiveForm").validate({

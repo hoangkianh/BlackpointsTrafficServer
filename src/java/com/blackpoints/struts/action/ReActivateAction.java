@@ -43,9 +43,6 @@ public class ReActivateAction extends org.apache.struts.action.Action {
         User u = userDAO.getUserByEmail(reActivateForm.getEmail());
 
         if (u != null) {
-            if (u.isActivated()) {
-                return mapping.findForward("activateRedirect");
-            }
             
             // set new salt
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

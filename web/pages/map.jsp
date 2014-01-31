@@ -3,7 +3,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html:html lang="true">
     <!DOCTYPE HTML>
@@ -30,33 +31,32 @@
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
                                 <c:choose>
-                                    <c:when test="${empty sessionScope.BPT_userName and empty cookie.BPT_userName}">
+                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
                                         <li>
                                             <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                            </li>
+                                        </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>
                                             <a href="#">
                                                 <c:choose>
-                                                    <c:when test="${not empty sessionScope.BPT_userName}">
-                                                        ${sessionScope.BPT_displayName}
+                                                    <c:when test="${not empty sessionScope.blackpoints}">
+                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        <c:if test="${not empty cookie.BPT_userName}">
-                                                            ${cookie.BPT_displayName.value}
-                                                        </c:if>
+                                                    <c:otherwise>                                                        
+                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
                                                     </c:otherwise>
                                                 </c:choose>
+                                                ${userStr[2]}
                                             </a>
                                         </li>
-                                        <logic:notEqual name="LoginForm" property="level" value="3">
+                                        <c:if test="${userStr[3] ne 3}">
                                             <li>
                                                 <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                             </li>
-                                        </logic:notEqual>
+                                        </c:if>
                                         <li>
-                                            <html:link action="LogoutAction"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
+                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
                                             </li>
                                     </c:otherwise>
                                 </c:choose>
@@ -107,7 +107,7 @@
                             </a>
                             <p>
                                 <c:choose>
-                                    <c:when test="${empty sessionScope.BPT_userName and empty cookie.BPT_userName}">
+                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
                                         <bean:message key="map.login" />
                                     </c:when>
                                     <c:otherwise>

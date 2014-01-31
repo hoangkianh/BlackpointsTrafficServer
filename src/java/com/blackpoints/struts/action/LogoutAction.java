@@ -29,26 +29,15 @@ public class LogoutAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         HttpSession session = request.getSession(true);
-        session.removeAttribute("BPT_userName");
-        session.removeAttribute("BPT_displayName");
-        session.removeAttribute("BPT_userID");
+        session.removeAttribute("blackpoints");
         
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("BPT_userName") || cookie.getName().equals("BPT_displayName")) {
+            if (cookie.getName().equals("blackpoints") || cookie.getName().equals("blackpoints")) {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
         }
-        
-//        if (loginForm.isRememberMe()) {
-//            Cookie c = new Cookie("BPT_userName", u.getUserName());
-//            c.setMaxAge(7 * 24 * 60 * 60);
-//            response.addCookie(c);
-//            c = new Cookie("BPT_displayName", u.getDisplayName());
-//            c.setMaxAge(7 * 24 * 60 * 60);
-//            response.addCookie(c);
-//        }
         
         return mapping.findForward("logoutSuccess");
     }

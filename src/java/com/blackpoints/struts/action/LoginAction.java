@@ -41,31 +41,27 @@ public class LoginAction extends org.apache.struts.action.Action {
         HttpSession session = request.getSession(true);
         MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
         Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
-
+        
         User u = new UserDAO().login(loginForm.getUserName(), MD5Hashing.encryptPassword(loginForm.getPassword()));
-
+        
         if (u == null) {
             loginForm.setError("<p>" + mr.getMessage(locale, "login.failure") + "</p>");
             return mapping.findForward("loginFailure");
         }
+        UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
+        loginForm.setLevel(ug.getLevel());
         
         loginForm.setError("");
-        session.setAttribute("BPT_userName", u.getUserName());
-        session.setAttribute("BPT_displayName", u.getDisplayName());
-        session.setAttribute("BPT_userID", u.getUserID());
+        session.setAttribute("blackpoints",
+                u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
 
         if (loginForm.isRememberMe()) {
-            Cookie c = new Cookie("BPT_userName", u.getUserName());
-            c.setMaxAge(7 * 24 * 60 * 60);
-            response.addCookie(c);
-            c = new Cookie("BPT_displayName", u.getDisplayName());
+            Cookie c = new Cookie("blackpoints",
+                    u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
             c.setMaxAge(7 * 24 * 60 * 60);
             response.addCookie(c);
         }
         
-        UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
-        loginForm.setLevel(ug.getLevel());
-
         return ug.getLevel() == 3 ? mapping.findForward("normalUser_loginSuccess") : mapping.findForward("admin_loginSuccess");
     }
 }

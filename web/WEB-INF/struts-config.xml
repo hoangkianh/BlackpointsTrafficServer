@@ -35,7 +35,7 @@
             <forward name="admin_loginSuccess" path="/admin.do" redirect="true" />
             <forward name="loginFailure" path="/login.do" />
         </action>
-        <action input="/" name="UserForm" path="/LogoutAction" scope="session" type="com.blackpoints.struts.action.LogoutAction">
+        <action input="/" name="UserForm" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction">
             <forward name="logoutSuccess" path="/" redirect="true" />
         </action>
         <action input="/register.do" name="RegisterForm" path="/RegisterAction" scope="request" type="com.blackpoints.struts.action.RegisterAction">
@@ -53,7 +53,6 @@
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
         <action input="/reactivate.do" name="ReActivateForm" path="/ReActivateAction" scope="session" type="com.blackpoints.struts.action.ReActivateAction">
-            <forward name="activateRedirect" path="/" redirect="true" />
             <forward name="reactivateSuccess" path="/success.do?s=3" />
             <forward name="reactivateFailure" path="/failure.do?f=4" />
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />

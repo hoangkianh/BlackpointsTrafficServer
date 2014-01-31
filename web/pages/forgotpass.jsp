@@ -3,18 +3,28 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${not empty sessionScope.BPT_userName or not empty cookie.BPT_userName}">
-    <logic:notEqual name="LoginForm" property="level" value="3">
-        <c:redirect url="/admin.do" />
-    </logic:notEqual>
-    <logic:equal name="LoginForm" property="level" value="3">
-        <c:redirect url="/" />
-    </logic:equal>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
+    <c:if test="${not empty sessionScope.blackpoints}">
+        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
+    </c:if>
+    <c:if test="${not empty cookie.blackpoints}">
+        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
+    </c:if>
+    <c:choose>
+            <c:when test="${userStr[3] ne 3}">
+                <c:redirect url="/admin.do" />                
+            </c:when>
+            <c:otherwise>
+                <c:redirect url="/" />                
+            </c:otherwise>
+    </c:choose>
 </c:if>
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/> - <bean:message key="register.header" /></title>
+        <title><bean:message key="welcome.title"/> - <bean:message key="forgotpass.header" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -30,9 +40,36 @@
                                     <li>
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
-                                    <li>
-                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                    </li>
+                                    <c:choose>
+                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
+                                        <li>
+                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                            </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <a href="#">
+                                                <c:choose>
+                                                    <c:when test="${not empty sessionScope.blackpoints}">
+                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
+                                                    </c:when>
+                                                    <c:otherwise>                                                        
+                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                ${userStr[2]}
+                                            </a>
+                                        </li>
+                                        <c:if test="${userStr[3] ne 3}">
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                            </li>
+                                        </c:if>
+                                        <li>
+                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
+                                            </li>
+                                    </c:otherwise>
+                                </c:choose>
                                 </ul>
                             </nav>
                         </div>
