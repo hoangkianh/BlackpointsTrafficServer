@@ -27,16 +27,17 @@ var MapsLib = {
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
         // reset
-        $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
+        MapsLib.reset();
+    },
+    reset: function() {
+      $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
         var loadRadius = MapsLib.convertToPlainString($.address.parameter('radius'));
         if (loadRadius !== "") {
             $("#search_radius").val(loadRadius);
         }
         else {
             $("#search_radius").val(MapsLib.searchRadius);
-        }
-        MapsLib.findMe();
-        MapsLib.doSearch();
+        }  
     },
     doSearch: function() {
         MapsLib.clearSearch();

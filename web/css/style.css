@@ -580,7 +580,7 @@ footer p {
     text-shadow: none;
     padding: 0.5em;
     letter-spacing: 0.05em;
-    margin: 0;
+    margin: 0 5px;
     display: inline-block;
     border: 0;
     text-transform: none;
@@ -877,4 +877,41 @@ footer p {
 
 .valid {
     color: #468847;
+}
+
+legend {
+    border-bottom: 1px solid #E95B37;
+}
+
+/****** RATING *******/
+#rating {
+    list-style:none;
+    float:right;
+    padding-top: 2%;
+    margin-bottom: 0;
+}
+
+#rating li {
+    display:inline;
+    float:left; 
+    margin-left: 1px;
+}
+
+#rating li a { 
+    display:block; 
+    width:45px;
+    height:15px;
+    background-color:#252E30; 
+    text-indent:-9999px;
+}
+
+#ratinginfo { 
+    float:right;
+    width:350px; 
+}
+
+#ratinginfo p {
+    font-size: 14px;
+    text-align:right;
+    margin:0;
 }

@@ -51,7 +51,6 @@
                         <div class="controls">
                             <input type="text" id="userName" name="userName" placeholder="<bean:message key="register.userName" />"
                                    value="<bean:write name="RegisterForm" property="userName" />" />
-<!--                                   value="<bean:write name="RegisterForm" property="userName" />" onkeyup="checkUserExist()" />-->
                             <label for="userName" class="error"><html:errors property="userName" /></label>
                         </div>
                     </div>

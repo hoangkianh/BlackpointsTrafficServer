@@ -62,6 +62,8 @@
             <forward name="forgotPassFailure" path="/failure.do?f=5" />
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
+        <action input="/pages/poi.jsp" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
+        <action path="/poi" forward="/pages/poi.jsp"/>
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
         <action path="/map" forward="/pages/map.jsp" />
