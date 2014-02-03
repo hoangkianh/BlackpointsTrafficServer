@@ -1,6 +1,8 @@
 package com.blackpoints.struts.form;
 
+import com.blackpoints.classes.Category;
 import com.blackpoints.classes.TempPOI;
+import com.blackpoints.dao.CategoryDAO;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +18,10 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
 
     private int id;
     private String name;
+    private String address;
     private String description;
     private String geometry;
+    private int categoryID;
     private double rating;
     private int count;
     private String createdOnDate;
@@ -25,6 +29,7 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
     private String updatedOnDate;
     private int updatedByUserID;
     private List<TempPOI> tempPOIList;
+    private List<Category> categoryList;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -60,6 +65,14 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
         this.name = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -74,6 +87,14 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
 
     public void setGeometry(String geometry) {
         this.geometry = geometry;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 
     public double getRating() {
@@ -130,5 +151,9 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
 
     public void setTempPOIList(List<TempPOI> tempPOIList) {
         this.tempPOIList = tempPOIList;
+    }
+
+    public List<Category> getCategoryList() {
+        return new CategoryDAO().getAllCategories();
     }
 }

@@ -2,7 +2,9 @@ package com.blackpoints.service;
 
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
+import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.POIDAO;
+import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.util.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -64,6 +66,29 @@ public class POIServices {
             }
         }
 
+        return new Gson().toJson(inRadiusList);
+    }
+    
+    @GET
+    @Path("getAllTempPOI/{lat}/{lng}/{radius}")
+    @Produces("application/json")
+    public String getAllTempPOI(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
+        List<TempPOI> tempPOIs = new TempPOIDAO().getAllTempPOIs();
+        List<TempPOI> inRadiusList = new ArrayList<TempPOI>();
+        GeoLocation centerGeo = new GeoLocation(lat, lng);
+        
+        for (TempPOI tempPOI : tempPOIs) {
+            List<GeoLocation> geoList = GeoUtil.toLatLng(tempPOI.getGeometry());
+            
+            for (GeoLocation geoLocation : geoList) {
+                
+                double distance = GeoUtil.caculateDistance(centerGeo, geoLocation);
+                if (distance <= radius) {
+                    inRadiusList.add(tempPOI);
+                    break;
+                }
+            }
+        }
         return new Gson().toJson(inRadiusList);
     }
 }

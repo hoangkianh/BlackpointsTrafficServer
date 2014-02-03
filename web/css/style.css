@@ -881,37 +881,34 @@ footer p {
 
 legend {
     border-bottom: 1px solid #E95B37;
-}
-
-/****** RATING *******/
-#rating {
-    list-style:none;
-    float:right;
-    padding-top: 2%;
     margin-bottom: 0;
 }
 
-#rating li {
-    display:inline;
-    float:left; 
+/****** RATING *******/
+#rating-div .br-widget {
+    height: 25px;
+    width: 50%;
+    margin-left: 50%;
+    padding-top: 10px;
+}
+
+#rating-div .br-widget a {
+    display: block;
+    width: 40px;
+    height: 10px;
+    float: left;
+    background-color: #e3e3e3;
     margin-left: 1px;
 }
 
-#rating li a { 
-    display:block; 
-    width:45px;
-    height:15px;
-    background-color:#252E30; 
-    text-indent:-9999px;
+#rating-div .br-widget a.br-active,
+#rating-div .br-widget a.br-selected {
+    background-color: #E95B37;
 }
 
-#ratinginfo { 
-    float:right;
-    width:350px; 
-}
-
-#ratinginfo p {
+#rating-div .br-widget .br-current-rating {
+    line-height: 1.1;
+    float: left;
+    color: #252E30;
     font-size: 14px;
-    text-align:right;
-    margin:0;
 }

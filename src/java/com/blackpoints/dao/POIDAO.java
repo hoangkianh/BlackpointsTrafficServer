@@ -22,7 +22,7 @@ public class POIDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String query = "SELECT id, name, names, description"
+        String query = "SELECT id, name, address, description"
                     + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
@@ -38,7 +38,7 @@ public class POIDAO {
                 POI p = new POI();
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
-                p.setNames(rs.getString("names"));
+                p.setAddress(rs.getString("address"));
                 p.setDescription(rs.getString("description"));
                 p.setGeometry(rs.getString("geometry"));
                 p.setCategoryID(rs.getInt("categoryID"));
@@ -85,7 +85,7 @@ public class POIDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT id, name, names, description"
+            stm = conn.prepareStatement("SELECT id, name, address, description"
                     + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
@@ -97,7 +97,7 @@ public class POIDAO {
                 p = new POI();
                 p.setId(rs.getInt("id"));
                 p.setName(rs.getString("name"));
-                p.setNames(rs.getString("names"));
+                p.setAddress(rs.getString("address"));
                 p.setDescription(rs.getString("description"));
                 p.setGeometry(rs.getString("geometry"));
                 p.setCategoryID(rs.getInt("categoryID"));
@@ -141,12 +141,12 @@ public class POIDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO poi (name, names, description"
+            stm = conn.prepareStatement("INSERT INTO poi (name, address, description"
                     + ", geometry, categoryID, rating, bbox, geoJson"
                     + ", isDeleted, createdOnDate, createdByUserID)"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             stm.setString(1, p.getName());
-            stm.setString(2, p.getNames());
+            stm.setString(2, p.getAddress());
             stm.setString(3, p.getDescription());
             stm.setString(4, p.getGeometry());
             stm.setInt(5, p.getCategoryID());
@@ -173,12 +173,12 @@ public class POIDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE poi SET name=?, names=?, description=?"
+            stm = conn.prepareStatement("UPDATE poi SET name=?, address=?, description=?"
                     + ", geometry=?, categoryID=?, rating=?, bbox=?, geoJson=?"
                     + ", isDeleted=?, updatedOnDate=?, updatedByUserID=?"
                     + " WHERE id=?");
             stm.setString(1, p.getName());
-            stm.setString(2, p.getNames());
+            stm.setString(2, p.getAddress());
             stm.setString(3, p.getDescription());
             stm.setString(4, p.getGeometry());
             stm.setInt(5, p.getCategoryID());

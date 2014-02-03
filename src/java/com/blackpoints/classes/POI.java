@@ -8,7 +8,7 @@ public class POI {
 
     private int id;
     private String name;
-    private String names;
+    private String address;
     private String description;
     private String geometry;
     private int categoryID;
@@ -41,12 +41,12 @@ public class POI {
         this.name = name;
     }
 
-    public String getNames() {
-        return names;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNames(String names) {
-        this.names = names;
+    public void setAddress(String names) {
+        this.address = names;
     }
 
     public String getDescription() {

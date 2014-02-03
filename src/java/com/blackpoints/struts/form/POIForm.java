@@ -17,7 +17,7 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     private int id;
     private String name;
-    private String names;
+    private String address;
     private String description;
     private String geometry;
     private int categoryID;
@@ -35,7 +35,6 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int restoreByUserID;
 
     private List<POI> poiList;
-    private List<Category> categoryList;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -74,12 +73,12 @@ public class POIForm extends org.apache.struts.action.ActionForm {
         this.name = name;
     }
 
-    public String getNames() {
-        return names;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNames(String names) {
-        this.names = names;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDescription() {
@@ -208,9 +207,5 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     public void setPoiList(List<POI> poiList) {
         this.poiList = poiList;
-    }
-
-    public List<Category> getCategoryList() {
-        return new CategoryDAO().getAllCategories();
     }
 }

@@ -23,8 +23,8 @@ public class TempPOIDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT id, name, description"
-                    + ", AsText(geometry), rating, count"
+            stm = conn.prepareStatement("SELECT id, name, address, description"
+                    + ", AsText(geometry) AS geometry, categoryID, rating, count"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID FROM tempPoi");
             rs = stm.executeQuery();
 
@@ -32,8 +32,10 @@ public class TempPOIDAO {
                 TempPOI tp = new TempPOI();
                 tp.setId(rs.getInt("id"));
                 tp.setName(rs.getString("name"));
+                tp.setAddress(rs.getString("address"));
                 tp.setDescription(rs.getString("description"));
                 tp.setGeometry(rs.getString("geometry"));
+                tp.setCategoryID(rs.getInt("categoryID"));
                 tp.setRating(rs.getDouble("rating"));
                 tp.setCount(rs.getInt("count"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
@@ -65,8 +67,8 @@ public class TempPOIDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT id, name, description"
-                    + ", AsText(geometry), rating, count"
+            stm = conn.prepareStatement("SELECT id, name, address, description"
+                    + ", AsText(geometry) AS geometry, categoryID, rating, count"
                     + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
                     + " FROM tempPoi WHERE id=?");
             stm.setInt(1, id);
@@ -76,8 +78,10 @@ public class TempPOIDAO {
                 tp = new TempPOI();
                 tp.setId(rs.getInt("id"));
                 tp.setName(rs.getString("name"));
+                tp.setAddress(rs.getString("address"));
                 tp.setDescription(rs.getString("description"));
                 tp.setGeometry(rs.getString("geometry"));
+                tp.setCategoryID(rs.getInt("categoryID"));
                 tp.setRating(rs.getDouble("rating"));
                 tp.setCount(rs.getInt("count"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
@@ -106,16 +110,18 @@ public class TempPOIDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO tempPoi (name, description"
-                    + ", geometry, rating, count, createdOnDate, createdByUserID)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?)");
+            stm = conn.prepareStatement("INSERT INTO tempPoi (name, address, description"
+                    + ", geometry, categoryID, rating, count, createdOnDate, createdByUserID)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
             stm.setString(1, tp.getName());
-            stm.setString(2, tp.getDescription());
-            stm.setString(3, tp.getGeometry());
-            stm.setDouble(4, tp.getRating());
-            stm.setInt(5, tp.getCount());
-            stm.setString(6, tp.getCreatedOnDate());
-            stm.setInt(7, tp.getCreatedByUserID());
+            stm.setString(2, tp.getAddress());
+            stm.setString(3, tp.getDescription());
+            stm.setString(4, tp.getGeometry());
+            stm.setInt(5, tp.getCategoryID());
+            stm.setDouble(6, tp.getRating());
+            stm.setInt(7, tp.getCount());
+            stm.setString(8, tp.getCreatedOnDate());
+            stm.setInt(9, tp.getCreatedByUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -133,17 +139,19 @@ public class TempPOIDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE tempPoi SET name=?, description=?"
-                    + ", geometry=?, rating=?, count=?, updatedOnDate=?, updatedByUserID=?"
+            stm = conn.prepareStatement("UPDATE tempPoi SET name=?, address=?, description=?"
+                    + ", geometry=?, categoryID=?, rating=?, count=?, updatedOnDate=?, updatedByUserID=?"
                     + " WHERE id=?");
             stm.setString(1, p.getName());
-            stm.setString(2, p.getDescription());
-            stm.setString(3, p.getGeometry());
-            stm.setDouble(4, p.getRating());
-            stm.setDouble(5, p.getCount());
-            stm.setString(6, p.getUpdatedOnDate());
-            stm.setInt(7, p.getUpdatedByUserID());
-            stm.setInt(8, p.getId());
+            stm.setString(2, p.getAddress());
+            stm.setString(3, p.getDescription());
+            stm.setString(4, p.getGeometry());
+            stm.setInt(5, p.getCategoryID());
+            stm.setDouble(6, p.getRating());
+            stm.setInt(7, p.getCount());
+            stm.setString(8, p.getUpdatedOnDate());
+            stm.setInt(9, p.getUpdatedByUserID());
+            stm.setInt(10, p.getId());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

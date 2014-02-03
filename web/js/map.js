@@ -4,7 +4,8 @@ var MapsLib = {
     map_centroid: new google.maps.LatLng(21.0333330, 105.8500000),
     searchRadius: 5000,
     defaultZoom: 16,
-    addrMarkerImage: "img/marker.png",
+    poiMarkerImage: "img/marker.png",
+    tempPOIMarkderImage: "img/temp-marker.png",
     TYPE_POINT: "POINT",
     TYPE_LINE: "LINESTRING",
     TYPE_POLYGON: "POLYGON",
@@ -30,23 +31,23 @@ var MapsLib = {
         MapsLib.reset();
     },
     reset: function() {
-      $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
+        $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
         var loadRadius = MapsLib.convertToPlainString($.address.parameter('radius'));
         if (loadRadius !== "") {
             $("#search_radius").val(loadRadius);
         }
         else {
             $("#search_radius").val(MapsLib.searchRadius);
-        }  
+        }
     },
-    doSearch: function() {
+    doSearch: function(withTempPOI) {
         MapsLib.clearSearch();
 
         MapsLib.address = $("#search_address").val();
-        MapsLib.searchRadius = $("#search_radius").val();
+        MapsLib.searchRadius = withTempPOI === true ? 5000 : $("#search_radius").val();
 
         if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
-            MapsLib.submitSearch();
+            MapsLib.submitSearch(withTempPOI);
             return;
         }
 
@@ -72,20 +73,21 @@ var MapsLib = {
                         position: MapsLib.currentPinpoint,
                         map: map,
                         draggable: true,
-                        title: MapsLib.address,
-                        animation: google.maps.Animation.DROP
+                        title: MapsLib.address
                     });
 
                     var info = new google.maps.InfoWindow({
                         content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
                     });
                     google.maps.event.addListener(MapsLib.addrMarker, 'drag', function() {
-                        MapsLib.searchRadiusCircle.setMap(null);
                         MapsLib.newPinpoint = MapsLib.addrMarker.getPosition();
-                        MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
+                        if (withTempPOI === false) {
+                            MapsLib.searchRadiusCircle.setMap(null);
+                            MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
+                        }
                     });
                     google.maps.event.addListener(MapsLib.addrMarker, 'dragend', function() {
-                        MapsLib.addrFromLatLng(MapsLib.newPinpoint);
+                        MapsLib.addrFromLatLng(MapsLib.newPinpoint, withTempPOI);
                     });
                     google.maps.event.addListener(MapsLib.addrMarker, 'click', function() {
                         if (info.getMap() === undefined || info.getMap() === null) {
@@ -95,18 +97,21 @@ var MapsLib = {
                         }
                     });
 
-                    MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
-                    MapsLib.submitSearch();
+                    if (withTempPOI === false) {
+                        MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
+                    }
+                    MapsLib.submitSearch(withTempPOI);
                 }
                 else {
-                    alert("We could not find your address: " + status);
+                    alert("Không tìm thấy địa chỉ của bạn: " + status);
                 }
             });
         }
     },
-    submitSearch: function() {
+    submitSearch: function(withTempPOI) {
         var lat;
         var lng;
+        var url;
         var radius = 5000;
 
         if (MapsLib.currentPinpoint !== undefined) {
@@ -120,6 +125,7 @@ var MapsLib = {
         if (MapsLib.searchRadius !== undefined) {
             radius = MapsLib.searchRadius;
         }
+
         $.ajax({
             type: "GET",
             url: "service/POI/getPOIinRadius/" + lat + "/" + lng + "/" + radius,
@@ -127,6 +133,7 @@ var MapsLib = {
             success: function(json) {
                 $.each(json, function(idx, obj) {
                     var name = obj.name;
+                    var address = obj.address;
                     var description = obj.description;
                     if (description === undefined) {
                         description = "Chưa có mô tả";
@@ -143,10 +150,42 @@ var MapsLib = {
                             type = MapsLib.TYPE_POLYGON;
                         }
                     }
-                    MapsLib.drawBlackpoint(type, parsed_geometry, name, description, rating, createdOnDate);
+                    MapsLib.drawPOI(false, type, parsed_geometry, name, address, description, rating, createdOnDate);
                 });
             }
         });
+
+        if (withTempPOI === true) {
+            $.ajax({
+                type: "GET",
+                url: "service/POI/getAllTempPOI/" + lat + "/" + lng + "/" + radius,
+                dataType: "json",
+                success: function(json) {
+                    $.each(json, function(idx, obj) {
+                        var name = obj.name;
+                        var address = obj.address;
+                        var description = obj.description;
+                        if (description === undefined) {
+                            description = "Chưa có mô tả";
+                        }
+                        var rating = obj.rating;
+                        var createdOnDate = obj.createdOnDate;
+                        var geometry = obj.geometry;
+                        var parsed_geometry = MapsLib.parseGeomString(geometry);
+                        var type = MapsLib.TYPE_POINT;
+                        if (geometry.indexOf(MapsLib.TYPE_LINE) !== -1) {
+                            type = MapsLib.TYPE_LINE;
+                        } else {
+                            if (geometry.indexOf(MapsLib.TYPE_POLYGON) !== -1) {
+                                type = MapsLib.TYPE_POLYGON;
+                            }
+                        }
+                        MapsLib.drawPOI(true, type, parsed_geometry, name, address, description, rating, createdOnDate);
+                    });
+                }
+            });
+        }
+
     },
     parseGeomString: function(geomString) {
         var i, j, lat, lng, tmp, tmpArr;
@@ -168,12 +207,14 @@ var MapsLib = {
         }
         return latLngArr;
     },
-    drawBlackpoint: function(type, geometry, name, description, rating, createdOnDate) {
+    drawPOI: function(drawTempPOI, type, geometry, name, address, description, rating, createdOnDate) {
         var content = "<div id='content'>" +
                 "<h2>" + name + "</h2>" +
-                "<p><ul><li><b>Mô tả: </b>" + description + "</li>" +
+                "<p><ul><li><b>Địa chỉ: </b>" + address + "</li>" +
+                "<li><b>Mô tả: </b>" + description + "</li>" +
                 "<li><b>Mức độ nguy hiểm: </b>" + rating + "</li>" +
                 "<li><b>Thêm vào từ ngày: </b>" + createdOnDate + "</li>" +
+// TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
                 "</ul></p>" +
                 "</div>";
         var info = new google.maps.InfoWindow({
@@ -183,12 +224,22 @@ var MapsLib = {
 
         switch (type) {
             case MapsLib.TYPE_POINT:
-                var marker = new google.maps.Marker({
-                    position: geometry[0][0],
-                    map: map,
-                    title: name,
-                    icon: MapsLib.addrMarkerImage
-                });
+                var marker;
+                if (drawTempPOI === false) {
+                    marker = new google.maps.Marker({
+                        position: geometry[0][0],
+                        map: map,
+                        title: name,
+                        icon: MapsLib.poiMarkerImage
+                    });
+                } else {
+                    marker = new google.maps.Marker({
+                        position: geometry[0][0],
+                        map: map,
+                        title: name,
+                        icon: MapsLib.tempPOIMarkderImage
+                    });
+                }
                 google.maps.event.addListener(marker, 'click', function() {
                     if (info.getMap() === undefined || info.getMap() === null) {
                         info.open(map, marker);
@@ -258,9 +309,9 @@ var MapsLib = {
     handleNoGeolocation: function(errorFlag) {
         var content;
         if (errorFlag) {
-            content = 'Error: The Geolocation service failed.';
+            content = 'Lỗi: Dịch vụ geolocation gặp lỗi.';
         } else {
-            content = 'Error: Your browser doesn\'t support geolocation.';
+            content = 'Lỗi: Trình duyệt của bạn không hỗ trợ geolocation.';
         }
 
         var options = {
@@ -277,7 +328,7 @@ var MapsLib = {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 foundLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                MapsLib.addrFromLatLng(foundLocation);
+                MapsLib.addrFromLatLng(foundLocation, false);
             }, function() {
                 MapsLib.handleNoGeolocation(true);
             });
@@ -286,15 +337,16 @@ var MapsLib = {
             MapsLib.handleNoGeolocation(false);
         }
     },
-    addrFromLatLng: function(latLngPoint) {
+    addrFromLatLng: function(latLngPoint, withTempPOI) {
         geocoder.geocode({'latLng': latLngPoint}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
                     $('#search_address').val(results[1].formatted_address);
-                    MapsLib.doSearch();
+
+                    MapsLib.doSearch(withTempPOI);
                 }
             } else {
-                alert("Geocoder failed due to: " + status);
+                alert("Không tìm thấy địa chi này: " + status);
             }
         });
     },
@@ -316,7 +368,6 @@ var MapsLib = {
     calculateCenter: function() {
         center = map.getCenter();
     },
-    //converts a slug or query string in to readable text
     convertToPlainString: function(text) {
         if (text === undefined)
             return '';

@@ -8,8 +8,10 @@ public class TempPOI {
 
     private int id;
     private String name;
+    private String address;
     private String description;
     private String geometry;
+    private int categoryID;
     private double rating;
     private int count;
     private String createdOnDate;
@@ -33,6 +35,14 @@ public class TempPOI {
         this.name = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -47,6 +57,14 @@ public class TempPOI {
 
     public void setGeometry(String geometry) {
         this.geometry = geometry;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 
     public double getRating() {
