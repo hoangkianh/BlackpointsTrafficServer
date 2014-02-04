@@ -17,6 +17,7 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
     private int categoryID;
     private String name;
     private String description;
+    private String image;
     private List<Category> categoryList;
 
 //    @Override
@@ -56,6 +57,14 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<Category> getCategoryList() {

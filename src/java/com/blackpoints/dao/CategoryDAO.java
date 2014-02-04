@@ -29,6 +29,7 @@ public class CategoryDAO {
                 c.setCategoryID(rs.getInt("categoryID"));
                 c.setName(rs.getString("name"));
                 c.setDescription(rs.getString("description"));
+                c.setImage(rs.getString("image"));
 
                 list.add(c);
             }
@@ -55,6 +56,7 @@ public class CategoryDAO {
                 c.setCategoryID(rs.getInt("categoryID"));
                 c.setName(rs.getString("name"));
                 c.setDescription(rs.getString("description"));
+                c.setImage(rs.getString("image"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
@@ -69,9 +71,10 @@ public class CategoryDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO category (name, description) VALUES (? ,?)");
+            stm = conn.prepareStatement("INSERT INTO category (name, description, image) VALUES (? ,?, ?)");
             stm.setString(1, c.getName());
             stm.setString(2, c.getDescription());
+            stm.setString(3, c.getImage());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -89,10 +92,11 @@ public class CategoryDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE category SET name=?, description=? WHERE categoryID=?");
+            stm = conn.prepareStatement("UPDATE category SET name=?, description=?, image=? WHERE categoryID=?");
             stm.setString(1, c.getName());
             stm.setString(2, c.getDescription());
-            stm.setInt(3, c.getCategoryID());
+            stm.setString(3, c.getImage());
+            stm.setInt(4, c.getCategoryID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

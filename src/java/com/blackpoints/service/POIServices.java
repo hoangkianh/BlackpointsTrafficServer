@@ -1,8 +1,10 @@
 package com.blackpoints.service;
 
+import com.blackpoints.classes.Category;
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
 import com.blackpoints.classes.TempPOI;
+import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.util.GeoUtil;
@@ -50,9 +52,12 @@ public class POIServices {
     public String getPOIinRadius(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
         List<POI> inRadiusList = new ArrayList<POI>();
         GeoLocation centerGeo = new GeoLocation(lat, lng);
+        CategoryDAO categoryDAO = new CategoryDAO();
 
         for (POI poi : pois) {
 
+            poi.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
+            
             List<GeoLocation> geoList = GeoUtil.toLatLng(poi.getGeometry());
 
             for (GeoLocation geoLocation : geoList) {

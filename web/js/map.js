@@ -4,14 +4,7 @@ var MapsLib = {
     map_centroid: new google.maps.LatLng(21.0333330, 105.8500000),
     searchRadius: 5000,
     defaultZoom: 16,
-    poiMarkerImage: "img/marker.png",
-    tempPOIMarkderImage: "img/temp-marker.png",
-    TYPE_POINT: "POINT",
-    TYPE_LINE: "LINESTRING",
-    TYPE_POLYGON: "POLYGON",
     markerArr: [],
-    polyLineArr: [],
-    polygonArr: [],
     initialize: function() {
         geocoder = new google.maps.Geocoder();
 
@@ -132,25 +125,7 @@ var MapsLib = {
             dataType: "json",
             success: function(json) {
                 $.each(json, function(idx, obj) {
-                    var name = obj.name;
-                    var address = obj.address;
-                    var description = obj.description;
-                    if (description === undefined) {
-                        description = "Chưa có mô tả";
-                    }
-                    var rating = obj.rating;
-                    var createdOnDate = obj.createdOnDate;
-                    var geometry = obj.geometry;
-                    var parsed_geometry = MapsLib.parseGeomString(geometry);
-                    var type = MapsLib.TYPE_POINT;
-                    if (geometry.indexOf(MapsLib.TYPE_LINE) !== -1) {
-                        type = MapsLib.TYPE_LINE;
-                    } else {
-                        if (geometry.indexOf(MapsLib.TYPE_POLYGON) !== -1) {
-                            type = MapsLib.TYPE_POLYGON;
-                        }
-                    }
-                    MapsLib.drawPOI(false, type, parsed_geometry, name, address, description, rating, createdOnDate);
+                    MapsLib.drawPOI(obj);
                 });
             }
         });
@@ -162,25 +137,7 @@ var MapsLib = {
                 dataType: "json",
                 success: function(json) {
                     $.each(json, function(idx, obj) {
-                        var name = obj.name;
-                        var address = obj.address;
-                        var description = obj.description;
-                        if (description === undefined) {
-                            description = "Chưa có mô tả";
-                        }
-                        var rating = obj.rating;
-                        var createdOnDate = obj.createdOnDate;
-                        var geometry = obj.geometry;
-                        var parsed_geometry = MapsLib.parseGeomString(geometry);
-                        var type = MapsLib.TYPE_POINT;
-                        if (geometry.indexOf(MapsLib.TYPE_LINE) !== -1) {
-                            type = MapsLib.TYPE_LINE;
-                        } else {
-                            if (geometry.indexOf(MapsLib.TYPE_POLYGON) !== -1) {
-                                type = MapsLib.TYPE_POLYGON;
-                            }
-                        }
-                        MapsLib.drawPOI(true, type, parsed_geometry, name, address, description, rating, createdOnDate);
+                        MapsLib.drawTempPOI(obj);
                     });
                 }
             });
@@ -207,13 +164,14 @@ var MapsLib = {
         }
         return latLngArr;
     },
-    drawPOI: function(drawTempPOI, type, geometry, name, address, description, rating, createdOnDate) {
+    drawPOI: function(obj) {
         var content = "<div id='content'>" +
-                "<h2>" + name + "</h2>" +
-                "<p><ul><li><b>Địa chỉ: </b>" + address + "</li>" +
-                "<li><b>Mô tả: </b>" + description + "</li>" +
-                "<li><b>Mức độ nguy hiểm: </b>" + rating + "</li>" +
-                "<li><b>Thêm vào từ ngày: </b>" + createdOnDate + "</li>" +
+                "<img src='" + obj.image + "' height='100' width='100'" +
+                "<h2>" + obj.name + "</h2>" +
+                "<p><ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
+                "<li><b>Mô tả: </b>" + obj.description + "</li>" +
+                "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
+                "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
 // TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
                 "</ul></p>" +
                 "</div>";
@@ -222,70 +180,53 @@ var MapsLib = {
             maxWidth: 400
         });
 
-        switch (type) {
-            case MapsLib.TYPE_POINT:
-                var marker;
-                if (drawTempPOI === false) {
-                    marker = new google.maps.Marker({
-                        position: geometry[0][0],
-                        map: map,
-                        title: name,
-                        icon: MapsLib.poiMarkerImage
-                    });
-                } else {
-                    marker = new google.maps.Marker({
-                        position: geometry[0][0],
-                        map: map,
-                        title: name,
-                        icon: MapsLib.tempPOIMarkderImage
-                    });
-                }
-                google.maps.event.addListener(marker, 'click', function() {
-                    if (info.getMap() === undefined || info.getMap() === null) {
-                        info.open(map, marker);
-                    }
-                    else {
-                        info.close();
-                    }
-                });
-                MapsLib.markerArr.push(marker);
-                break;
-            case MapsLib.TYPE_LINE:
-                var polyLine = new google.maps.Polyline({
-                    path: geometry[0],
-                    geodesic: true,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.5,
-                    strokeWeight: 8,
-                    map: map,
-                    title: name
-                });
-
-                google.maps.event.addListener(polyLine, 'click', function(event) {
-                    info.setPosition(event.latLng);
-                    info.open(map);
-                });
-                MapsLib.polyLineArr.push(polyLine);
-                break;
-            case MapsLib.TYPE_POLYGON:
-                var polygon = new google.maps.Polygon({
-                    paths: geometry,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.0,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35,
-                    map: map,
-                    title: name
-                });
-
-                google.maps.event.addListener(polygon, 'click', function(event) {
-                    info.setPosition(event.latLng);
-                    info.open(map);
-                });
-                MapsLib.polygonArr.push(polygon);
-                break;
-        }
+        var marker = new google.maps.Marker({
+            position: MapsLib.parseGeomString(obj.geometry)[0][0],
+            map: map,
+            title: obj.name,
+            icon: obj.markerIcon
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            if (info.getMap() === undefined || info.getMap() === null) {
+                info.open(map, marker);
+            }
+            else {
+                info.close();
+            }
+        });
+        MapsLib.markerArr.push(marker);
+    },
+    drawTempPOI: function(obj) {
+        var content = "<div id='content'>" +
+                "<img src='" + obj.image + "'" +
+                "<h2>" + obj.name + "</h2>" +
+                "<p>Địa điểm này chưa được xác nhận, </p>" +
+                "<p><ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
+                "<li><b>Mô tả: </b>" + obj.description + "</li>" +
+                "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
+                "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
+// TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
+                "</ul></p>" +
+                "</div>";
+        var info = new google.maps.InfoWindow({
+            content: content,
+            maxWidth: 400
+        });
+        var marker = new google.maps.Marker({
+            position: MapsLib.parseGeomString(obj.geometry)[0][0],
+            map: map,
+            title: obj.name,
+            icon: obj.markerIcon
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            if (info.getMap() === undefined || info.getMap() === null) {
+                info.open(map, marker);
+            }
+            else {
+                info.close();
+            }
+        });
+        MapsLib.markerArr.push(marker);
     },
     clearSearch: function() {
         MapsLib.oldaddress = MapsLib.address;
@@ -298,12 +239,6 @@ var MapsLib = {
         }
         for (i = 0; i < MapsLib.markerArr.length; i++) {
             MapsLib.markerArr[i].setMap(null);
-        }
-        for (i = 0; i < MapsLib.polyLineArr.length; i++) {
-            MapsLib.polyLineArr[i].setMap(null);
-        }
-        for (i = 0; i < MapsLib.polygonArr.length; i++) {
-            MapsLib.polygonArr[i].setMap(null);
         }
     },
     handleNoGeolocation: function(errorFlag) {

@@ -9,6 +9,8 @@ public class TempPOI {
     private int id;
     private String name;
     private String address;
+    private int city;
+    private int district;
     private String description;
     private String geometry;
     private int categoryID;
@@ -41,6 +43,22 @@ public class TempPOI {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public void setCity(int city) {
+        this.city = city;
+    }
+
+    public int getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(int district) {
+        this.district = district;
     }
 
     public String getDescription() {
