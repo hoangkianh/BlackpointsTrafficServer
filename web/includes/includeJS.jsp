@@ -3,8 +3,7 @@
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.localscroll-1.2.7-min.js"></script>        
 <script type="text/javascript" src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="js/jquery.address.js"></script>
 <script type="text/javascript" src="js/site.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=vi"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
 <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
 <script type="text/javascript" src="js/map.js"></script>

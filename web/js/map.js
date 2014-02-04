@@ -9,6 +9,7 @@ var MapsLib = {
         geocoder = new google.maps.Geocoder();
 
         var mapOptions = {
+            mapTypeControl: false,
             scaleControl: true,
             zoomControl: true,
             zoomControlOptions: {
@@ -21,17 +22,7 @@ var MapsLib = {
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
         // reset
-        MapsLib.reset();
-    },
-    reset: function() {
-        $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
-        var loadRadius = MapsLib.convertToPlainString($.address.parameter('radius'));
-        if (loadRadius !== "") {
-            $("#search_radius").val(loadRadius);
-        }
-        else {
-            $("#search_radius").val(MapsLib.searchRadius);
-        }
+        $("#search_radius").val(MapsLib.searchRadius);
     },
     doSearch: function(withTempPOI) {
         MapsLib.clearSearch();
@@ -57,8 +48,6 @@ var MapsLib = {
                         MapsLib.currentPinpoint = MapsLib.newPinpoint;
                     }
 
-                    $.address.parameter('address', encodeURIComponent(MapsLib.address));
-                    $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
                     map.setCenter(MapsLib.currentPinpoint);
                     map.setZoom(MapsLib.caculateZoom());
 
@@ -104,7 +93,6 @@ var MapsLib = {
     submitSearch: function(withTempPOI) {
         var lat;
         var lng;
-        var url;
         var radius = 5000;
 
         if (MapsLib.currentPinpoint !== undefined) {
@@ -142,7 +130,6 @@ var MapsLib = {
                 }
             });
         }
-
     },
     parseGeomString: function(geomString) {
         var i, j, lat, lng, tmp, tmpArr;

@@ -412,6 +412,7 @@ blockquote.mega .cite {
 #map-wrapper {
     padding: 2em 0;
 }
+
 /* Contact Form */
 #theme-form {
     position: relative;
@@ -911,4 +912,76 @@ legend {
     float: left;
     color: #252E30;
     font-size: 14px;
+}
+
+/* POI in radius div */
+#inRadius-div {
+    position: absolute;
+    top: 0px;
+    right: 40px;
+    background: #fff;
+    border: 1px solid #E95B37;
+    height: 100%;
+}
+
+#inRadius-div #header {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid #E95B37;
+}
+
+#inRadius-div #list {
+    margin: 0;
+    width: 280px;
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#list li {
+    float: left;
+    width: 245px;
+    border-bottom: 1px solid #eee;
+    padding: 8px 10px;
+}
+
+#list li .item-img {
+    float: left;
+    margin-right: 10px;
+    width: 40px;
+}
+#list li .item-content {
+    float: left;
+    width: 190px;
+}
+.item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-bottom: 3px;
+}
+
+.item-name:hover {
+    text-decoration: underline;
+}
+
+.item-add {
+    font-size: 11px;
+    color: #252E30;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-desc {
+    font-size: 11px;
+    color: #888;
+    padding-top: 3px;
+}
+
+/** District highlight **/
+.district-highlight {
+    padding-top: 2em;
 }

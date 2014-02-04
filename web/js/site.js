@@ -5,14 +5,14 @@ jQuery(document).ready(function($) {
     MapsLib.initialize();
     MapsLib.findMe();
     MapsLib.doSearch(false);
-    $("#search_address").geocomplete();
+    $("#search_address").geocomplete({
+        country: "vn",
+        markerOptions: {
+            draggable: true
+        }
+    });
     $('#search').click(function() {
         MapsLib.doSearch(false);
-    });
-    $('#reset').click(function() {
-        $.address.parameter('address', '');
-        MapsLib.initialize();
-        return false;
     });
     $('#search_radius').change(function() {
         MapsLib.doSearch(false);
