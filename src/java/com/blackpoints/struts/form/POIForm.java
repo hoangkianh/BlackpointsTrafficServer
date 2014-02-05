@@ -38,6 +38,7 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int restoreByUserID;
 
     private List<POI> poiList;
+    private List<Category> categoryList;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -234,5 +235,9 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     public void setPoiList(List<POI> poiList) {
         this.poiList = poiList;
+    }
+
+    public List<Category> getCategoryList() {
+        return new CategoryDAO().getAllCategories();
     }
 }

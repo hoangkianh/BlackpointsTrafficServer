@@ -31,7 +31,7 @@ var MapsLib = {
         MapsLib.searchRadius = withTempPOI === true ? 5000 : $("#search_radius").val();
 
         if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
-            MapsLib.submitSearch(withTempPOI);
+            MapsLib.getPOIInRadius(withTempPOI);
             return;
         }
 
@@ -82,7 +82,10 @@ var MapsLib = {
                     if (withTempPOI === false) {
                         MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
                     }
-                    MapsLib.submitSearch(withTempPOI);
+                    MapsLib.getPOIInRadius(withTempPOI);
+                    MapsLib.findCityAndDistrict(function(district, city) {
+                        MapsLib.getPOIInDistrict(district, city);
+                    });
                 }
                 else {
                     alert("Không tìm thấy địa chỉ của bạn: " + status);
@@ -90,7 +93,7 @@ var MapsLib = {
             });
         }
     },
-    submitSearch: function(withTempPOI) {
+    getPOIInRadius: function(withTempPOI) {
         var lat;
         var lng;
         var radius = 5000;
@@ -109,11 +112,15 @@ var MapsLib = {
 
         $.ajax({
             type: "GET",
-            url: "service/POI/getPOIinRadius/" + lat + "/" + lng + "/" + radius,
+            url: "service/POI/getPOIInRadius/" + lat + "/" + lng + "/" + radius,
             dataType: "json",
             success: function(json) {
+                // empty #list
+                $("#list").empty();
+
                 $.each(json, function(idx, obj) {
                     MapsLib.drawPOI(obj);
+                    MapsLib.appendPOIToDiv(obj);
                 });
             }
         });
@@ -121,7 +128,7 @@ var MapsLib = {
         if (withTempPOI === true) {
             $.ajax({
                 type: "GET",
-                url: "service/POI/getAllTempPOI/" + lat + "/" + lng + "/" + radius,
+                url: "service/POI/getTempPOIInRadius/" + lat + "/" + lng + "/" + radius,
                 dataType: "json",
                 success: function(json) {
                     $.each(json, function(idx, obj) {
@@ -130,6 +137,29 @@ var MapsLib = {
                 }
             });
         }
+    },
+    getPOIInDistrict: function(district, city) {
+        $.ajax({
+            type: "GET",
+            url: "service/POI/getPOIInDistrict/" + district + "/" + city,
+            dataType: "json",
+            success: function(json) {
+                $("#inDistrict").empty().append("Các điểm đen ở "+ district);
+
+                // empty div
+                $("#tabs").children("div").empty();
+
+                $.each(json, function(idx, obj) {
+                    MapsLib.appendPOIInDistrict(obj);
+                });
+                
+                $("#tabs").children("div").each(function(){
+                    if ($(this).is(":empty")) {
+                        $(this).html("<p>Chưa có dữ liệu</p>")
+                    }
+                });
+            }
+        });
     },
     parseGeomString: function(geomString) {
         var i, j, lat, lng, tmp, tmpArr;
@@ -259,6 +289,42 @@ var MapsLib = {
             MapsLib.handleNoGeolocation(false);
         }
     },
+    findCityAndDistrict: function(callback) {
+        var district = "";
+        var city = "";
+        geocoder.geocode({'latLng': MapsLib.currentPinpoint}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    for (i = 0; i < results[1].address_components.length; i++) {
+                        if (results[1].address_components[i].types[0] === "administrative_area_level_2"
+                                && results[1].address_components[i].types[1] === "political") {
+                            district = results[1].address_components[i].long_name;
+                            break;
+                        }
+                    }
+                    if (district === "") {
+                        for (i = 0; i < results[1].address_components.length; i++) {
+                            if (results[1].address_components[i].types[0] === "locality"
+                                    && results[1].address_components[i].types[1] === "political") {
+                                district = results[1].address_components[i].long_name;
+                            }
+                        }
+                    }
+
+                    for (i = 0; i < results[1].address_components.length; i++) {
+                        if (results[1].address_components[i].types[0] === "administrative_area_level_1"
+                                && results[1].address_components[i].types[1] === "political") {
+                            city = results[1].address_components[i].long_name;
+                            break;
+                        }
+                    }
+                    callback(district, city);
+                }
+            } else {
+                alert("Có lỗi xảy ra: " + status);
+            }
+        });
+    },
     addrFromLatLng: function(latLngPoint, withTempPOI) {
         geocoder.geocode({'latLng': latLngPoint}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
@@ -324,5 +390,58 @@ var MapsLib = {
                 break;
         }
         return zoom;
+    },
+    appendPOIToDiv: function(obj) {
+        var liToAppend = "";
+        liToAppend += "<li>";
+        liToAppend += "<div class='item-img'>";
+        liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
+        liToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "' />";
+        liToAppend += "</a>";
+        liToAppend += "</div>";
+        liToAppend += "<div class='item-content'>";
+        liToAppend += "<div class='item-name'>";
+        liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
+        liToAppend += obj.name;
+        liToAppend += "</a>";
+        liToAppend += "</div>";
+        liToAppend += "<div class='item-add'>" + obj.address + "</div>";
+        if (obj.description !== undefined) {
+            liToAppend += "<div class='item-desc'>" + obj.description + "</div>";
+        } else {
+            liToAppend += "<div class='item-desc'>---</div>";
+        }
+        liToAppend += "</div>";
+        liToAppend += "</li>";
+
+        $("#list").append(liToAppend);
+    },
+    appendPOIInDistrict: function(obj) {
+        $("#tabs").children("div").each(function() {
+            var id = $(this).attr("id");
+
+            var divToAppend = "";
+            if (obj.categoryID == id.substring(5)) {
+                divToAppend += "<div class='district-item'>";
+                divToAppend += "<div class='district-image'>";
+                divToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
+                divToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "'/>";
+                divToAppend += "</a>";
+                divToAppend += "</div>";
+                divToAppend += "<div class='district-info'>";
+                divToAppend += "<h3><a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>" + obj.name + "</a></h3><br/>";
+                divToAppend += "<h4>" + obj.address + "</h4>";
+                if (obj.description !== undefined) {
+                    divToAppend += "<p>" + obj.description + "</p>";
+                } else {
+                    divToAppend += "<p'>---</p>";
+                }
+                divToAppend += "</div>";
+                divToAppend += "</div>";
+            }
+            if (divToAppend !== "") {
+                $("#" + id).append(divToAppend);
+            }
+        });
     }
 };

@@ -12,3 +12,4 @@
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="css/introjs.css">
+<link type="text/css" rel="stylesheet" href="css/jquery-ui-1.10.0.custom.css">

@@ -23,10 +23,10 @@ public class POIDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String query = "SELECT id, name, address, city, district, description, image"
-                    + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
-                    + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
-                    + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
-                    + " FROM poi";
+                + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
+                + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
+                + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
+                + " FROM poi";
         if (!getAllFlag) {
             query += " WHERE isDeleted = False";
         }

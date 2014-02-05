@@ -14,7 +14,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
     </head>
-    <body>
+    <body class="noscript">
+        <div class="disable">
+            <p><bean:message key="warning.javascript" /></p>
+            <p><bean:message key="warning.javascript2" /></p>
+        </div>
         <div class="navbar-wrapper">
             <div class="navbar navbar-inverse navbar-static-top">
                 <div class="navbar-inner">
@@ -66,22 +70,14 @@
                 </div>
             </div>
         </div>
-        <section style="padding-bottom: 2em;">
+        <section class="enable">
             <div class="container">
                 <div class="row">
                     <div class="span12">
-                        <p>
+                        <p style="margin: 0;">
                             <bean:message key="map.intro"/><br/>
-                            <c:choose>
-                                <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
-                                    <bean:message key="map.login" />
-                                </c:when>
-                                <c:otherwise>
-                                    <bean:message key="map.addNewPOI" />
-                                </c:otherwise>
-                            </c:choose>
                         </p>
-                        <div class="offset2">
+                        <div class="offset2" style="margin-bottom: 1%;">
                             <div class="form-inline">
                                 <div class="input-append">
                                     <input type="text" id="search_address" placeholder="<bean:message key='map.enterAddress'/>" 
@@ -112,44 +108,48 @@
                 </div>
             </div>
         </section>
-        <section>
-            <div id="map-canvas" style="height: 60%;"></div>
+        <section class="enable">
+            <div id="map-canvas" style="height: 50%;"></div>
             <div id="inRadius-div">
                 <div id="header"><bean:message key="map.near" /></div>
-                <ul id="list">
-                    <li>
-                        <div class="item-img">
-                            <a href="#">
-                                <img width="45" alt="A" src="http://media.foody.vn/restaurant/634782220929832277_HuynhDeQuan_HInhDaiDien_160.jpg"/>
-                            </a>
-                        </div>
-                        <div class="item-content">
-                            <div class="item-name">
-                                <a href="#">Test</a>
-                            </div>
-                            <div class="item-add">
-                                Hà Nội
-                            </div>
-                            <div class="item-desc">
-                                Hà Nội
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <ul id="list"></ul>
             </div>
         </section>
-        <section>
+        <section class="enable">
             <div class="container">
                 <div class="row">
                     <div class="span12 district-highlight">
-                        <h2>Các địa điểm nổi bật ở quận</h2>
+                        <h2 id="inDistrict"></h2>
+                        <p>
+                            <c:choose>
+                                <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
+                                    <bean:message key="map.login" />
+                                </c:when>
+                                <c:otherwise>
+                                    <bean:message key="map.addNewPOI" />
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
+                        <div id="tabs">
+                            <ul>
+                                <logic:iterate id="c" name="POIForm" property="categoryList">
+                                    <li><a href="#tabs-${c.categoryID}">${c.name}</a></li>
+                                    </logic:iterate>
+                            </ul>
+                            <logic:iterate id="c" name="POIForm" property="categoryList">
+                                <div id="tabs-${c.categoryID}"></div>
+                            </logic:iterate>
+                        </div>
                     </div>
                 </div>
-            </div>
         </section>
         <%@include file="../includes/includeJS.jsp" %>
         <script type="text/javascript">
-
+            $(function() {
+                $('body').removeClass('noscript');
+                $('.disable').remove();
+                $("#tabs").tabs();
+            });
         </script>
     </body>
 </html:html>

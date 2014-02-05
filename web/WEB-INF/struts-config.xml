@@ -68,7 +68,7 @@
         <action path="/poi" forward="/pages/poi.jsp"/>
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
-        <action path="/map" forward="/pages/map.jsp" />
+        <action path="/map" forward="/pages/map.jsp" name="POIForm" />
         <action path="/admin" forward="/admin/admin.jsp" />
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />

@@ -1,10 +1,13 @@
 package com.blackpoints.service;
 
-import com.blackpoints.classes.Category;
+import com.blackpoints.classes.City;
+import com.blackpoints.classes.District;
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
 import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.CategoryDAO;
+import com.blackpoints.dao.CityDAO;
+import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.util.GeoUtil;
@@ -47,9 +50,9 @@ public class POIServices {
     }
 
     @GET
-    @Path("getPOIinRadius/{lat}/{lng}/{radius}")
-    @Produces("application/json")
-    public String getPOIinRadius(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
+    @Path("getPOIInRadius/{lat}/{lng}/{radius}")
+    @Produces("application/json; charset=UTF-8")
+    public String getPOIInRadius(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
         List<POI> inRadiusList = new ArrayList<POI>();
         GeoLocation centerGeo = new GeoLocation(lat, lng);
         CategoryDAO categoryDAO = new CategoryDAO();
@@ -57,7 +60,7 @@ public class POIServices {
         for (POI poi : pois) {
 
             poi.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
-            
+
             List<GeoLocation> geoList = GeoUtil.toLatLng(poi.getGeometry());
 
             for (GeoLocation geoLocation : geoList) {
@@ -73,20 +76,38 @@ public class POIServices {
 
         return new Gson().toJson(inRadiusList);
     }
-    
+
+    @GET
+    @Path("getPOIInDistrict/{district}/{city}")
+    public String getPOIInDistrict(@PathParam("district") String district, @PathParam("city") String city) {
+        System.out.println(district);
+        List<POI> inDistrictList = new ArrayList<POI>();
+        City c = new CityDAO().getCityByName(city);
+        District d = new DistrictDAO().getDistrictByName(district, c.getId());
+        if (c != null && d != null) {
+            System.out.println(d.getName());
+            for (POI poi : pois) {
+                if (poi.getCity() == c.getId() && poi.getDistrict() == d.getId()) {
+                    inDistrictList.add(poi);
+                }
+            }
+        }
+        return new Gson().toJson(inDistrictList);
+    }
+
     @GET
     @Path("getAllTempPOI/{lat}/{lng}/{radius}")
-    @Produces("application/json")
+    @Produces("application/json; charset=UTF-8")
     public String getAllTempPOI(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
         List<TempPOI> tempPOIs = new TempPOIDAO().getAllTempPOIs();
         List<TempPOI> inRadiusList = new ArrayList<TempPOI>();
         GeoLocation centerGeo = new GeoLocation(lat, lng);
-        
+
         for (TempPOI tempPOI : tempPOIs) {
             List<GeoLocation> geoList = GeoUtil.toLatLng(tempPOI.getGeometry());
-            
+
             for (GeoLocation geoLocation : geoList) {
-                
+
                 double distance = GeoUtil.caculateDistance(centerGeo, geoLocation);
                 if (distance <= radius) {
                     inRadiusList.add(tempPOI);

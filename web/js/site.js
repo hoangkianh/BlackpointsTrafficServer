@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+$(function() {
     $.localScroll();
 
     /*** MapsLib ***/

@@ -48,7 +48,7 @@ public class GeoUtil {
      *
      * @param geo1 GeoLocation1
      * @param geo2 GeoLocation2
-     * @return
+     * @return distance from geo1 to geo2
      */
     public static double caculateDistance(GeoLocation geo1, GeoLocation geo2) {
 
