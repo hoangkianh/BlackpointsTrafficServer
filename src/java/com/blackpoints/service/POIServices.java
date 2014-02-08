@@ -10,7 +10,7 @@ import com.blackpoints.dao.CityDAO;
 import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.dao.TempPOIDAO;
-import com.blackpoints.util.GeoUtil;
+import com.blackpoints.utils.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,27 +94,11 @@ public class POIServices {
         }
         return new Gson().toJson(inDistrictList);
     }
-
+    
     @GET
-    @Path("getAllTempPOI/{lat}/{lng}/{radius}")
+    @Path("getDistrict/{city}")
     @Produces("application/json; charset=UTF-8")
-    public String getAllTempPOI(@PathParam("lat") double lat, @PathParam("lng") double lng, @PathParam("radius") double radius) {
-        List<TempPOI> tempPOIs = new TempPOIDAO().getAllTempPOIs();
-        List<TempPOI> inRadiusList = new ArrayList<TempPOI>();
-        GeoLocation centerGeo = new GeoLocation(lat, lng);
-
-        for (TempPOI tempPOI : tempPOIs) {
-            List<GeoLocation> geoList = GeoUtil.toLatLng(tempPOI.getGeometry());
-
-            for (GeoLocation geoLocation : geoList) {
-
-                double distance = GeoUtil.caculateDistance(centerGeo, geoLocation);
-                if (distance <= radius) {
-                    inRadiusList.add(tempPOI);
-                    break;
-                }
-            }
-        }
-        return new Gson().toJson(inRadiusList);
+    public String getDistrict(@PathParam("city") int city) {
+        return "";
     }
 }

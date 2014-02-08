@@ -1,11 +1,14 @@
 package com.blackpoints.struts.form;
 
 import com.blackpoints.classes.Category;
+import com.blackpoints.classes.City;
+import com.blackpoints.classes.District;
 import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.CategoryDAO;
+import com.blackpoints.dao.CityDAO;
+import com.blackpoints.dao.DistrictDAO;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
@@ -22,34 +25,47 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
     private int city;
     private int district;
     private String description;
-    private String geometry;
     private int categoryID;
     private double rating;
-    private int count;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
     private int updatedByUserID;
     private List<TempPOI> tempPOIList;
     private List<Category> categoryList;
+    private List<City> cityList;
+    private List<District> districtList;
 
-//    @Override
-//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-//        ActionErrors err = new ActionErrors();
-//        if (name == null || name.trim().length() == 0) {
-//            err.add("name", new ActionMessage("errors.required", "Tên (hoặc địa chỉ) điểm đen"));
-//        }
-//        if (name.trim().length() < 10 || name.trim().length() > 100) {
-//            err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "10", "100", "kí tự"));
-//        }
-//        if (description.trim().length() > 200) {
-//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
-//        }
-//        if (geometry == null || geometry.trim().length() == 0) {
-//            err.add("geometry", new ActionMessage("errors.select", "điểm đen trên bản đồ"));
-//        }
-//        return err;
-//    }
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors err = new ActionErrors();
+        if (name == null || name.trim().length() == 0) {
+            err.add("name", new ActionMessage("errors.required", "Tên điểm đen"));
+        } else {
+            if (name.trim().length() < 10 || name.trim().length() > 100) {
+                err.add("name", new ActionMessage("errors.range", "Tên điểm đen có độ dài", "10", "100", "kí tự"));
+            }
+        }
+        if (address == null || address.trim().length() == 0) {
+            err.add("address", new ActionMessage("errors.required", "Địa chỉ"));
+        } else {
+            if (address.trim().length() < 10 || address.trim().length() > 100) {
+                err.add("address", new ActionMessage("errors.range", "Địa chỉ", "10", "100", "kí tự"));
+            }
+        }
+        if (categoryID <= 0) {
+            err.add("categoryID", new ActionMessage("errors.select", "kiểu điểm đen"));
+        }
+        if (description != null && description.trim().length() > 500) {
+            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "500"));
+        }
+        City c = new CityDAO().getCityByID(city);
+        District d = new DistrictDAO().getDistrictByID(district);
+        if (c!= null && d != null && city != d.getCity()) {
+            err.add("city", new ActionMessage("errors.nodistrict", c.getName(), d.getName())); 
+        }
+        return err;
+    }
 
     public int getId() {
         return id;
@@ -99,14 +115,6 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
         this.description = description;
     }
 
-    public String getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(String geometry) {
-        this.geometry = geometry;
-    }
-
     public int getCategoryID() {
         return categoryID;
     }
@@ -122,15 +130,7 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
     public void setRating(double rating) {
         this.rating = rating;
     }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
+    
     public String getCreatedOnDate() {
         return createdOnDate;
     }
@@ -173,5 +173,16 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
 
     public List<Category> getCategoryList() {
         return new CategoryDAO().getAllCategories();
+    }
+
+    public List<City> getCityList() {
+        return new CityDAO().getAllCities();
+    }
+
+    public List<District> getDistrictList() {
+        if (city == 0) {
+            city = 1;
+        }
+        return new DistrictDAO().getAllDistrictsInCity(city);
     }
 }

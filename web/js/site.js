@@ -4,7 +4,7 @@ $(function() {
     /*** MapsLib ***/
     MapsLib.initialize();
     MapsLib.findMe();
-    MapsLib.doSearch(false);
+    MapsLib.doSearch();
     $("#search_address").geocomplete({
         country: "vn",
         markerOptions: {
@@ -12,10 +12,10 @@ $(function() {
         }
     });
     $('#search').click(function() {
-        MapsLib.doSearch(false);
+        MapsLib.doSearch();
     });
     $('#search_radius').change(function() {
-        MapsLib.doSearch(false);
+        MapsLib.doSearch();
     });
     $("#search_address").keydown(function(e) {
         var key = e.keyCode ? e.keyCode : e.which;

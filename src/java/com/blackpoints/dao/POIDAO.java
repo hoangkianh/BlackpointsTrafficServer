@@ -1,7 +1,7 @@
 package com.blackpoints.dao;
 
 import com.blackpoints.classes.POI;
-import com.blackpoints.util.DBUtil;
+import com.blackpoints.utils.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

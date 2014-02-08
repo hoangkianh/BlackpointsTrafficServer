@@ -5,7 +5,7 @@ import com.blackpoints.classes.UserGroup;
 import com.blackpoints.dao.UserDAO;
 import com.blackpoints.dao.UserGroupDAO;
 import com.blackpoints.struts.form.LoginForm;
-import com.blackpoints.util.MD5Hashing;
+import com.blackpoints.utils.MD5Hashing;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

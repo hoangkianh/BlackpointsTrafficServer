@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/> - <bean:message  key="poi.title"/></title>
+        <title><bean:message  key="poi.title"/> | <bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -62,35 +62,53 @@
                     </div>
                 </div>
             </div>
-            <section id="map-wrapper">
+            <section>
                 <div class="container">
                     <div class="row">
-                        <div class="span12">
-                        <bean:message key="poi.note" />
-                        <h3><a href="#" id="startIntro"><i class="fa fa-question-circle"></i> <bean:message key="poi.intro"/></a></h3>
-                    </div>
+                        <div class="span12 offset2" style="padding-top:20px; font-weight: bold;"><bean:message key="poi.note" /></div>
                 </div>
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="span5">
-                        <html:form styleId="poiForm" method="POST" action="/AddNewTempPOIAction" styleClass="form-horizontal my-form">
-                            <fieldset id="step1">
+                    <div class="span7 offset2">
+                        <html:form styleId="tempPOIForm" method="POST" action="/AddNewTempPOIAction" styleClass="form-horizontal my-form">
+                            <fieldset>
                                 <legend><bean:message key="poi.legend.step1"/></legend>
                                 <div class="control-group">
-                                    <label class="control-label" for="search_address">
+                                    <label class="control-label" for="name">
+                                        <bean:message key="poi.name" />
+                                        <span class="asterisk">*</span>
+                                    </label>
+                                    <div class="controls">
+                                        <input type="text" id="name" name="name" placeholder="<bean:message key="poi.name" />"
+                                               value="<bean:write name="TempPOIForm" property="name" />" />
+                                        <label for="name" class="error"><html:errors property="name" /></label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="address">
                                         <bean:message key="poi.address" />
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <div class="input-append">
-                                            <input type="text" id="search_address" name="address" placeholder="<bean:message key="poi.address" />"
-                                                   value="<bean:write name="TempPOIForm" property="address" />" style="height: 17px;" />
-                                            <a class="btn btn-primary" id="search" href="#">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-                                        </div>
-                                        <label for="search_address" class="error"><html:errors property="name" /></label>
+                                        <input type="text" id="address" name="address" placeholder="<bean:message key="poi.address" />"
+                                               value="<bean:write name="TempPOIForm" property="address" />" />
+                                        <label for="address" class="error"><html:errors property="address" /></label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="city">
+                                        <bean:message key="poi.city" />
+                                        <span class="asterisk">*</span>
+                                    </label>
+                                    <div class="controls">
+                                        <html:select name="TempPOIForm" property="city" styleId="city">
+                                            <html:optionsCollection name="TempPOIForm" property="cityList" label="name" value="id"/>
+                                        </html:select>
+                                        <html:select name="TempPOIForm" property="district" styleId="district">
+                                            <html:optionsCollection name="TempPOIForm" property="districtList" label="name" value="id"/>
+                                        </html:select>
+                                        <label for="city" class="error"><html:errors property="city" /></label>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -99,39 +117,27 @@
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <select id="categoryID" name="categoryID">
-                                            <option value="0"><bean:message key="poi.select" /></option>
-                                            <logic:iterate id="c" name="TempPOIForm" property="categoryList">
-                                                <option value="<bean:write name="c" property="categoryID" />"><bean:write name="c" property="name" /></option>
-                                            </logic:iterate>
-                                        </select>
-                                        <label for="categoryID" class="error"><html:errors property="name" /></label>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="name">
-                                        <bean:message key="poi.name" />
-                                        <span class="asterisk">*</span>
-                                    </label>
-                                    <div class="controls">
-                                        <input type="text" id="name" name="name" placeholder="<bean:message key="poi.name" />"
-                                               value="<bean:write name="TempPOIForm" property="name" />" style="height: 17px;" />
-                                        <label for="name" class="error"><html:errors property="name" /></label>
+                                        <html:select name="TempPOIForm" property="categoryID" styleId="categoryID">
+                                            <html:option value="0"><bean:message key="poi.selectCategory" /></html:option>
+                                            <html:optionsCollection name="TempPOIForm" property="categoryList" label="name" value="categoryID"/>
+                                        </html:select>
+                                        <label for="categoryID" class="error"><html:errors property="categoryID" /></label>
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset id="step3">
-                                <legend><bean:message key="poi.legend.step3"/></legend>
+                            <fieldset>
+                                <legend><bean:message key="poi.legend.step2"/></legend>
                                 <div class="control-group" id="rating-div">
                                     <label class="control-label" for="rating"><bean:message key="poi.rating" /></label>
-                                    <html:select styleId="rating" name="TempPOIForm" property="rating">
-                                        <html:option value="1"><bean:message key="poi.rating.1"/></html:option>
-                                        <html:option value="2"><bean:message key="poi.rating.2"/></html:option>
-                                        <html:option value="3"><bean:message key="poi.rating.3"/></html:option>
-                                        <html:option value="4"><bean:message key="poi.rating.4"/></html:option>
-                                        <html:option value="5"><bean:message key="poi.rating.5"/></html:option>
-                                    </html:select>
-                                    <label for="rating" class="error"><html:errors property="rating" /></label>
+                                    <div class="controls">
+                                        <html:select styleId="rating" name="TempPOIForm" property="rating">
+                                            <html:option value="1"><bean:message key="poi.rating.1"/></html:option>
+                                            <html:option value="2"><bean:message key="poi.rating.2"/></html:option>
+                                            <html:option value="3"><bean:message key="poi.rating.3"/></html:option>
+                                            <html:option value="4"><bean:message key="poi.rating.4"/></html:option>
+                                            <html:option value="5"><bean:message key="poi.rating.5"/></html:option>
+                                        </html:select>
+                                    </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="description"><bean:message key="poi.description" /></label>
@@ -144,14 +150,7 @@
                             <input type="reset" id="reset" class="btn pull-right" value="<bean:message key='poi.reset' />" />
                             <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key='poi.submit' />" />
                         </html:form>
-                    </div>
-                    <div class="span7">
-                        <fieldset id="step2">
-                            <legend><bean:message key="poi.legend.step2"/></legend>
-                            <div class="control-group">
-                                <div id="map-canvas" style="height: 500px;"></div>
-                            </div>
-                        </fieldset>
+                        <div id="loading"></div>
                     </div>
                 </div>
             </div>
@@ -159,49 +158,46 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=vi"></script>
-        <script type="text/javascript" src="js/map.js"></script>
-        <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="js/jquery.barrating.min.js"></script>
-        <script type="text/javascript" src="js/intro.js"></script>
         <script type="text/javascript">
             $(function() {
-                $("#search_address").geocomplete();
 
-                $.validator.addMethod("checkSelect", function(value, element) {
+                $("#city").change(function() {
+
+                    $.ajax({
+                        type: "GET",
+                        url: "service/utils/getDistrictsInCity/" + $(this).val(),
+                        dataType: "json",
+                        success: function(json) {
+                            // empty select
+                            $("#district").empty();
+
+                            $.each(json, function(idx, obj) {
+                                $("#district").append('<option value="' + obj.id + '">' + obj.name + '</option>');
+                            });
+                        }
+                    });
+                });
+
+                $.validator.addMethod("checkSelectCategory", function(value, element) {
                     return this.optional(element) || value !== "0";
                 }, "<bean:message key="errors.select" arg0="kiểu điểm đen" />");
 
-                $("#poiForm").validate({
+                $("#tempPOIForm").validate({
                     errorClass: "error",
-                    validClass: "valid",
-                    highlight: function(element, errorClass, validClass) {
-                        $(element).addClass(errorClass);
-                        $(element).parent().find("label[for=" + element.id + "]")
-                                .removeClass(validClass)
-                                .addClass(errorClass)
-                                .css("display", "block");
-                    },
-                    unhighlight: function(element, errorClass, validClass) {
-                        $(element).removeClass(errorClass);
-                        $(element).parent().find("label[for=" + element.id + "]")
-                                .removeClass(errorClass)
-                                .addClass(validClass)
-                                .html("<i class='fa fa-check valid'></i>")
-                                .css("display", "block");
-                    },
                     rules: {
                         name: {
                             required: true,
+                            minlength: 10,
                             maxlength: 100
                         },
                         address: {
                             required: true,
+                            minlength: 10,
                             maxlength: 100
                         },
                         categoryID: {
-                            checkSelect: true
+                            checkSelectCategory: true
                         },
                         description: {
                             maxlength: 500
@@ -210,11 +206,13 @@
                     messages: {
                         name: {
                             required: "<bean:message key="errors.required" arg0="Tên" />",
+                            minlength: "<bean:message key="errors.minlength" arg0="Tên điểm đen" arg1="10" />",
                             maxlength: "<bean:message key="errors.maxlength" arg0="Tên điểm đen" arg1="100" />"
                         },
                         address: {
-                            required: "<bean:message key="errors.required" arg0="Địa chỉ điểm đen" />",
-                            maxlength: "<bean:message key="errors.maxlength" arg0="Địa chỉ điểm đen" arg1="100" />"
+                            required: "<bean:message key="errors.required" arg0="Địa chỉ" />",
+                            minlength: "<bean:message key="errors.minlength" arg0="Địa chỉ" arg1="10" />",
+                            maxlength: "<bean:message key="errors.maxlength" arg0="Địa chỉ" arg1="100" />"
                         },
                         categoryID: {
                             checkSelect: "<bean:message key="errors.required" arg0="Kiểu điểm đen" />"
@@ -222,66 +220,34 @@
                         description: {
                             maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="500" />"
                         }
-                    }
-                });
-
-                $("#startIntro").click(function() {
-                    var intro = introJs();
-                    intro.setOptions({
-                        steps: [
-                            {
-                                element: "#step1",
-                                intro: "<bean:message key="poi.intro.step1"/>"
+                    },
+                    submitHandler: function(form) {
+                        $("#tempPOIForm").fadeOut();
+                        $('#loading').html('<img src="img/loading.GIF">' + '<bean:message key="poi.loading"/>');
+                        $.ajax({
+                            type: "POST",
+                            url: "AddNewTempPOIAction.do",
+                            data: $("#tempPOIForm").serialize(),
+                            success: function(data) {
+                                setTimeout(function() {
+                                    if (data.trim() === "success") {
+                                        $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="poi.success"/>' + '</p>');
+                                    } else {
+                                        $('#loading').html('<p class="error">' + '<bean:message key="poi.failure"/>' + '</p>');
+                                    }
+                                }, 2000);
                             },
-                            {
-                                element: "#step2",
-                                intro: "<bean:message key="poi.intro.step2"/>",
-                                position: 'left'
-                            },
-                            {
-                                element: "#step3",
-                                intro: "<bean:message key="poi.intro.step3"/>",
-                                position: 'top'
-                            },
-                            {
-                                element: "#step4",
-                                intro: "<bean:message key="poi.intro.step4"/>",
-                                position: 'top'
+                            error: function(e) {
+                                setTimeout(function() {
+                                    $('#loading').html('<p class="error">' + '<bean:message key="poi.failure"/>' + '</p>');
+                                }, 2000);
                             }
-                        ],
-                        nextLabel: "<bean:message key="poi.intro.nextLabel"/>",
-                        prevLabel: "<bean:message key="poi.intro.prevLabel"/>",
-                        doneLabel: "<bean:message key="poi.intro.doneLabel"/>",
-                        skipLabel: "<bean:message key="poi.intro.skipLabel"/>",
-                    });
-                    intro.start();
-                });
-
-                $('#rating').barrating('show', {
-                    showSelectedRating: true,
-                    onSelect: function(value, text) {
-                        console.log(value);
+                        });
+                        // redirect
+                        setTimeout(function() {
+                            window.location.href = "poi.do";
+                        }, 5000);
                     }
-                });
-
-                /** MapsLib **/
-                MapsLib.initialize();
-                
-                $('#search').click(function() {
-//                    MapsLib.doSearchWithTempPOI();
-                    MapsLib.doSearch(true);
-                });
-                $("#search_address").keydown(function(e) {
-                    var key = e.keyCode ? e.keyCode : e.which;
-                    if (key === 13) {
-                        $('#search').click();
-                        return false;
-                    }
-                });
-                $('#reset').click(function() {
-                    $.address.parameter('address', '');
-                    MapsLib.initialize();
-                    return false;
                 });
             });
         </script>

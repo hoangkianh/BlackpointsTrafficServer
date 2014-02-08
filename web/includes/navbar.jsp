@@ -19,7 +19,7 @@
                             <a href="#top"><bean:message key="navbar.home"/></a>
                         </li>
                         <li>
-                            <a href="#map"><bean:message key="navbar.map"/></a>                                
+                            <a href="map.do"><bean:message key="navbar.map"/></a>                                
                         </li>
                         <c:choose>
                             <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">

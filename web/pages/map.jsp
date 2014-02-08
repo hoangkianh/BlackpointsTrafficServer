@@ -9,7 +9,7 @@
 <html:html lang="true">
     <!DOCTYPE HTML>
     <head>
-        <title><bean:message key="welcome.title"/></title>
+        <title><bean:message key="map.title"/> | <bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -145,7 +145,7 @@
         </section>
         <%@include file="../includes/includeJS.jsp" %>
         <script type="text/javascript">
-            $(function() {
+            $(function() {                
                 $('body').removeClass('noscript');
                 $('.disable').remove();
                 $("#tabs").tabs();

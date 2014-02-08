@@ -24,14 +24,14 @@ var MapsLib = {
         // reset
         $("#search_radius").val(MapsLib.searchRadius);
     },
-    doSearch: function(withTempPOI) {
+    doSearch: function() {
         MapsLib.clearSearch();
 
         MapsLib.address = $("#search_address").val();
-        MapsLib.searchRadius = withTempPOI === true ? 5000 : $("#search_radius").val();
+        MapsLib.searchRadius = $("#search_radius").val();
 
         if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
-            MapsLib.getPOIInRadius(withTempPOI);
+            MapsLib.getPOIInRadius();
             return;
         }
 
@@ -58,31 +58,26 @@ var MapsLib = {
                         title: MapsLib.address
                     });
 
-                    var info = new google.maps.InfoWindow({
-                        content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
-                    });
                     google.maps.event.addListener(MapsLib.addrMarker, 'drag', function() {
                         MapsLib.newPinpoint = MapsLib.addrMarker.getPosition();
-                        if (withTempPOI === false) {
-                            MapsLib.searchRadiusCircle.setMap(null);
-                            MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
-                        }
+                        MapsLib.searchRadiusCircle.setMap(null);
+                        MapsLib.drawSearchRadiusCircle(MapsLib.newPinpoint);
                     });
                     google.maps.event.addListener(MapsLib.addrMarker, 'dragend', function() {
-                        MapsLib.addrFromLatLng(MapsLib.newPinpoint, withTempPOI);
+                        MapsLib.addrFromLatLng(MapsLib.newPinpoint);
                     });
                     google.maps.event.addListener(MapsLib.addrMarker, 'click', function() {
-                        if (info.getMap() === undefined || info.getMap() === null) {
-                            info.open(map, MapsLib.addrMarker);
-                        } else {
-                            info.close();
+                        if (MapsLib.infoWindow) {
+                            MapsLib.infoWindow.close();
                         }
+                        MapsLib.infoWindow = new google.maps.InfoWindow({
+                            content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
+                        });
+                        MapsLib.infoWindow.open(map, MapsLib.addrMarker);
                     });
 
-                    if (withTempPOI === false) {
-                        MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
-                    }
-                    MapsLib.getPOIInRadius(withTempPOI);
+                    MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
+                    MapsLib.getPOIInRadius();
                     MapsLib.findCityAndDistrict(function(district, city) {
                         MapsLib.getPOIInDistrict(district, city);
                     });
@@ -93,12 +88,12 @@ var MapsLib = {
             });
         }
     },
-    getPOIInRadius: function(withTempPOI) {
+    getPOIInRadius: function() {
         var lat;
         var lng;
         var radius = 5000;
 
-        if (MapsLib.currentPinpoint !== undefined) {
+        if (MapsLib.currentPinpoint) {
             lat = MapsLib.currentPinpoint.lat();
             lng = MapsLib.currentPinpoint.lng();
         } else {
@@ -106,7 +101,7 @@ var MapsLib = {
             lng = MapsLib.map_centroid.lng();
         }
 
-        if (MapsLib.searchRadius !== undefined) {
+        if (MapsLib.searchRadius) {
             radius = MapsLib.searchRadius;
         }
 
@@ -117,26 +112,15 @@ var MapsLib = {
             success: function(json) {
                 // empty #list
                 $("#list").empty();
+                // empty array
+                MapsLib.markerArr = [];
 
                 $.each(json, function(idx, obj) {
                     MapsLib.drawPOI(obj);
-                    MapsLib.appendPOIToDiv(obj);
+                    MapsLib.appendPOIToDiv(idx, obj);
                 });
             }
         });
-
-        if (withTempPOI === true) {
-            $.ajax({
-                type: "GET",
-                url: "service/POI/getTempPOIInRadius/" + lat + "/" + lng + "/" + radius,
-                dataType: "json",
-                success: function(json) {
-                    $.each(json, function(idx, obj) {
-                        MapsLib.drawTempPOI(obj);
-                    });
-                }
-            });
-        }
     },
     getPOIInDistrict: function(district, city) {
         $.ajax({
@@ -144,7 +128,7 @@ var MapsLib = {
             url: "service/POI/getPOIInDistrict/" + district + "/" + city,
             dataType: "json",
             success: function(json) {
-                $("#inDistrict").empty().append("Các điểm đen ở "+ district);
+                $("#inDistrict").empty().append("Các điểm đen ở " + district);
 
                 // empty div
                 $("#tabs").children("div").empty();
@@ -152,8 +136,8 @@ var MapsLib = {
                 $.each(json, function(idx, obj) {
                     MapsLib.appendPOIInDistrict(obj);
                 });
-                
-                $("#tabs").children("div").each(function(){
+
+                $("#tabs").children("div").each(function() {
                     if ($(this).is(":empty")) {
                         $(this).html("<p>Chưa có dữ liệu</p>")
                     }
@@ -182,7 +166,7 @@ var MapsLib = {
         return latLngArr;
     },
     drawPOI: function(obj) {
-        var content = "<div id='content'>" +
+        var infoContent = "<div id='content'>" +
                 "<img src='" + obj.image + "' height='100' width='100'" +
                 "<h2>" + obj.name + "</h2>" +
                 "<p><ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
@@ -192,10 +176,6 @@ var MapsLib = {
 // TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
                 "</ul></p>" +
                 "</div>";
-        var info = new google.maps.InfoWindow({
-            content: content,
-            maxWidth: 400
-        });
 
         var marker = new google.maps.Marker({
             position: MapsLib.parseGeomString(obj.geometry)[0][0],
@@ -204,12 +184,13 @@ var MapsLib = {
             icon: obj.markerIcon
         });
         google.maps.event.addListener(marker, 'click', function() {
-            if (info.getMap() === undefined || info.getMap() === null) {
-                info.open(map, marker);
+            if (MapsLib.infoWindow) {
+                MapsLib.infoWindow.close();
             }
-            else {
-                info.close();
-            }
+            MapsLib.infoWindow = new google.maps.InfoWindow({
+                content: infoContent
+            });
+            MapsLib.infoWindow.open(map, marker);
         });
         MapsLib.markerArr.push(marker);
     },
@@ -248,12 +229,13 @@ var MapsLib = {
     clearSearch: function() {
         MapsLib.oldaddress = MapsLib.address;
 
-        if (MapsLib.addrMarker !== undefined) {
+        if (MapsLib.addrMarker) {
             MapsLib.addrMarker.setMap(null);
         }
-        if (MapsLib.searchRadiusCircle !== undefined) {
+        if (MapsLib.searchRadiusCircle) {
             MapsLib.searchRadiusCircle.setMap(null);
         }
+
         for (i = 0; i < MapsLib.markerArr.length; i++) {
             MapsLib.markerArr[i].setMap(null);
         }
@@ -325,13 +307,13 @@ var MapsLib = {
             }
         });
     },
-    addrFromLatLng: function(latLngPoint, withTempPOI) {
+    addrFromLatLng: function(latLngPoint) {
         geocoder.geocode({'latLng': latLngPoint}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
                     $('#search_address').val(results[1].formatted_address);
 
-                    MapsLib.doSearch(withTempPOI);
+                    MapsLib.doSearch();
                 }
             } else {
                 alert("Không tìm thấy địa chi này: " + status);
@@ -391,9 +373,9 @@ var MapsLib = {
         }
         return zoom;
     },
-    appendPOIToDiv: function(obj) {
+    appendPOIToDiv: function(idx, obj) {
         var liToAppend = "";
-        liToAppend += "<li>";
+        liToAppend += "<li onclick='MapsLib.openInfoWindow(" + idx + ");'>";
         liToAppend += "<div class='item-img'>";
         liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
         liToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "' />";
@@ -406,7 +388,7 @@ var MapsLib = {
         liToAppend += "</a>";
         liToAppend += "</div>";
         liToAppend += "<div class='item-add'>" + obj.address + "</div>";
-        if (obj.description !== undefined) {
+        if (obj.description) {
             liToAppend += "<div class='item-desc'>" + obj.description + "</div>";
         } else {
             liToAppend += "<div class='item-desc'>---</div>";
@@ -431,7 +413,7 @@ var MapsLib = {
                 divToAppend += "<div class='district-info'>";
                 divToAppend += "<h3><a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>" + obj.name + "</a></h3><br/>";
                 divToAppend += "<h4>" + obj.address + "</h4>";
-                if (obj.description !== undefined) {
+                if (obj.description) {
                     divToAppend += "<p>" + obj.description + "</p>";
                 } else {
                     divToAppend += "<p'>---</p>";
@@ -443,5 +425,10 @@ var MapsLib = {
                 $("#" + id).append(divToAppend);
             }
         });
+    },
+    openInfoWindow: function(idx) {
+        console.log(MapsLib.markerArr);
+        console.log(MapsLib.markerArr[idx]);
+        google.maps.event.trigger(MapsLib.markerArr[idx], 'click');
     }
 };

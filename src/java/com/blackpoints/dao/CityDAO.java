@@ -1,7 +1,7 @@
 package com.blackpoints.dao;
 
 import com.blackpoints.classes.City;
-import com.blackpoints.util.DBUtil;
+import com.blackpoints.utils.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +69,7 @@ public class CityDAO {
         ResultSet rs = null;
         try {
             stm = conn.prepareStatement("SELECT * FROM city WHERE name LIKE ?");
-            stm.setString(1, "%" + "Hà Nội" + "%" );
+            stm.setString(1, "%" + name + "%" );
             rs = stm.executeQuery();
             
             if (rs.next()) {

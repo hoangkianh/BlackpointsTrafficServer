@@ -12,10 +12,8 @@ public class TempPOI {
     private int city;
     private int district;
     private String description;
-    private String geometry;
     private int categoryID;
     private double rating;
-    private int count;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
@@ -68,15 +66,7 @@ public class TempPOI {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(String geometry) {
-        this.geometry = geometry;
-    }
-
+    
     public int getCategoryID() {
         return categoryID;
     }
@@ -91,14 +81,6 @@ public class TempPOI {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public String getCreatedOnDate() {

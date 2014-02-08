@@ -2,7 +2,7 @@ package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
 import com.blackpoints.dao.UserDAO;
-import com.blackpoints.util.SendingEmail;
+import com.blackpoints.utils.SendingEmail;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

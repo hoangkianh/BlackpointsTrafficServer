@@ -13,19 +13,19 @@
         <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
     </c:if>
     <c:choose>
-            <c:when test="${userStr[3] ne 3}">
-                <c:redirect url="/admin.do" />                
-            </c:when>
-            <c:otherwise>
-                <c:redirect url="/" />                
-            </c:otherwise>
+        <c:when test="${userStr[3] ne 3}">
+            <c:redirect url="/admin.do" />                
+        </c:when>
+        <c:otherwise>
+            <c:redirect url="/" />                
+        </c:otherwise>
     </c:choose>
 </c:if>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/> - <bean:message key="register.header" /></title>
+        <title><bean:message key="register.header" /> | <bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -141,7 +141,7 @@
                 });
                 return this.optional(element) || exist;
             }, "<bean:message key="errors.isExist" arg0="Tên đăng nhập" />");
-            
+
             $.validator.addMethod("checkEmailExist", function(value, element) {
                 var exist;
                 $.ajax({
@@ -234,6 +234,9 @@
                     description: {
                         maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="200" />"
                     }
+                },
+                submitHandler: function(form) {
+                    form.submit();
                 }
             });
         </script>
