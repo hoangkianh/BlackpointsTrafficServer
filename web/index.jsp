@@ -36,6 +36,7 @@
             </div>
         </section>
         <hr>
+        <%@include file="includes/footer.jsp" %>
         <%@include file="includes/includeJS.jsp" %>
     </body>
 </html:html>

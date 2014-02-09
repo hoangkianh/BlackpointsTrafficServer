@@ -5,6 +5,7 @@
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 <struts-config>
     <form-beans>
+        <form-bean name="StatusForm" type="com.blackpoints.struts.form.StatusForm"/>
         <form-bean name="ForgotPassForm" type="com.blackpoints.struts.form.ForgotPassForm"/>
         <form-bean name="ReActivateForm" type="com.blackpoints.struts.form.ReActivateForm"/>
         <form-bean name="LoginForm" type="com.blackpoints.struts.form.LoginForm"/>
@@ -63,7 +64,7 @@
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
         <action input="/" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
-        <action input="/pages/poi.jsp" name="TempPOIForm" path="/AddNewTempPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewTempPOIAction"/>
+        <action input="/poi.do" name="TempPOIForm" path="/AddNewTempPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewTempPOIAction"/>
         <action path="/poi" forward="/pages/poi.jsp"/>
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>

@@ -3,6 +3,7 @@ package com.blackpoints.struts.form;
 import com.blackpoints.classes.Category;
 import com.blackpoints.classes.POI;
 import com.blackpoints.dao.CategoryDAO;
+import com.blackpoints.dao.POIDAO;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
@@ -38,7 +39,6 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int restoreByUserID;
 
     private List<POI> poiList;
-    private List<Category> categoryList;
 
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {

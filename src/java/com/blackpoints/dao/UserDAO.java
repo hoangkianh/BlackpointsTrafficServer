@@ -312,4 +312,23 @@ public class UserDAO {
 
         return isExist;
     }
+    
+    public int countUser() {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM user");
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
 }

@@ -377,13 +377,13 @@ var MapsLib = {
         var liToAppend = "";
         liToAppend += "<li onclick='MapsLib.openInfoWindow(" + idx + ");'>";
         liToAppend += "<div class='item-img'>";
-        liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
+        liToAppend += "<a href='javascript:void(0)' onclick='MapsLib.openInfoWindow(" + idx + ")' title='" + obj.name + "'>";
         liToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "' />";
         liToAppend += "</a>";
         liToAppend += "</div>";
         liToAppend += "<div class='item-content'>";
         liToAppend += "<div class='item-name'>";
-        liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
+        liToAppend += "<a href='javascript:void(0)' onclick='MapsLib.openInfoWindow(" + idx + ")' title='" + obj.name + "'>";
         liToAppend += obj.name;
         liToAppend += "</a>";
         liToAppend += "</div>";

@@ -32,9 +32,6 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
     private String updatedOnDate;
     private int updatedByUserID;
     private List<TempPOI> tempPOIList;
-    private List<Category> categoryList;
-    private List<City> cityList;
-    private List<District> districtList;
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {

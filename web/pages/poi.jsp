@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <section>
+            <section style="padding-bottom:30px;">
                 <div class="container">
                     <div class="row">
                         <div class="span12 offset2" style="padding-top:20px; font-weight: bold;"><bean:message key="poi.note" /></div>
@@ -154,7 +154,8 @@
                     </div>
                 </div>
             </div>
-        </section>        
+        </section>
+        <%@include file="../includes/footer.jsp" %>
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>

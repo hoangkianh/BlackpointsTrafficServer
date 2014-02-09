@@ -251,6 +251,12 @@ ul#menu-main > li > a span{
 /* ---------------------------------------------------------------------------------------------------------- 
 05 Single-Page Sections ------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------- */
+.align {
+    text-align:center;
+    margin-top: 0;
+    font-size: 5em;
+}
+
 #headerwrap {
     width: 100%;
     background: url(../img/top-bg.jpg) #0B333F no-repeat center center fixed;
@@ -259,8 +265,7 @@ ul#menu-main > li > a span{
     -o-background-size: cover;
     background-size: cover;
     min-height: 600px;
-    margin-top: -30px;
-    padding-top: 160px;
+    padding-top: 200px;
     text-align:center;
 }
 
@@ -343,9 +348,6 @@ section.single-page h1 {
 }
 
 /* Map */
-section#map {
-    padding-bottom: 0;
-}
 section#map h1 {
     font-size: 2em;
     margin-bottom: 0;
@@ -355,21 +357,8 @@ section#map hgroup h2 {
     margin-top: 1em;
     text-transform: capitalize;
 }
-section#map hgroup h3 {
-    margin-top:  .35em;
-    font-family: 'Open Sans', cursive;
-}
 section#map .entry-content {
     margin: 1em 0 2.5em;
-}
-section#map .align {
-    text-align:center;
-    margin-top: 0;
-    font-size: 5em;
-}
-section#map .row{
-    color: #E95B37;
-    padding-bottom: 1em;
 }
 #map-canvas{
     width: 100%;
@@ -389,38 +378,64 @@ section#map .row{
     overflow:hidden;
     white-space:nowrap;
 }
-/* Description */
-section#description {
-    height:  500px;
-    background: #1c2224 repeat-x 0 0;
-    padding: 0;
-    color: #e95b37;
-    z-index: 500;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-}
-section#description .blockquote-wrapper {
-    display: table-cell;
-    vertical-align: middle;
-    height:  500px;
-}
-blockquote.mega {
-}
-blockquote.mega p {
-    font-size: 45px;
-    line-height: 50px;
-    text-align: left;
-    font-family: 'Open Sans', cursive;
-    font-weight:bold;
-    color:#e95b37;
-}
-blockquote.mega .cite {
-    font-size: 22px;
-    text-align: left;
-    font-weight:300;
+
+/* section footer*/
+#footer {
+    background: #ddd;
+    margin-top: 5%;
 }
 
+#footer article {
+    width: 30%;
+    float: left;
+    margin-top: 20px;
+}
+
+#footer .status {
+    border-bottom: #ccc 1px solid;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    float: left;
+    width: 100%;
+}
+
+#footer .status .header {
+    color: #E95B37;
+    text-align: left;
+    font-weight: 700;
+    padding-bottom: 3px;
+}
+
+#footer .status .desc {
+    font-size: 14px;
+    color: #888;
+}
+
+#footer .mobileapps {
+    float: left;
+    width: 60%;
+}
+
+#footer .mobileapps .left-text {
+    font-size:14px;
+    text-align: justify;
+    float: left;
+    width: 60%;
+    line-height: 1.5em;
+    color: #666;
+    margin-top: 20px;
+}
+
+#footer .mobileapps .left-text h2 {
+    font-weight: bold;
+}
+
+#footer .mobileapps .right-image {
+    float: right;
+    text-align: right;
+    margin-top: -40px;
+    width: 30%;
+}
 /* Map view */
 #map-wrapper {
     padding: 2em 0;

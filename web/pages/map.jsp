@@ -143,6 +143,7 @@
                     </div>
                 </div>
         </section>
+        <%@include file="../includes/footer.jsp" %>
         <%@include file="../includes/includeJS.jsp" %>
         <script type="text/javascript">
             $(function() {                
