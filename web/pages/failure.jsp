@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="welcome.title"/> - <bean:message key="failure.header" /></title>
+        <title><bean:message key="failure.header" /> | <bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -65,31 +65,9 @@
         <div id="headerwrap">
             <header class="clearfix">
                 <div class="container">
-                    <h1><i class="fa fa-exclamation-triangle fa-2x error"></i></h1>
-                    <c:if test="${param.f eq 1}">
-                        <h1><bean:message key="register.sendingEmailFailure"/></h1>
-                        <h3><bean:message key="failure.1" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 2}">
-                        <h1><bean:message key="register.failure" /></h1>
-                        <h3><bean:message key="failure.2" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 3}">
-                        <h1><bean:message key="activate.failure" /></h1>
-                        <h3><bean:message key="failure.3" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 4}">
-                        <h1><bean:message key="reactivate.failure" /></h1>
-                        <h3><bean:message key="failure.4" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 5}">
-                        <h1><bean:message key="forgotpass.failure" /></h1>
-                        <h3><bean:message key="failure.5" /></h3>
-                    </c:if>
-                    <c:if test="${param.f eq 6}">
-                        <h1><bean:message key="permission.failure" /></h1>
-                        <h3><bean:message key="failure.6" /></h3>
-                    </c:if>
+                    <h1><i class="fa fa-exclamation-triangle fa-2x error"></i></h1>                    
+                    <h1><bean:message key="failure.${param.f}"/></h1>
+                    <h3><bean:message key="failure.message.${param.f}" /></h3>                    
                 </div>
             </header>
         </div>

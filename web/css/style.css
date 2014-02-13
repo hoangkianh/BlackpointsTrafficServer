@@ -367,16 +367,31 @@ section#map .entry-content {
 #map-canvas img{
     max-width: none;
 }
-#map-canvas h1, h2{
+#map-canvas h2{
     margin-top: 0;
+    padding-top: 10%;
 }
-#map-canvas p{
-    margin-top: 1em;
-}
-#map-canvas #content{
+
+#map-canvas .content{
     line-height:1.35;
     overflow:hidden;
     white-space:nowrap;
+}
+
+#map-canvas .content img {
+    float: left;
+    margin-right: 5px;
+    width: 100px;
+}
+
+#map-canvas .content ul {
+    list-style-type: none;
+    clear: both;
+    margin: 0;
+}
+
+#map-canvas .content ul li p {
+    float:right;
 }
 
 /* section footer*/
@@ -932,7 +947,7 @@ legend {
     margin: 0;
     width: 100%;
     height: 90%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -983,7 +998,7 @@ legend {
 }
 
 /** District highlight **/
-.district-highlight {
+.tabs-wrapper {
     clear: both;
     margin: 10px 0 10px 0;
     overflow: hidden;
@@ -994,14 +1009,14 @@ legend {
     -webkit-box-shadow: 0 0 2px #E5E5E5;
 }
 
-.district-highlight h2 {
+.tabs-wrapper h2 {
     padding: 5px;
     font-size: 18px;
     background: #f8f8f8;
     border-bottom: #eee 1px solid;
 }
 
-.district-highlight p {
+.tabs-wrapper p {
     padding: 5px;    
 }
 
@@ -1041,4 +1056,93 @@ legend {
 }
 .district-info h3 a:hover {
     text-decoration: underline;
+}
+
+/** Details Page **/
+.info-box {
+    margin-top: 20px;
+    position: relative;
+    background: #fff;
+    border: #ddd 1px solid;
+}
+
+.info-box .breadcrumb {
+    font-size: 12px;
+}
+
+.poi-details {
+    clear: both;
+    width: 100%;
+    float: left;
+    position: relative;
+    background: #fff;
+    border-bottom: #ddd 1px solid;
+    border-left: #ddd 1px solid;
+    border-right: #ddd 1px solid;
+}
+
+.poi-details .main-image {
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.info-wrapper .main-info {
+    float: left;
+    margin: 0;
+}
+
+.main-info-title {
+    float: left;
+    width: 98%;
+    border-bottom: #ccc 1px dashed;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    min-height: 53px;
+}
+
+.main-info-title h1 {
+    font-weight: 700;
+    float: left;
+    padding: 5px 0 2px 0;
+    font-size: 19px;
+}
+.main-info-title h3 {
+    color: #888;
+    padding: 2px;
+    font-size: 13px;
+    clear: both;
+}
+
+.main-info-title h3 a:hover {
+    text-decoration: underline;
+}
+
+.main-info-content ul {
+    text-align: justify;
+    list-style-type: none;
+    font-size: 14px;
+    float:left;
+    width: 100%;
+}
+
+.main-info-content ul li {
+    padding-bottom: 15px;
+}
+.main-info-content ul li p{
+    word-wrap: break-word;
+}
+
+
+.main-info-content ul li span {
+    font-weight: bold;
+}
+
+.geo-info {
+    float: right !important;
+    border-left: #eee 1px solid;
+    padding: 10px 0 0 20px;
+    margin: 0;
 }

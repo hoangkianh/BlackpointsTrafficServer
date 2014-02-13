@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:if test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
-    <c:redirect url="/" />
+    <c:redirect url="/login.do" />
 </c:if>
 <!DOCTYPE html>
 <html>

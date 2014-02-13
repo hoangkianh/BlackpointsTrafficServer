@@ -25,7 +25,7 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private String image;
     private String geometry;
     private int categoryID;
-    private double rating;
+    private int rating;
     private String bbox;
     private String geoJson;
     private String createdOnDate;
@@ -37,9 +37,13 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int deletedByUserID;
     private String restoreOnDate;
     private int restoreByUserID;
+    private String cityName;
+    private String districtName;
+    private String categoryName;
+    private String ratingName;
 
     private List<POI> poiList;
-
+    private List<POI> poiListInDistrict;
 //    @Override
 //    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 //        ActionErrors err = new ActionErrors();
@@ -133,11 +137,11 @@ public class POIForm extends org.apache.struts.action.ActionForm {
         this.categoryID = categoryID;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -239,5 +243,45 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     public List<Category> getCategoryList() {
         return new CategoryDAO().getAllCategories();
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public void setRatingName(String ratingName) {
+        this.ratingName = ratingName;
+    }
+    
+    public String getRatingName () {
+        return this.ratingName;
+    }
+
+    public List<POI> getPoiListInDistrict() {
+        return poiListInDistrict;
+    }
+
+    public void setPoiListInDistrict(List<POI> poiListInDistrict) {
+        this.poiListInDistrict = poiListInDistrict;
     }
 }

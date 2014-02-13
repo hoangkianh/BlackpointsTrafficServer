@@ -118,7 +118,7 @@
         <section class="enable">
             <div class="container">
                 <div class="row">
-                    <div class="span12 district-highlight">
+                    <div class="span12 tabs-wrapper">
                         <h2 id="inDistrict"></h2>
                         <p>
                             <c:choose>

@@ -80,12 +80,10 @@ public class POIServices {
     @GET
     @Path("getPOIInDistrict/{district}/{city}")
     public String getPOIInDistrict(@PathParam("district") String district, @PathParam("city") String city) {
-        System.out.println(district);
         List<POI> inDistrictList = new ArrayList<POI>();
         City c = new CityDAO().getCityByName(city);
         District d = new DistrictDAO().getDistrictByName(district, c.getId());
         if (c != null && d != null) {
-            System.out.println(d.getName());
             for (POI poi : pois) {
                 if (poi.getCity() == c.getId() && poi.getDistrict() == d.getId()) {
                     inDistrictList.add(poi);

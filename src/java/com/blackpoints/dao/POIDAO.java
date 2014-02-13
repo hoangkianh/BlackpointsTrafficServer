@@ -45,7 +45,7 @@ public class POIDAO {
                 p.setImage(rs.getString("image"));
                 p.setGeometry(rs.getString("geometry"));
                 p.setCategoryID(rs.getInt("categoryID"));
-                p.setRating(rs.getDouble("rating"));
+                p.setRating(rs.getInt("rating"));
                 p.setBbox(rs.getString("bbox"));
                 p.setGeoJson(rs.getString("geoJson"));
                 p.setDeleted(rs.getBoolean("isDeleted"));
@@ -107,7 +107,7 @@ public class POIDAO {
                 p.setImage(rs.getString("image"));
                 p.setGeometry(rs.getString("geometry"));
                 p.setCategoryID(rs.getInt("categoryID"));
-                p.setRating(rs.getDouble("rating"));
+                p.setRating(rs.getInt("rating"));
                 p.setBbox(rs.getString("bbox"));
                 p.setGeoJson(rs.getString("geoJson"));
                 p.setDeleted(rs.getBoolean("isDeleted"));
@@ -159,7 +159,7 @@ public class POIDAO {
             stm.setString(6, p.getImage());
             stm.setString(7, p.getGeometry());
             stm.setInt(8, p.getCategoryID());
-            stm.setDouble(9, p.getRating());
+            stm.setInt(9, p.getRating());
             stm.setString(10, p.getBbox());
             stm.setString(11, p.getGeoJson());
             stm.setBoolean(12, p.isDeleted());
@@ -194,7 +194,7 @@ public class POIDAO {
             stm.setString(4, p.getImage());
             stm.setString(5, p.getGeometry());
             stm.setInt(6, p.getCategoryID());
-            stm.setDouble(7, p.getRating());
+            stm.setInt(7, p.getRating());
             stm.setString(8, p.getBbox());
             stm.setString(9, p.getGeoJson());
             stm.setBoolean(10, p.isDeleted());
@@ -274,5 +274,69 @@ public class POIDAO {
             DBUtil.closeAll(conn, stm, rs);
         }
         return count;
+    }
+
+    public List<POI> getAllPOIsInDistrict(int city, int district) {
+        List<POI> list = new ArrayList<POI>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "SELECT id, name, address, city, district, description, image"
+                + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
+                + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
+                + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
+                + " FROM poi WHERE city=? AND district=?";
+        try {
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, city);
+            stm.setInt(2, district);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                POI p = new POI();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCity(rs.getInt("city"));
+                p.setDistrict(rs.getInt("district"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setGeometry(rs.getString("geometry"));
+                p.setCategoryID(rs.getInt("categoryID"));
+                p.setRating(rs.getInt("rating"));
+                p.setBbox(rs.getString("bbox"));
+                p.setGeoJson(rs.getString("geoJson"));
+                p.setDeleted(rs.getBoolean("isDeleted"));
+                p.setCreatedByUserID(rs.getInt("createdByUserID"));
+                p.setUpdatedByUserID(rs.getInt("updatedByUserID"));
+                p.setDeletedByUserID(rs.getInt("deletedByUserID"));
+                p.setRestoreByUserID(rs.getInt("restoreByUserID"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
+                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
+                if (createdDateSQL != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
+                if (deletedDateSQL != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                }
+                if (restoreDateSQL != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                }
+
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
     }
 }

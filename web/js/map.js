@@ -70,7 +70,7 @@ var MapsLib = {
                         if (MapsLib.infoWindow) {
                             MapsLib.infoWindow.close();
                         }
-                        MapsLib.infoWindow = new google.maps.InfoWindow({
+                        MapsLib.infoWindow = new InfoBubble({
                             content: "<h1>Bạn đang ở đây</h1>" + MapsLib.address
                         });
                         MapsLib.infoWindow.open(map, MapsLib.addrMarker);
@@ -166,15 +166,15 @@ var MapsLib = {
         return latLngArr;
     },
     drawPOI: function(obj) {
-        var infoContent = "<div id='content'>" +
-                "<img src='" + obj.image + "' height='100' width='100'" +
+        var infoContent = "<div class='content'>" +
+                "<img src='" + obj.image + "' height='100' width='100' />" +
                 "<h2>" + obj.name + "</h2>" +
-                "<p><ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
+                "<ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
                 "<li><b>Mô tả: </b>" + obj.description + "</li>" +
                 "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
                 "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
 // TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
-                "</ul></p>" +
+                "</ul>" +
                 "</div>";
 
         var marker = new google.maps.Marker({
@@ -187,42 +187,12 @@ var MapsLib = {
             if (MapsLib.infoWindow) {
                 MapsLib.infoWindow.close();
             }
-            MapsLib.infoWindow = new google.maps.InfoWindow({
-                content: infoContent
+            MapsLib.infoWindow = new InfoBubble({
+                content: infoContent,
+                minWidth: 300,
+                maxWidth: 500
             });
             MapsLib.infoWindow.open(map, marker);
-        });
-        MapsLib.markerArr.push(marker);
-    },
-    drawTempPOI: function(obj) {
-        var content = "<div id='content'>" +
-                "<img src='" + obj.image + "'" +
-                "<h2>" + obj.name + "</h2>" +
-                "<p>Địa điểm này chưa được xác nhận, </p>" +
-                "<p><ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
-                "<li><b>Mô tả: </b>" + obj.description + "</li>" +
-                "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
-                "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
-// TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
-                "</ul></p>" +
-                "</div>";
-        var info = new google.maps.InfoWindow({
-            content: content,
-            maxWidth: 400
-        });
-        var marker = new google.maps.Marker({
-            position: MapsLib.parseGeomString(obj.geometry)[0][0],
-            map: map,
-            title: obj.name,
-            icon: obj.markerIcon
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-            if (info.getMap() === undefined || info.getMap() === null) {
-                info.open(map, marker);
-            }
-            else {
-                info.close();
-            }
         });
         MapsLib.markerArr.push(marker);
     },
@@ -427,8 +397,6 @@ var MapsLib = {
         });
     },
     openInfoWindow: function(idx) {
-        console.log(MapsLib.markerArr);
-        console.log(MapsLib.markerArr[idx]);
         google.maps.event.trigger(MapsLib.markerArr[idx], 'click');
     }
 };

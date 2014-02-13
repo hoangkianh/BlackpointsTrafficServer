@@ -16,7 +16,7 @@ public class POI {
     private String markerIcon;
     private String geometry;
     private int categoryID;
-    private double rating;
+    private int rating;
     private String bbox;
     private String geoJson;
     private String createdOnDate;
@@ -109,11 +109,11 @@ public class POI {
         this.categoryID = categoryID;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
