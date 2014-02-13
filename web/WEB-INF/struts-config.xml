@@ -63,7 +63,7 @@
             <forward name="forgotPassFailure" path="/failure.do?f=5" />
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
-        <action input="/" name="POIForm" path="/details" scope="request" type="com.blackpoints.struts.action.GetPOIDetails">
+        <action input="/" name="POIForm" path="/details" scope="request" type="com.blackpoints.struts.action.GetPOIDetailsAction">
             <forward name="getPOIDetailsSuccess" path="/pages/details.jsp" />
             <forward name="getPOIDetailsFailure" path="/failure.do?f=7" />
         </action>

@@ -88,6 +88,17 @@ var MapsLib = {
             });
         }
     },
+    getPOIByID: function(id) {
+        $.ajax({
+            type: "GET",
+            url: "service/POI/getPOIByID/" + id,
+            dataType: "json",
+            success: function(obj) {
+                MapsLib.drawPOI(obj);
+                map.setCenter(MapsLib.parseGeomString(obj.geometry)[0][0]);
+            }
+        });
+    },
     getPOIInRadius: function() {
         var lat;
         var lng;
@@ -173,7 +184,6 @@ var MapsLib = {
                 "<li><b>Mô tả: </b>" + obj.description + "</li>" +
                 "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
                 "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
-// TODO:                "<li><a href='home.do'> Chi tiết </a></li>" +
                 "</ul>" +
                 "</div>";
 

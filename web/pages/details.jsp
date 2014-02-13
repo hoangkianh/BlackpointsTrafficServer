@@ -77,7 +77,7 @@
                             <div class="main-info span4">
                                 <div class="main-info-title">
                                     <h1><bean:write name="POIForm" property="name" /></h1>
-                                    <h3><a href="#"><bean:write name="POIForm" property="categoryName" /></a> - <a href="#"><bean:write name="POIForm" property="ratingName" /></a></h3>
+                                    <h3><bean:write name="POIForm" property="categoryName" /> - <bean:write name="POIForm" property="ratingName" /></h3>
                                 </div>
                                 <div class="main-info-content">
                                     <ul>
@@ -127,7 +127,7 @@
                                                     <h4><bean:write name="p" property="address"/></h4>
                                                     <logic:notEmpty name="p" property="description">
                                                         <li><span></span><p><bean:write name="p" property="description" /></p></li>
-                                                        </logic:notEmpty>
+                                                            </logic:notEmpty>
                                                 </div>
                                             </div>
                                             <bean:write name="p" property="name" />
@@ -140,9 +140,17 @@
                 </div>
         </section>
         <%@include file="../includes/footer.jsp" %>
-        <%@include file="../includes/includeJS.jsp" %>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
+        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript">
             $(function() {
+                MapsLib.initialize();
+                MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
+                
                 $("#tabs").tabs();
             });
         </script>

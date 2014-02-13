@@ -4,12 +4,10 @@ import com.blackpoints.classes.City;
 import com.blackpoints.classes.District;
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
-import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.dao.CityDAO;
 import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.POIDAO;
-import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.utils.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -43,9 +41,25 @@ public class POIServices {
      */
     @GET
     @Path("getAll")
-    @Produces("application/json")
+    @Produces("application/json; charset=UTF-8")
     public String getAll() {
         String json = new Gson().toJson(pois);
+        return json;
+    }
+    
+    @GET
+    @Path("getPOIByID/{id}")
+    @Produces("application/json; charset=UTF-8")
+    public String getPOIByID(@PathParam("id") int id) {
+        String json = "";
+        CategoryDAO categoryDAO = new CategoryDAO();
+        for (POI poi : pois) {
+            if (poi.getId() == id) {
+                poi.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
+                json = new Gson().toJson(poi);
+                break;
+            }
+        }
         return json;
     }
 
@@ -91,12 +105,5 @@ public class POIServices {
             }
         }
         return new Gson().toJson(inDistrictList);
-    }
-    
-    @GET
-    @Path("getDistrict/{city}")
-    @Produces("application/json; charset=UTF-8")
-    public String getDistrict(@PathParam("city") int city) {
-        return "";
     }
 }
