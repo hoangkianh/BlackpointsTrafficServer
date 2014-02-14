@@ -40,8 +40,13 @@ public class GetPOIDetailsAction extends org.apache.struts.action.Action {
             throws Exception {
         POIForm poif = (POIForm) form;
         int id = 0;
-        if (request.getParameter("id") != null) {
-            id = Integer.parseInt(request.getParameter("id"));
+        if (request.getParameter("id") != null) {            
+            try {
+                id = Integer.parseInt(request.getParameter("id"));
+            } catch (NumberFormatException ex) {
+                System.out.println(ex.getMessage());
+                return mapping.findForward("getPOIDetailsFailure");
+            }
         } else {
             return mapping.findForward("getPOIDetailsFailure");
         }

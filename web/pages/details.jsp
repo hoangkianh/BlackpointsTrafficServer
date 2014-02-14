@@ -130,7 +130,6 @@
                                                             </logic:notEmpty>
                                                 </div>
                                             </div>
-                                            <bean:write name="p" property="name" />
                                         </logic:equal>
                                     </logic:iterate>
                                 </div>
