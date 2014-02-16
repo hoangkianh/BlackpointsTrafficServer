@@ -5,6 +5,7 @@
           "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 <struts-config>
     <form-beans>
+        <form-bean name="ChangePassForm" type="com.blackpoints.struts.form.ChangePassForm"/>
         <form-bean name="UpdateInfoForm" type="com.blackpoints.struts.form.UpdateInfoForm"/>
         <form-bean name="StatusForm" type="com.blackpoints.struts.form.StatusForm"/>
         <form-bean name="ForgotPassForm" type="com.blackpoints.struts.form.ForgotPassForm"/>
@@ -37,7 +38,7 @@
             <forward name="admin_loginSuccess" path="/admin.do" redirect="true" />
             <forward name="loginFailure" path="/login.do" />
         </action>
-        <action input="/" name="UserForm" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction">
+        <action input="/" name="UserForm" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction" validate="false">
             <forward name="logoutSuccess" path="/" redirect="true" />
         </action>
         <action input="/register.do" name="RegisterForm" path="/RegisterAction" scope="request" type="com.blackpoints.struts.action.RegisterAction">
@@ -73,6 +74,7 @@
             <forward name="getUserDetailsFailure" path="/failure.do?f=6" />
         </action>
         <action input="/updateinfo.do" name="UpdateInfoForm" path="/UpdateInfoAction" scope="request" type="com.blackpoints.struts.action.UpdateInfoAction"/>
+        <action input="/updateinfo.do" name="ChangePassForm" path="/ChangePassAction" scope="request" type="com.blackpoints.struts.action.ChangePassAction"/>
         <action input="/" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
         <action input="/poi.do" name="TempPOIForm" path="/AddNewTempPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewTempPOIAction"/>
         <action path="/poi" forward="/pages/poi.jsp"/>

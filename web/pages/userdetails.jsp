@@ -115,10 +115,42 @@
                                     <label for="description" class="error"><html:errors property="description" /></label>
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-primary" value="<bean:message key="updateinfo.btnRegister" />"/>
+                            <input type="submit" class="btn btn-primary" value="<bean:message key="updateinfo.btnUpdate" />"/>
                         </html:form>
                     </div>
-                    <div id="change-pass"></div>
+                    <div id="change-pass">
+                        <html:form action="/ChangePassAction" method="POST" styleClass="form-horizontal my-form" styleId="changepassForm">
+                            <html:hidden name="UserForm" property="userID" />
+                            <div class="control-group">
+                                <label class="control-label" for="oldPass">
+                                    <bean:message key="updateinfo.oldPass" />
+                                </label>
+                                <div class="controls">
+                                    <input type="password" id="oldPass" name="oldPass" placeholder="<bean:message key="updateinfo.oldPass" />" />
+                                    <label for="oldPass" class="error"><html:errors property="oldPass" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="newPass">
+                                    <bean:message key="updateinfo.newPass" />
+                                </label>
+                                <div class="controls">
+                                    <input type="password" id="newPass" name="newPass" placeholder="<bean:message key="updateinfo.newPass" />" />
+                                    <label for="newPass" class="error"><html:errors property="newPass" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="newPass2">
+                                    <bean:message key="updateinfo.newPass2" />
+                                </label>
+                                <div class="controls">
+                                    <input type="password" id="newPass2" name="newPass2" placeholder="<bean:message key="updateinfo.newPass2" />" />
+                                    <label for="newPass2" class="error"><html:errors property="newPass2" /></label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="<bean:message key="updateinfo.btnUpdate" />"/>
+                        </html:form>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -165,13 +197,70 @@
                             }
                             msg = data.trim().split("~");
                             if (msg[0] === "success") {
-                                $("#messageDiv").addClass("alert-success")
+                                $("#messageDiv").addClass("alert-success").removeClass("alert-error");
                                 $("#message").html('<bean:message key="updateinfo.success"/>');
-                                
+
                                 $("#menu-main li:eq(1)").html('<a href="updateinfo.do">' + msg[1] + '</a>');
                             } else {
-                                $("#messageDiv").addClass("alert-error")
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
                                 $("#message").html('<bean:message key="updateinfo.error"/>');
+                            }
+                        }
+                    });
+                }
+            });
+
+            $("#changepassForm").validate({
+                rules: {
+                    oldPass: {
+                        required: true
+                    },
+                    newPass: {
+                        required: true,
+                        maxlength: 30,
+                        minlength: 6
+                    },
+                    newPass2: {
+                        equalTo: "#newPass"
+                    }
+                },
+                messages: {
+                    oldPass: {
+                        required: "<bean:message key="errors.required" arg0="Mật khẩu cũ" />"
+                    },
+                    newPass: {
+                        required: "<bean:message key="errors.required" arg0="Mật khẩu mới" />",
+                        maxlength: "<bean:message key="errors.maxlength" arg0="Mật khẩu mới" arg1="30" />",
+                        minlength: "<bean:message key="errors.minlength" arg0="Mật khẩu mới" arg1="6" />"
+                    },
+                    newPass2: {
+                        equalTo: "<bean:message key="errors.equal" arg0="Mật khẩu" arg1="mật khẩu nhập lại" />"
+                    }
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        type: "POST",
+                        url: "ChangePassAction.do",
+                        data: $("#changepassForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="updateinfo.messageDiv"/>');
+                            }
+
+                            if (data.trim() === "success") {
+                                $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                $("#message").html('<bean:message key="updateinfo.success"/>');
+                                
+                                $("#oldPass").val("");
+                                $("#newPass").val("");
+                                $("#newPass2").val("");
+                            } else {
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                if (data.trim().indexOf("passNotCorrect") !== -1) {
+                                    $("#message").html('<bean:message key="errors.notCorrect" arg0="Mật khẩu cũ"/>');
+                                } else {
+                                    $("#message").html('<bean:message key="updateinfo.error"/>');
+                                }
                             }
                         }
                     });

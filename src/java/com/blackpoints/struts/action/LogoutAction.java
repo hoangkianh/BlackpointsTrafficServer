@@ -35,7 +35,7 @@ public class LogoutAction extends org.apache.struts.action.Action {
         if (cookie != null) {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
-        }
+        } 
 
         return mapping.findForward("logoutSuccess");
     }

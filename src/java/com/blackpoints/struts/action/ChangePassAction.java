@@ -1,17 +1,15 @@
 package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
-import com.blackpoints.classes.UserGroup;
 import com.blackpoints.dao.UserDAO;
-import com.blackpoints.dao.UserGroupDAO;
-import com.blackpoints.struts.form.UpdateInfoForm;
+import com.blackpoints.struts.form.ChangePassForm;
 import com.blackpoints.utils.CookieUtils;
+import com.blackpoints.utils.MD5Hashing;
 import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class UpdateInfoAction extends org.apache.struts.action.Action {
+public class ChangePassAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -36,7 +34,7 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        UpdateInfoForm infoForm = (UpdateInfoForm) form;
+        ChangePassForm passForm = (ChangePassForm) form;
         UserDAO userDAO = new UserDAO();
         PrintWriter out = response.getWriter();
         String kq = "success";
@@ -61,32 +59,21 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
 
             if (u == null) {
                 kq = "error";
+            } else {
+                if (!u.getPassword().equals(MD5Hashing.encryptPassword(passForm.getOldPass()))) {                    
+                    kq = "error" + "~passNotCorrect";
+                } else {
+                    u.setPassword(MD5Hashing.encryptPassword(passForm.getNewPass()));
+                }
             }
-
-            BeanUtils.copyProperties(u, infoForm);
 
             if (!userDAO.updateUser(u)) {
                 kq = "error";
             }
-
-            if (kq.equals("success")) {
-                Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
-                if (cookie != null) {
-                    UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
-                    cookie.setValue(u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
-                    cookie.setMaxAge(7 * 24 * 60 * 60);
-                    response.addCookie(cookie);
-
-                    session.setAttribute("blackpoints",
-                            u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
-                }
-            }
-            
-            kq += "~" + u.getDisplayName();
-        } catch (Exception ex) {
+        } catch (Exception e) {
             kq = "error";
         }
-
+        
         out.print(kq);
         out.flush();
 
