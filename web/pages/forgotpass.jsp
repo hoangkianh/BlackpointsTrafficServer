@@ -13,12 +13,12 @@
         <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
     </c:if>
     <c:choose>
-            <c:when test="${userStr[3] ne 3}">
-                <c:redirect url="/admin.do" />                
-            </c:when>
-            <c:otherwise>
-                <c:redirect url="/" />                
-            </c:otherwise>
+        <c:when test="${userStr[3] ne 3}">
+            <c:redirect url="/admin.do" />                
+        </c:when>
+        <c:otherwise>
+            <c:redirect url="/" />                
+        </c:otherwise>
     </c:choose>
 </c:if>
 <!DOCTYPE html>
@@ -40,36 +40,9 @@
                                     <li>
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
-                                    <c:choose>
-                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
-                                        <li>
-                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                            </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li>
-                                            <a href="#">
-                                                <c:choose>
-                                                    <c:when test="${not empty sessionScope.blackpoints}">
-                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
-                                                    </c:when>
-                                                    <c:otherwise>                                                        
-                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                ${userStr[2]}
-                                            </a>
-                                        </li>
-                                        <c:if test="${userStr[3] ne 3}">
-                                            <li>
-                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
-                                            </li>
-                                        </c:if>
-                                        <li>
-                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
-                                            </li>
-                                    </c:otherwise>
-                                </c:choose>
+                                    <li>
+                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -86,8 +59,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="control-group">
-                                    <input type="text" id="email" name="email" placeholder="<bean:message key="forgotpass.email" />"
-                                           value="<bean:write name="ReActivateForm" property="email" />" />
+                                    <input type="text" id="email" name="email" placeholder="<bean:message key="forgotpass.email" />"/>
                                     <label for="email" class="error"><html:errors property="email" /></label>
                                 </div>
                             </div>
@@ -114,12 +86,12 @@
                     success: function(data) {
                         if (data === "false") {
                             exist = true;
-                    } else {
-                        exist = false;
+                        } else {
+                            exist = false;
+                        }
                     }
-                }
-            });
-            return this.optional(element) || exist;
+                });
+                return this.optional(element) || exist;
             }, "<bean:message key="errors.notExist" arg0="Email" />");
 
             $("#forgotpassForm").validate({

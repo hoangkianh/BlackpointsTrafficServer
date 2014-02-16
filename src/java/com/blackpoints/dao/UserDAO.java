@@ -63,6 +63,51 @@ public class UserDAO {
         return list;
     }
 
+    public User getUserByID(int id) {
+        User u = null;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT * FROM user WHERE userID=?");
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                u = new User();
+                u.setUserID(rs.getInt("userID"));
+                u.setUserName(rs.getString("userName"));
+                u.setPassword(rs.getString("password"));
+                u.setDisplayName(rs.getString("displayName"));
+                u.setDescription(rs.getString("description"));
+                u.setEmail(rs.getString("email"));
+                u.setPhoto(rs.getString("photo"));
+                u.setGroupID(rs.getInt("groupID"));
+                u.setActivated(rs.getBoolean("isActivated"));
+                u.setSalt(rs.getString("salt"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
+                java.sql.Date activatedDateSQL = rs.getDate("activatedOnDate");
+                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
+                if (createdDateSQL != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                }
+                if (activatedDateSQL != null) {
+                    u.setActivatedOnDate(sdf.format(new Date(activatedDateSQL.getTime())));
+                }
+                if (updatedDateSQL != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return u;
+    }
+    
     public User getUserByEmail(String email) {
         User u = null;
         Connection conn = DBUtil.getConnection();
@@ -142,18 +187,17 @@ public class UserDAO {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE user SET userName=?, password=?, displayName=?"
+            stm = conn.prepareStatement("UPDATE user SET password=?, displayName=?"
                     + ", description=?, email=?, photo=?, groupID=?, salt=?, updatedOnDate=NOW()"
                     + " WHERE userID=?");
-            stm.setString(1, u.getUserName());
-            stm.setString(2, u.getPassword());
-            stm.setString(3, u.getDisplayName());
-            stm.setString(4, u.getDescription());
-            stm.setString(5, u.getEmail());
-            stm.setString(6, u.getPhoto());
-            stm.setInt(7, u.getGroupID());
-            stm.setString(8, u.getSalt());
-            stm.setInt(9, u.getUserID());
+            stm.setString(1, u.getPassword());
+            stm.setString(2, u.getDisplayName());
+            stm.setString(3, u.getDescription());
+            stm.setString(4, u.getEmail());
+            stm.setString(5, u.getPhoto());
+            stm.setInt(6, u.getGroupID());
+            stm.setString(7, u.getSalt());
+            stm.setInt(8, u.getUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

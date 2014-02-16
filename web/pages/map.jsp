@@ -42,7 +42,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <li>
-                                            <a href="#">
+                                            <a href="updateinfo.do">
                                                 <c:choose>
                                                     <c:when test="${not empty sessionScope.blackpoints}">
                                                         <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>

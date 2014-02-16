@@ -29,32 +29,38 @@
                                     <li>
                                     <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                                     </li>
-                                    <li>
-                                    <html:link action="/map" ><bean:message key="navbar.map"/></html:link>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                        <c:choose>
-                                            <c:when test="${not empty sessionScope.blackpoints}">
-                                                <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
-                                            </c:when>
-                                            <c:otherwise>                                                        
-                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
-                                            </c:otherwise>
-                                        </c:choose>
-                                        ${userStr[2]}
-                                    </a>
-                                </li>
-                                <c:if test="${userStr[3] ne 3}">
-                                    <li>
-                                        <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
-                                    </li>
-                                </c:if>
-                                <li>
-                                    <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
-                                    </li>
-                                </ul>
-                            </nav>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
+                                        <li>
+                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
+                                            </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <a href="updateinfo.do">
+                                                <c:choose>
+                                                    <c:when test="${not empty sessionScope.blackpoints}">
+                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
+                                                    </c:when>
+                                                    <c:otherwise>                                                        
+                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                ${userStr[2]}
+                                            </a>
+                                        </li>
+                                        <c:if test="${userStr[3] ne 3}">
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                            </li>
+                                        </c:if>
+                                        <li>
+                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
+                                            </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </ul>
+                        </nav>
                         </div>
                     </div>
                 </div>

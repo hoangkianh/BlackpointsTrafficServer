@@ -1,5 +1,6 @@
 package com.blackpoints.struts.action;
 
+import com.blackpoints.utils.CookieUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,15 +31,12 @@ public class LogoutAction extends org.apache.struts.action.Action {
             throws Exception {
         HttpSession session = request.getSession(true);
         session.removeAttribute("blackpoints");
-        
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("blackpoints") || cookie.getName().equals("blackpoints")) {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
+        Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
+        if (cookie != null) {
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
         }
-        
+
         return mapping.findForward("logoutSuccess");
     }
 }

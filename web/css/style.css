@@ -919,6 +919,7 @@ footer p {
     color: #FF0000;
 }
 
+
 legend {
     border-bottom: 1px solid #E95B37;
     margin-bottom: 0;
@@ -1145,4 +1146,18 @@ legend {
     border-left: #eee 1px solid;
     padding: 10px 0 0 20px;
     margin: 0;
+}
+
+/* form in tabs */
+#tabs .control-label {
+    width: 100px;
+    text-align: left;
+}
+
+#tabs .controls {
+    margin-left: 110px;
+}
+
+#tabs .controls input[type=text], input[type=password] {
+    width: 70%;
 }

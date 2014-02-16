@@ -29,7 +29,7 @@
                             </c:when>
                             <c:otherwise>
                                 <li>
-                                    <a href="#">
+                                    <a href="updateinfo.do">
                                         <c:choose>
                                             <c:when test="${not empty sessionScope.blackpoints}">
                                                 <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
@@ -43,7 +43,6 @@
                                 </li>
                                 <c:if test="${userStr[3] ne 3}">
                                     <li>
-                                        <%-- TODO: add link --%>
                                         <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                     </li>
                                 </c:if>

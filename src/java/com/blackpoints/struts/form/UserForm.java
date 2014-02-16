@@ -1,7 +1,14 @@
 package com.blackpoints.struts.form;
 
 import com.blackpoints.classes.User;
+import com.blackpoints.dao.UserDAO;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
 /**
  *
@@ -19,49 +26,79 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String lastLogin;
     private int groupID;
     private String salt;
-    private boolean isActivated;
+    private boolean activated;
     private String createdOnDate;
     private String activatedOnDate;
     private String updatedOnDate;
     private List<User> userList;
     private int level;
 
-//    @Override
-//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-//        ActionErrors err = new ActionErrors();
-//        if (userName == null || userName.trim().length() == 0) {
-//            err.add("userName", new ActionMessage("errors.required", "Tên đăng nhập"));
-//        }
-//        if (userName.trim().length() < 6 || userName.trim().length() > 30) {
-//            err.add("userName", new ActionMessage("errors.range", "Tên đăng nhập có độ dài", "6", "30", "kí tự"));
-//        }
-//        if (password == null || password.trim().length() == 0) {
-//            err.add("password", new ActionMessage("errors.required", "Mật khẩu"));
-//        }
-//        if (password.trim().length() < 6 || password.trim().length() > 30) {
-//            err.add("password", new ActionMessage("errors.range", "Mật khẩu có độ dài", "6", "30", "kí tự"));
-//        }
-//        if (displayName != null && displayName.trim().length() > 30) {
-//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
-//        }
-//        if (email == null || email.trim().length() == 0) {
-//            err.add("email", new ActionMessage("errors.required", "Email"));
-//        }
-//        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-//                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(email);
-//        if (!matcher.matches()) {
-//            err.add("email", new ActionMessage("errors.email", email));
-//        }
-//        if (groupID <= 0) {
-//            err.add("groupID", new ActionMessage("errors.required", "nhóm người dùng"));
-//        }
-//        if (description.trim().length() > 200) {
-//            err.add("description", new ActionMessage("errors.maxlength", "Mô tả", "200"));
-//        }
-//        return err;
-//    }
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors err = new ActionErrors();
+        String regex;
+        Pattern pattern;
+        Matcher matcher;
+
+        if (userName == null || userName.trim().length() == 0) {
+            err.add("userName", new ActionMessage("errors.required", "Tên đăng nhập"));
+        } else {
+            if (userName.trim().length() < 6 || userName.trim().length() > 30) {
+                err.add("userName", new ActionMessage("errors.range", "Tên đăng nhập có độ dài", "6", "30", "kí tự"));
+            } else {
+                regex = "^[a-zA-Z0-9_]*$";
+                pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(userName);
+
+                if (!matcher.matches()) {
+                    err.add("userName", new ActionMessage("errors.userName"));
+                } else {
+                    if (new UserDAO().userNameIsExist(userName)) {
+                        err.add("userName", new ActionMessage("errors.isExist", "Tên đăng nhập"));
+                    }
+                }
+            }
+        }
+        // validate displayName
+        if (displayName == null || displayName.trim().length() == 0) {
+            err.add("displayName", new ActionMessage("errors.required", "Tên hiển thị"));
+        } else {
+            if (displayName.trim().length() < 6 || displayName.trim().length() > 30) {
+                err.add("displayName", new ActionMessage("errors.range", "Tên hiển thị", "6", "30", "kí tự"));
+            }
+        }
+
+        // validate password
+        if (password == null || password.trim().length() == 0) {
+            err.add("password", new ActionMessage("errors.required", "Mật khẩu"));
+        } else {
+            if (password.trim().length() < 6 || password.trim().length() > 30) {
+                err.add("password", new ActionMessage("errors.range", "Mật khẩu có độ dài", "6", "30", "kí tự"));
+            }
+        }
+        
+        // validate email
+        if (email == null || email.trim().length() == 0) {
+            err.add("email", new ActionMessage("errors.required", "Email"));
+        } else {
+            regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                err.add("email", new ActionMessage("errors.email"));
+            } else {
+                if (new UserDAO().emailIsExist(email)) {
+                    err.add("email", new ActionMessage("errors.isExist", "Email"));
+                }
+            }
+        }
+        if (description != null && description.trim().length() > 200) {
+            err.add("description", new ActionMessage("errors.maxlength", "Thông tin thêm", "200"));
+        }
+        
+        return err;
+    }
 
     public int getUserID() {
         return userID;
@@ -175,12 +212,12 @@ public class UserForm extends org.apache.struts.action.ActionForm {
         this.salt = salt;
     }
 
-    public boolean isIsActivated() {
-        return isActivated;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setIsActivated(boolean isActivated) {
-        this.isActivated = isActivated;
+    public void setActivated(boolean isActivated) {
+        this.activated = isActivated;
     }
 
     public String getActivatedOnDate() {
