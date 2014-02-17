@@ -13,6 +13,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
+        <%@include file="../includes/includeJS.jsp" %>
+        <script type="text/javascript">
+            $(function() {
+                $('body').removeClass('noscript');
+                $('.disable').remove();
+                $("#tabs").tabs();
+            });
+        </script>
     </head>
     <body class="noscript">
         <div class="disable">
@@ -56,7 +64,7 @@
                                         </li>
                                         <c:if test="${userStr[3] ne 3}">
                                             <li>
-                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                                <a href="admin.do" title="<bean:message key="navbar.controlPanel"/>"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                             </li>
                                         </c:if>
                                         <li>
@@ -144,13 +152,5 @@
                 </div>
         </section>
         <%@include file="../includes/footer.jsp" %>
-        <%@include file="../includes/includeJS.jsp" %>
-        <script type="text/javascript">
-            $(function() {                
-                $('body').removeClass('noscript');
-                $('.disable').remove();
-                $("#tabs").tabs();
-            });
-        </script>
     </body>
 </html:html>

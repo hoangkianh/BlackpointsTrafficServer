@@ -50,7 +50,7 @@
                                 </li>
                                 <c:if test="${userStr[3] ne 3}">
                                     <li>
-                                        <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                        <a href="admin.do" title="<bean:message key="navbar.controlPanel"/>"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                     </li>
                                 </c:if>
                                 <li>

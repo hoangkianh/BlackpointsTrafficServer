@@ -55,7 +55,7 @@
                                         </li>
                                         <c:if test="${userStr[3] ne 3}">
                                             <li>
-                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                                <a href="admin.do" title="<bean:message key="navbar.controlPanel"/>"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                             </li>
                                         </c:if>
                                         <li>
@@ -152,9 +152,6 @@
                         </html:form>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-
             </div>
         </div>
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>

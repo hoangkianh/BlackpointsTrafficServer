@@ -12,8 +12,28 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
+        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                MapsLib.initialize();
+                MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
+                
+                $('body').removeClass('noscript');
+                $('.disable').remove();
+                $("#tabs").tabs();
+            });
+        </script>
     </head>
-    <body>
+    <body class="noscript">
+        <div class="disable">
+            <p><bean:message key="warning.javascript" /></p>
+            <p><bean:message key="warning.javascript2" /></p>
+        </div>
         <div class="navbar-wrapper">
             <div class="navbar navbar-inverse navbar-static-top">
                 <div class="navbar-inner">
@@ -51,7 +71,7 @@
                                         </li>
                                         <c:if test="${userStr[3] ne 3}">
                                             <li>
-                                                <a href="#"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
+                                                <a href="admin.do" title="<bean:message key="navbar.controlPanel"/>"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
                                             </li>
                                         </c:if>
                                         <li>
@@ -145,19 +165,5 @@
                 </div>
         </section>
         <%@include file="../includes/footer.jsp" %>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="//code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
-        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
-        <script type="text/javascript" src="js/map.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                MapsLib.initialize();
-                MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
-                
-                $("#tabs").tabs();
-            });
-        </script>
     </body>
 </html>
