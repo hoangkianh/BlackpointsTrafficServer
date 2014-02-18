@@ -31,20 +31,20 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
-        <link type="text/css" rel="stylesheet" href="css/xcharts.min.css">
+        <link type="text/css" rel="stylesheet" href="css/morris.css">
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>        
-        <script type="text/javascript" src="js/d3.v3.min.js"></script>
-        <script type="text/javascript" src="js/xcharts.min.js"></script>
+        <script type="text/javascript" src="js/morris.min.js"></script>
+        <script type="text/javascript" src="js/raphael.min.js"></script>
     </head>
     <body>
-        <%@include file="../includes/navbar.jsp" %>
+        <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin.jsp" %>
         <section id="statistic">
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12">
-                        <a class="span3 tile" href="#">
+                        <a class="span3 tile" href="poilist.do">
                             <div class="tile-header">Số điểm đen</div>
                             <div class="tile-content-wrapper">
                                 <i class="fa fa-map-marker"></i>
@@ -103,85 +103,51 @@
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span12 chart">
-                        <div class="chart-header clearfix">
-                            <h3 class="pull-left">Số lượng điểm đen <small>trên toàn quốc</small></h3>
-                            <div class="btn-group pull-right">
-                                <a href="#" class="btn active">Biểu đồ cột</a>
-                                <a href="#" class="btn">Biểu đồ đường</a>
+                    <div class="span12">
+                        <div class="span8 chart bar-chart">
+                            <div class="chart-header clearfix">
+                                <h3 class="pull-left">Số lượng điểm đen <small>trên toàn quốc</small></h3>
+                            </div>
+                            <div class="chart-content-wrapper">
+                                <div class="chart-content" id="bar-chart"></div>
                             </div>
                         </div>
-                        <div class="chart-content-wrapper">
-                            <figure id="myChart" style="width: 98%; height: 300px"></figure>
-                            <script type="text/javascript">
-                                var tt = document.createElement('div'),
-                                        leftOffset = -(~~$('html').css('padding-left').replace('px', '') + ~~$('body').css('margin-left').replace('px', '')),
-                                        topOffset = 0;
-                                tt.className = 'tooltip top fade in';
-                                document.body.appendChild(tt);
-
-                                var data = {
-                                    "xScale": "time",
-                                    "yScale": "linear",
-                                    "main": [
-                                        {
-                                            "className": ".pizza",
-                                            "data": [
-                                                {
-                                                    "x": "2012-11-05",
-                                                    "y": 6
-                                                },
-                                                {
-                                                    "x": "2012-11-06",
-                                                    "y": 6
-                                                },
-                                                {
-                                                    "x": "2012-11-07",
-                                                    "y": 8
-                                                },
-                                                {
-                                                    "x": "2012-11-08",
-                                                    "y": 3
-                                                },
-                                                {
-                                                    "x": "2012-11-09",
-                                                    "y": 4
-                                                },
-                                                {
-                                                    "x": "2012-11-10",
-                                                    "y": 9
-                                                },
-                                                {
-                                                    "x": "2012-11-11",
-                                                    "y": 6
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                };
-                                var opts = {
-                                    "dataFormatX": function(x) {
-                                        return d3.time.format('%Y-%m-%d').parse(x);
-                                    },
-                                    "tickFormatX": function(x) {
-                                        return d3.time.format('%A')(x);
-                                    },
-                                    "mouseover": function(d, i) {
-                                        var pos = $(this).offset();
-                                        $(tt).html('<div class="arrow"></div><div class="tooltip-inner">' + d3.time.format('%A')(d.x) + ': ' + d.y + '</div>')
-                                                .css({top: topOffset + pos.top, left: pos.left + leftOffset})
-                                                .show();
-                                    },
-                                    "mouseout": function(x) {
-                                        $(tt).hide();
-                                    }
-                                };
-                                var myChart = new xChart('line-dotted', data, '#myChart', opts);
-                            </script>
+                        <div class="span4 chart donut-chart">
+                            <div class="chart-header clearfix">
+                                <h3 class="pull-left">Tỉ lệ điểm đen <small>theo các tỉnh thành</small></h3>
+                            </div>
+                            <div class="chart-content-wrapper">
+                                <div class="chart-content" id="donut-chart"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            Morris.Bar({
+                element: 'bar-chart',
+                data: [
+                    {y: '2006', a: 100},
+                    {y: '2007', a: 75},
+                    {y: '2008', a: 50},
+                    {y: '2009', a: 75},
+                    {y: '2010', a: 50},
+                    {y: '2011', a: 75},
+                    {y: '2012', a: 100}
+                ],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Series A']
+            });
+            Morris.Donut({
+                element: 'donut-chart',
+                data: [
+                    {label: "Download Sales", value: 12},
+                    {label: "In-Store Sales", value: 30},
+                    {label: "Mail-Order Sales", value: 20}
+                ]
+            });
+        </script>
     </body>
 </html>

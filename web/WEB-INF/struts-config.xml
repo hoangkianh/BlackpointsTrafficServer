@@ -35,7 +35,7 @@
         <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
             <forward name="normalUser_loginSuccess" path="/" redirect="true" />
-            <forward name="admin_loginSuccess" path="/admin.do" redirect="true" />
+            <forward name="admin_loginSuccess" path="/dashboard.do" redirect="true" />
             <forward name="loginFailure" path="/login.do" />
         </action>
         <action input="/" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction">
@@ -81,10 +81,11 @@
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
         <action path="/map" forward="/pages/map.jsp" name="POIForm" />
-        <action path="/dashboard" forward="/admin/dashboard.jsp" />
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />
         <action path="/home" forward="/" />
+        <action path="/dashboard" name="StatisticForm" forward="/admin/dashboard.jsp" />
+        <action path="/poilist" forward="/admin/poi-list.jsp" />
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

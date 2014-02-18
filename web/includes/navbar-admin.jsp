@@ -14,7 +14,7 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.blackpoints.list" /></a>
+                                        <a href="poilist.do"><bean:message key="navbar.admin.blackpoints.list" /></a>
                                     </li>
                                     <li>
                                         <a href="#"><bean:message key="navbar.admin.blackpoints.deleted" /></a>
