@@ -22,7 +22,7 @@
             $(function() {
                 MapsLib.initialize();
                 MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
-                
+
                 $('body').removeClass('noscript');
                 $('.disable').remove();
                 $("#tabs").tabs();
@@ -34,63 +34,13 @@
             <p><bean:message key="warning.javascript" /></p>
             <p><bean:message key="warning.javascript2" /></p>
         </div>
-        <div class="navbar-wrapper">
-            <div class="navbar navbar-inverse navbar-static-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="btn btn-navbar"  data-toggle="collapse" data-target=".nav-collapse">
-                            <i class="fa fa-bars"></i>
-                        </a>
-                        <h1 class="brand">
-                            <html:link action="/home"><bean:message key="navbar.webLogo"/></html:link>
-                            </h1>
-                            <nav class="pull-right nav-collapse collapse">
-                                <ul id="menu-main" class="nav">                                
-                                    <li>
-                                    <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
-                                    </li>
-                                <c:choose>
-                                    <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
-                                        <li>
-                                            <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                            </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li>
-                                            <a href="updateinfo.do">
-                                                <c:choose>
-                                                    <c:when test="${not empty sessionScope.blackpoints}">
-                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
-                                                    </c:when>
-                                                    <c:otherwise>                                                        
-                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                            
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                ${userStr[2]}
-                                            </a>
-                                        </li>
-                                        <c:if test="${userStr[3] ne 3}">
-                                            <li>
-                                                <a href="admin.do" title="<bean:message key="navbar.controlPanel"/>"><i class="fa fa-gear"></i> <bean:message key="navbar.controlPanel"/></a>
-                                            </li>
-                                        </c:if>
-                                        <li>
-                                            <html:link action="logout"><i class="fa fa-sign-out"></i> <bean:message key="logout" /></html:link>
-                                            </li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </ul>
-                        </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <section>
-                <div class="container">
-                    <div class="row">
-                        <div class="info-box span12">
-                            <ul class="breadcrumb">
-                                <li><a href="#"><bean:write name="POIForm" property="cityName"/></a><span class="divider">/</span></li>
+        <%@include file="../includes/navbar-alter.jsp" %>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="info-box span12">
+                        <ul class="breadcrumb">
+                            <li><a href="#"><bean:write name="POIForm" property="cityName"/></a><span class="divider">/</span></li>
                             <li class="active"><bean:write name="POIForm" property="districtName"/></li>
                         </ul>
                         <a href="poi.do" target="_blank" class="btn btn-primary" title="Thêm điểm đen mới" style="position: absolute; top: 15px; right: 0; width: auto;"><bean:message key="detail.addnewPOI" /></a>

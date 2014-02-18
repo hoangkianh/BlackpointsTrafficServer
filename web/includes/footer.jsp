@@ -8,7 +8,7 @@
             <article>
                 <div class="status">
                     <div class="header">
-                        <jsp:useBean id="status" class="com.blackpoints.struts.form.StatusForm">
+                        <jsp:useBean id="status" class="com.blackpoints.struts.form.StatisticForm">
                             <fmt:formatNumber value="${status.countPOI}" type="NUMBER" maxFractionDigits="3" />
                         </jsp:useBean> 
                         <bean:message key="footer.header.location" />

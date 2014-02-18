@@ -7,7 +7,7 @@
     <form-beans>
         <form-bean name="ChangePassForm" type="com.blackpoints.struts.form.ChangePassForm"/>
         <form-bean name="UpdateInfoForm" type="com.blackpoints.struts.form.UpdateInfoForm"/>
-        <form-bean name="StatusForm" type="com.blackpoints.struts.form.StatusForm"/>
+        <form-bean name="StatisticForm" type="com.blackpoints.struts.form.StatisticForm"/>
         <form-bean name="ForgotPassForm" type="com.blackpoints.struts.form.ForgotPassForm"/>
         <form-bean name="ReActivateForm" type="com.blackpoints.struts.form.ReActivateForm"/>
         <form-bean name="LoginForm" type="com.blackpoints.struts.form.LoginForm"/>
@@ -38,7 +38,7 @@
             <forward name="admin_loginSuccess" path="/admin.do" redirect="true" />
             <forward name="loginFailure" path="/login.do" />
         </action>
-        <action input="/" name="UserForm" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction" validate="false">
+        <action input="/" path="/logout" scope="session" type="com.blackpoints.struts.action.LogoutAction">
             <forward name="logoutSuccess" path="/" redirect="true" />
         </action>
         <action input="/register.do" name="RegisterForm" path="/RegisterAction" scope="request" type="com.blackpoints.struts.action.RegisterAction">
@@ -66,7 +66,7 @@
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
         <action input="/" name="POIForm" path="/details" scope="request" type="com.blackpoints.struts.action.GetPOIDetailsAction">
-            <forward name="getPOIDetailsSuccess" path="/pages/details.jsp" />
+            <forward name="getPOIDetailsSuccess" path="/pages/poidetails.jsp" />
             <forward name="getPOIDetailsFailure" path="/failure.do?f=7" />
         </action>
         <action input="/" name="UserForm" path="/updateinfo" scope="request" type="com.blackpoints.struts.action.GetUserDetailsAction" validate="false">
@@ -81,7 +81,7 @@
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
         <action path="/map" forward="/pages/map.jsp" name="POIForm" />
-        <action path="/admin" forward="/admin/admin.jsp" />
+        <action path="/dashboard" forward="/admin/dashboard.jsp" />
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />
         <action path="/home" forward="/" />

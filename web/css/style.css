@@ -31,7 +31,7 @@ div, article, section, header, footer, nav, li {
 }
 body {
     background:#f0f0f0;
-    color: #0B333F;
+    color: #37485D;
     font-size: 100%;
     font-family: 'Open Sans', serif;
 }
@@ -49,11 +49,11 @@ body {
     text-align: center;
 }
 ::-moz-selection {
-    background:#E95B37;
+    background:#FF5757;
     color:#333;
 }
 ::selection {
-    background:#E95B37;
+    background:#FF5757;
     color:#333;
 }
 
@@ -85,10 +85,10 @@ ul, ol {
 body, input, textarea {
 }
 a:link, a:visited {
-    color: #F1505A;
+    color: #0067BE;
 }
 a:hover, a:active {
-    color: #F1505A;
+    color: #0067BE;
     text-decoration: blink;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -153,7 +153,7 @@ em {
     font-family: 'Open Sans', cursive;
 }
 .more-link:link, .more-link:visited {
-    color: #E95B37;
+    color: #FF5757;
     text-transform: uppercase;
 }
 /* ---------------------------------------------------------------------------------------------------------- 
@@ -204,7 +204,7 @@ em {
 }
 .navbar .brand a:hover {
     text-decoration: none;
-    color:#E95B37;
+    color:#FF5757;
     transition: color .15s linear;
     -webkit-transition: color .15s linear;
     -moz-transition: color .15s linear;
@@ -216,37 +216,58 @@ em {
     min-height: 4.75em;
 }
 .navbar-inverse .navbar-inner {
-    background-color: #252E30;
-    border-color: #E95B37;
+    background-color: #2B394A;
+    border-color: #FF5757;
 }
 .navbar-wrapper {
     overflow:hidden;/* No fixed height, will break collapsible nav */    
     z-index: 1000;
 }
-#menu-main {
+#menu-main, #menu-admin {
     margin-top: 1.125em;
 }
 ul#menu-main > li {
     overflow: hidden;
     height: 2em;
 }
-ul#menu-main > li:hover a{
-    color: #E95B37;
+ul#menu-main > li:hover a, ul#menu-admin > li > a:hover {
+    color: #FF5757;
 }
-ul#menu-main > li > a {
+ul#menu-main > li > a, ul#menu-admin > li > a {
     font-family: 'Open Sans', cursive;
     font-weight: normal;
     font-size: 0.8em;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #fff;
     display: block;
 }
 ul#menu-main > li > a span{
     text-transform: lowercase;
 }
+ul#menu-main > li > a {
+    color: #fff;
+}
+
+ul#menu-admin > li > a {
+    color: #333;
+}
+
 .navbar-inverse .brand, .navbar-inverse .nav > li > a {
     text-shadow: none;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color: #2B394A;
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to bottom, #37485D, #273342);
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    outline: 0;
+    color: #ffffff;
+    background-color: #2B394A;
+    background-repeat: repeat-x;
+    background-image: linear-gradient(to bottom, #37485D, #273342);
 }
 /* ---------------------------------------------------------------------------------------------------------- 
 05 Single-Page Sections ------------------------------------------------------------
@@ -259,7 +280,7 @@ ul#menu-main > li > a span{
 
 #headerwrap {
     width: 100%;
-    background: url(../img/top-bg.jpg) #0B333F no-repeat center center fixed;
+    background: url(../img/top-bg.jpg) #37485D no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -293,7 +314,7 @@ ul#menu-main > li > a span{
     text-shadow: 1px 1px 1px #000;
 }
 headerwrap h1 span, #headerwrap h3 span {
-    color:#E95B37;
+    color:#FF5757;
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -305,7 +326,7 @@ headerwrap h1 span, #headerwrap h3 span {
     color: #FFFFFF;
 }
 #headerwrap p#p-arrow a:hover{
-    color: #E95B37;
+    color: #FF5757;
 }
 #headerwrap p#p-arrow a{
     -webkit-transition: 0.4s;
@@ -415,7 +436,7 @@ section#map .entry-content {
 }
 
 #footer .status .header {
-    color: #E95B37;
+    color: #FF5757;
     text-align: left;
     font-weight: 700;
     padding-bottom: 3px;
@@ -494,7 +515,7 @@ section#map .entry-content {
     display: block;
     border: 0;
     text-transform: none;
-    background: #E95B37 !important;
+    background: #FF5757 !important;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -640,7 +661,7 @@ footer p {
     color: #fff;
 }
 .btn:hover {
-    background: #0B333F !important;
+    background: #37485D !important;
     color:#fff;
 }
 .navbar-inverse .btn-navbar {
@@ -650,7 +671,7 @@ footer p {
 
 .btn-primary {
     color: #fff;
-    background: #E95B37 !important;     
+    background: #FF5757 !important;     
 }
 
 /* ---------------------------------------------------------------------------------------------------------- 
@@ -921,7 +942,7 @@ footer p {
 
 
 legend {
-    border-bottom: 1px solid #E95B37;
+    border-bottom: 1px solid #FF5757;
     margin-bottom: 0;
 }
 
@@ -931,7 +952,7 @@ legend {
     top: 0px;
     right: 40px;
     background: #fff;
-    border: 1px solid #E95B37;
+    border: 1px solid #FF5757;
     height: 100%;
     width: 25%;
 }
@@ -941,7 +962,7 @@ legend {
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    border-bottom: 1px solid #E95B37;
+    border-bottom: 1px solid #FF5757;
 }
 
 #inRadius-div #list {
@@ -986,7 +1007,7 @@ legend {
 
 .item-add {
     font-size: 11px;
-    color: #252E30;
+    color: #2B394A;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1053,7 +1074,7 @@ legend {
     font-size: 16px;
 }
 .district-info h3 a {
-    color: #F1505A;
+    color: #0067BE;
 }
 .district-info h3 a:hover {
     text-decoration: underline;
@@ -1160,4 +1181,135 @@ legend {
 
 #tabs .controls input[type=text], input[type=password] {
     width: 70%;
+}
+
+/* admin ui */
+/* statistic section */
+.tile {
+    border: 1px solid #ccc;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.tile:hover .tile-header {
+    color: #000;
+}
+
+.tile:hover .tile-content-wrapper {
+    color: #666;
+}
+
+.tile-header {
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-shadow: 1px 1px 0 #fff;
+    min-height: 18px;
+    line-height: 19px;
+    color: #888;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+}
+
+.tile-content-wrapper {
+    padding: 10px 10px 17px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tile-content-wrapper small {
+    -moz-opacity: .7;
+    filter: alpha(opacity:70);
+    opacity: .7;
+    text-align: right;
+    font-size: 14px;
+    display: block;
+}
+
+.tile-content-wrapper .fa{
+    position: absolute;
+    font-size: 65px;
+    height: 70px;
+    line-height: 70px;
+    top: 50%;
+    margin-top: -40px;
+    -moz-opacity: .3;
+    filter: alpha(opacity:30);
+    opacity: .3;
+    left: 15px;
+}
+
+.tile-content {
+    font-size: 35px;
+    text-align: right;
+}
+
+.tile-content span {
+    font-size: 25px;
+    -moz-opacity: .7;
+    filter: alpha(opacity:70);
+    opacity: .7;
+}
+
+.tile-footer {
+    font-size: 14px;
+    color:#fff;
+    padding: 5px 10px;
+    margin: 5px!important;
+    background: #37485d;
+    text-align: left;
+}
+
+.tile-footer .fa {
+    float: right;
+}
+
+/*chart*/
+.chart {
+    border-right: 1px solid #c1cad5;
+    border-left: 1px solid #c1cad5;
+    border-bottom: 1px solid #c1cad5;
+    border-top: 3px solid #ff5757;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin-top: 15px;
+}
+
+.chart-header {
+    font-size: 18px;
+    margin: 0;
+    padding: 10px;
+}
+
+.chart-header h3 {
+    margin-top: 0;
+}
+
+.chart-header small {
+    font-size: 14px;
+    -moz-opacity: .8;
+    filter: alpha(opacity:80);
+    opacity: .8;
+}
+
+.chart-header .btn {
+    margin-right: 0;
+    width: auto;
+    background: #65a6ff !important;
+}
+
+.chart-header .btn:hover{
+    background: #77b0ff !important;
+}
+
+.chart-content-wrapper {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
