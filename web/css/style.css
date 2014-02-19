@@ -1217,6 +1217,14 @@ legend {
     -webkit-border-radius: 5px 5px 0 0;
 }
 
+.border-red {
+    border-top: 3px solid #ff5757 !important;
+}
+
+.border-green {
+    border-top: 3px solid #9cd159 !important;   
+}
+
 .tile-content-wrapper {
     padding: 10px 10px 17px;
     position: relative;
@@ -1279,14 +1287,6 @@ legend {
     margin-top: 15px;
 }
 
-.bar-chart {
-    border-top: 3px solid #ff5757;
-}
-
-.donut-chart {
-    border-top: 3px solid #9cd159;   
-}
-
 .chart-header {
     font-size: 18px;
     margin: 0;
@@ -1312,4 +1312,43 @@ legend {
 .chart-content-wrapper .chart-content {
     margin: 0;
     height: 300px;
+}
+/*table style */
+.table-list {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.table caption {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+div.dataTables_length select {
+    width: 75px;
+}
+
+div.dataTables_filter input {
+   width: 350px;
+   height: 23px;
+}
+ 
+div.dataTables_info {
+    padding-top: 8px;
+}
+ 
+div.dataTables_paginate {
+    float: right;
+    margin: 0;
+}
+ 
+table {
+    margin: 1em 0;
+    clear: both;
 }

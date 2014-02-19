@@ -47,7 +47,7 @@
                     </div>
                     <div class="poi-details span12">
                         <div class="main-image">
-                            <img src="<bean:write name="POIForm" property="image" />" width="220" height="280" />
+                            <img alt="<bean:write name="POIForm" property="name" />" src="<bean:write name="POIForm" property="image" />" width="220" height="280" />
                         </div>
                         <div class="info-wrapper span9">
                             <div class="main-info span4">

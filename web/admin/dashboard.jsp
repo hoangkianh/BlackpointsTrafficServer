@@ -104,7 +104,7 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
-                        <div class="span8 chart bar-chart">
+                        <div class="span8 chart border-red">
                             <div class="chart-header clearfix">
                                 <h3 class="pull-left">Số lượng điểm đen <small>trên toàn quốc</small></h3>
                             </div>
@@ -112,7 +112,7 @@
                                 <div class="chart-content" id="bar-chart"></div>
                             </div>
                         </div>
-                        <div class="span4 chart donut-chart">
+                        <div class="span4 chart border-green">
                             <div class="chart-header clearfix">
                                 <h3 class="pull-left">Tỉ lệ điểm đen <small>theo các tỉnh thành</small></h3>
                             </div>
