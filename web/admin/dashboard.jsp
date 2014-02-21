@@ -58,10 +58,10 @@
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
-                        <a class="span3 tile" href="#">
-                            <div class="tile-header">Số điểm đen</div>
+                        <a class="span3 tile" href="fromuser.do">
+                            <div class="tile-header">Số điểm đen đang chờ xác nhận</div>
                             <div class="tile-content-wrapper">
-                                <i class="fa fa-map-marker"></i>
+                                <i class="fa fa-spinner"></i>
                                 <div class="tile-content">
                                     35
                                 </div>
@@ -72,10 +72,10 @@
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
-                        <a class="span3 tile" href="#">
-                            <div class="tile-header">Số điểm đen</div>
+                        <a class="span3 tile" href="deletedlist.do">
+                            <div class="tile-header">Số điểm đen đã xóa</div>
                             <div class="tile-content-wrapper">
-                                <i class="fa fa-map-marker"></i>
+                                <i class="fa fa-times-circle-o"></i>
                                 <div class="tile-content">
                                     35
                                 </div>
@@ -86,14 +86,14 @@
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
-                        <a class="span3 tile" href="#">
-                            <div class="tile-header">Số điểm đen</div>
+                        <a class="span3 tile" href="user.do">
+                            <div class="tile-header">Số người dùng</div>
                             <div class="tile-content-wrapper">
-                                <i class="fa fa-map-marker"></i>
+                                <i class="fa fa-users"></i>
                                 <div class="tile-content">
                                     35
                                 </div>
-                                <small>5 điểm đen mới</small>
+                                <small>5 người dùng mới</small>
                             </div>
                             <div class="tile-footer">
                                 xem chi tiết

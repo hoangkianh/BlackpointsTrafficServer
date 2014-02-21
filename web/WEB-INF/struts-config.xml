@@ -86,6 +86,12 @@
         <action path="/home" forward="/" />
         <action path="/dashboard" name="StatisticForm" forward="/admin/dashboard.jsp" />
         <action path="/poilist" forward="/admin/poi-list.jsp" />
+        <action path="/deletedlist" forward="/admin/poi-deleted-list.jsp" />
+        <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
+        <action path="/category" forward="/admin/poi-category.jsp" />
+        <action path="/user" forward="/admin/user-list.jsp" />
+        <action path="/usergroup" forward="/admin/user-group.jsp" />
+        <action path="/admin" forward="/admin/user-admin.jsp" />
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

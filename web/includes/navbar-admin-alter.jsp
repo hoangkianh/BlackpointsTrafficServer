@@ -18,13 +18,13 @@
                                         <a href="poilist.do"><bean:message key="navbar.admin.blackpoints.list" /></a>
                                     </li>
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.blackpoints.deleted" /></a>
+                                        <a href="deletedlist.do"><bean:message key="navbar.admin.blackpoints.deleted" /></a>
                                     </li>
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.blackpoints.fromUser" /></a>
+                                        <a href="fromuser.do"><bean:message key="navbar.admin.blackpoints.fromUser" /></a>
                                     </li>
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.blackpoints.category" /></a>
+                                        <a href="category.do"><bean:message key="navbar.admin.blackpoints.category" /></a>
                                     </li>
                                 </ul>
                             </li>
@@ -35,13 +35,13 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.user.list" /></a>
+                                        <a href="user.do"><bean:message key="navbar.admin.user.list" /></a>
                                     </li>
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.user.group" /></a>
+                                        <a href="usergroup.do"><bean:message key="navbar.admin.user.group" /></a>
                                     </li>
                                     <li>
-                                        <a href="#"><bean:message key="navbar.admin.user.admin" /></a>
+                                        <a href="admin.do"><bean:message key="navbar.admin.user.admin" /></a>
                                     </li>
                                 </ul>
                             </li>

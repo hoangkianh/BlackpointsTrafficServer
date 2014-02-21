@@ -1253,6 +1253,10 @@ legend {
     left: 15px;
 }
 
+.tile-content-wrapper .fa-times-circle-o {
+    color: #ff0000;
+}
+
 .tile-content {
     font-size: 35px;
     text-align: right;
@@ -1324,6 +1328,15 @@ legend {
     border: 1px solid #ccc;
 }
 
+.table-list .btn {
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.table-list .other-link:hover {
+    text-decoration: underline;
+}
+
 .table caption {
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -1335,20 +1348,86 @@ div.dataTables_length select {
 }
 
 div.dataTables_filter input {
-   width: 350px;
-   height: 23px;
+    width: 350px;
+    height: 23px;
 }
- 
+
 div.dataTables_info {
     padding-top: 8px;
 }
- 
+
 div.dataTables_paginate {
     float: right;
     margin: 0;
 }
- 
+
 table {
     margin: 1em 0;
     clear: both;
+}
+
+table td.center {
+    text-align: center;
+}
+
+table tbody td i {
+    cursor: pointer;
+}
+
+table tbody td i.fa-check-circle {
+    color: #0067BE;
+}
+
+table a:hover {
+    color: #ff5757;
+    text-decoration: underline;
+}
+
+table a.delete {
+    color: #ff0000 !important;
+}
+
+table .headerSortUp, table .headerSortDown {
+    background-color: rgba(141, 192, 219, 0.25);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+
+table .header:after {
+    content: "";
+    float: right;
+    margin-top: 7px;
+    border-width: 0 4px 4px;
+    border-style: solid;
+    border-color: #000 transparent;
+    visibility: hidden;
+}
+
+table .header {
+    cursor: pointer;
+}
+
+table .header:hover:after {    
+    visibility: visible;
+}
+table .headerSortDown:after, table .headerSortDown:hover:after {
+    visibility: visible;
+    filter: alpha(opacity=60);
+    -khtml-opacity: 0.6;
+    -moz-opacity: 0.6;
+    opacity: 0.6;
+}
+
+table .headerSortUp:after {
+    border-bottom: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #000;
+    visibility: visible;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    filter: alpha(opacity=60);
+    -khtml-opacity: 0.6;
+    -moz-opacity: 0.6;
+    opacity: 0.6;
 }
