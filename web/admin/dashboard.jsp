@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.header" /></title>
+        <title><bean:message key="admin.title.dashboard" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -45,58 +45,90 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <a class="span3 tile" href="poilist.do">
-                            <div class="tile-header">Số điểm đen</div>
+                            <div class="tile-header"><bean:message key="admin.tile.header.poicount" /></div>
                             <div class="tile-content-wrapper">
                                 <i class="fa fa-map-marker"></i>
                                 <div class="tile-content">
-                                    35
+                                    <bean:write name="StatisticForm" property="countPOI"/>
                                 </div>
-                                <small>5 điểm đen mới</small>
+                                <small>
+                                    <c:choose>
+                                        <c:when test="${StatisticForm.countNewPOI gt 0}">
+                                            <bean:write name="StatisticForm" property="countNewPOI"/>
+                                            <bean:message key="admin.tile.content.newpoi"/>
+                                        </c:when>
+                                        <c:otherwise>&nbsp;</c:otherwise>
+                                    </c:choose>
+                                </small>
                             </div>
                             <div class="tile-footer">
-                                xem chi tiết
+                                <bean:message key="admin.tile.footer.viewdetails" />
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
                         <a class="span3 tile" href="fromuser.do">
-                            <div class="tile-header">Số điểm đen đang chờ xác nhận</div>
+                            <div class="tile-header"><bean:message key="admin.tile.header.tempcount" /></div>
                             <div class="tile-content-wrapper">
                                 <i class="fa fa-spinner"></i>
                                 <div class="tile-content">
-                                    35
+                                    <bean:write name="StatisticForm" property="countTempPOI"/>
                                 </div>
-                                <small>5 điểm đen mới</small>
+                                <small>
+                                    <c:choose>
+                                        <c:when test="${StatisticForm.countNewTempPOI gt 0}">
+                                            <bean:write name="StatisticForm" property="countNewTempPOI"/>
+                                            <bean:message key="admin.tile.content.newpoi"/>
+                                        </c:when>
+                                        <c:otherwise>&nbsp;</c:otherwise>
+                                    </c:choose>
+                                </small>
                             </div>
                             <div class="tile-footer">
-                                xem chi tiết
+                                <bean:message key="admin.tile.footer.viewdetails" />
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
                         <a class="span3 tile" href="deletedlist.do">
-                            <div class="tile-header">Số điểm đen đã xóa</div>
+                            <div class="tile-header"><bean:message key="admin.tile.header.deletecount" /></div>
                             <div class="tile-content-wrapper">
                                 <i class="fa fa-times-circle-o"></i>
                                 <div class="tile-content">
-                                    35
+                                    <bean:write name="StatisticForm" property="countDeletedPOI"/>
                                 </div>
-                                <small>5 điểm đen mới</small>
+                                <small>
+                                    <c:choose>
+                                        <c:when test="${StatisticForm.countNewDeletedPOI gt 0}">
+                                            <bean:write name="StatisticForm" property="countNewDeletedPOI"/>
+                                            <bean:message key="admin.tile.content.deletepoi"/>
+                                        </c:when>
+                                        <c:otherwise>&nbsp;</c:otherwise>
+                                    </c:choose>
+                                </small>
                             </div>
                             <div class="tile-footer">
-                                xem chi tiết
+                                <bean:message key="admin.tile.footer.viewdetails" />
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>
                         <a class="span3 tile" href="user.do">
-                            <div class="tile-header">Số người dùng</div>
+                            <div class="tile-header"><bean:message key="admin.tile.header.usercount" /></div>
                             <div class="tile-content-wrapper">
                                 <i class="fa fa-users"></i>
                                 <div class="tile-content">
-                                    35
+                                    <bean:write name="StatisticForm" property="countUser"/>
                                 </div>
-                                <small>5 người dùng mới</small>
+                                <small>
+                                    <c:choose>
+                                        <c:when test="${StatisticForm.countNewUser gt 0}">
+                                            <bean:write name="StatisticForm" property="countNewUser"/>
+                                            <bean:message key="admin.tile.content.newuser"/>
+                                        </c:when>
+                                        <c:otherwise>&nbsp;</c:otherwise>
+                                    </c:choose>
+                                </small>
                             </div>
                             <div class="tile-footer">
-                                xem chi tiết
+                                <bean:message key="admin.tile.footer.viewdetails" />
                                 <i class="fa fa-arrow-right"></i>
                             </div>
                         </a>

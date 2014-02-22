@@ -178,4 +178,42 @@ public class TempPOIDAO {
         }
         return kq;
     }
+    
+    public int countTempPOI() {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM temppoi");
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
+    
+    public int countNewTempPOI() {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM temppoi WHERE DATE( createdOnDate ) = CURDATE()");
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
 }

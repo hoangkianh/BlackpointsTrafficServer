@@ -257,13 +257,34 @@ public class POIDAO {
         return kq;
     }
     
-    public int countPOI() {
+    public int countPOI(boolean isDeleted) {
         int count = 0;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi");
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE isDeleted=?");
+            stm.setBoolean(1, isDeleted);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
+    
+    public int countNewPOI(boolean isDeleted) {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE DATE( createdOnDate ) = CURDATE() AND isDeleted=?");
+            stm.setBoolean(1, isDeleted);
             rs = stm.executeQuery();
             if (rs.next()) {
                 count = rs.getInt("count");

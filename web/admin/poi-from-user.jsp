@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.poilist" /></title>
+        <title><bean:message key="admin.title.fromuser" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -44,7 +44,7 @@
                 var aData = oTable.fnGetData(nTr);
                 var sOut = '<table class="table">';
                 sOut += '<tr class="info"><td>'+'Ảnh (image)'+':</td><td>' + aData[2] + ' ' + aData[5] + '</td></tr>';
-                sOut += '<tr class="info"><td>'+'Ngày thêm vào (createdOnDate) bởi (createdByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
+                sOut += '<tr class="info"><td>'+'Thêm vào bởi (createdByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
                 sOut += '<tr class="info"><td>'+'Thông tin thêm (description)'+':</td><td>Could provide a link here</td></tr>';
                 sOut += '</table>';
 
@@ -53,7 +53,7 @@
             $(function() {
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[1, 'asc']],
+                    "aaSorting": [[7, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
@@ -114,6 +114,7 @@
                                     <th>Quận/Huyện</th>
                                     <th>Phân loại</th>
                                     <th>Xếp hạng</th>
+                                    <th>Ngày thêm vào</th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
                                 </tr>
@@ -127,6 +128,7 @@
                                     <td>C</td>
                                     <td>C</td>
                                     <td>C</td>
+                                    <td>C</td>
                                     <td class="center"><a href="#"><i class="fa fa-save" title="Lưu lại vào CSDL"></i></a></td>
                                     <td class="center delete"><a href="#" class="delete"><i class="fa fa-times-circle" title="Xóa"></i></a></td>
                                 </tr>
@@ -134,6 +136,7 @@
                                     <td class="center"><i class="fa fa-angle-double-down"></i></td>
                                     <td>D</td>
                                     <td>E</td>
+                                    <td>F</td>
                                     <td>F</td>
                                     <td>F</td>
                                     <td>F</td>

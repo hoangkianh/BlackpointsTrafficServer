@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.poilist" /></title>
+        <title><bean:message key="admin.title.category" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -40,7 +40,7 @@
             $(function() {
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[1, 'asc']],
+                    "aaSorting": [[0, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
