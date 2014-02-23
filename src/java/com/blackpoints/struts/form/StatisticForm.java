@@ -3,6 +3,7 @@ package com.blackpoints.struts.form;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.dao.UserDAO;
+import java.util.Map;
 
 /**
  *
@@ -10,9 +11,9 @@ import com.blackpoints.dao.UserDAO;
  */
 public class StatisticForm extends org.apache.struts.action.ActionForm {
 
-    private POIDAO poiDAO;
-    private TempPOIDAO tempPOIDAO;
-    private UserDAO userDAO;
+    private final POIDAO poiDAO;
+    private final TempPOIDAO tempPOIDAO;
+    private final UserDAO userDAO;
     
     public StatisticForm() {
         poiDAO = new POIDAO();
@@ -42,5 +43,11 @@ public class StatisticForm extends org.apache.struts.action.ActionForm {
     }
     public int getCountNewUser () {
         return userDAO.countNewUser();
+    }
+    public Map<String, Integer> getCountPOIByCity() {        
+        return poiDAO.countPOIByCity();
+    }
+    public Map<String, Map<String, Integer>> getCountPOIByDistrict() {
+        return poiDAO.countPOIByDistrict();
     }
 }

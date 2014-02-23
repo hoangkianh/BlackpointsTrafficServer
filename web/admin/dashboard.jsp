@@ -33,9 +33,10 @@
         <%@include file="../includes/includeCSS.jsp" %>
         <link type="text/css" rel="stylesheet" href="css/morris.css">
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>        
-        <script type="text/javascript" src="js/morris.min.js"></script>
-        <script type="text/javascript" src="js/raphael.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/highcharts.js"></script>
+        <script type="text/javascript" src="js/data.js"></script>
+        <script type="text/javascript" src="js/drilldown.js"></script>
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
@@ -137,17 +138,13 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="span8 chart border-red">
-                            <div class="chart-header clearfix">
-                                <h3 class="pull-left">Số lượng điểm đen <small>trên toàn quốc</small></h3>
-                            </div>
                             <div class="chart-content-wrapper">
+                                <div id="data-for-bar-chart">
+                                </div>
                                 <div class="chart-content" id="bar-chart"></div>
                             </div>
                         </div>
                         <div class="span4 chart border-green">
-                            <div class="chart-header clearfix">
-                                <h3 class="pull-left">Tỉ lệ điểm đen <small>theo các tỉnh thành</small></h3>
-                            </div>
                             <div class="chart-content-wrapper">
                                 <div class="chart-content" id="donut-chart"></div>
                             </div>
@@ -157,28 +154,114 @@
             </div>
         </section>
         <script type="text/javascript">
-            Morris.Bar({
-                element: 'bar-chart',
-                data: [
-                    {y: '2006', a: 100},
-                    {y: '2007', a: 75},
-                    {y: '2008', a: 50},
-                    {y: '2009', a: 75},
-                    {y: '2010', a: 50},
-                    {y: '2011', a: 75},
-                    {y: '2012', a: 100}
-                ],
-                xkey: 'y',
-                ykeys: ['a'],
-                labels: ['Series A']
-            });
-            Morris.Donut({
-                element: 'donut-chart',
-                data: [
-                    {label: "Download Sales", value: 12},
-                    {label: "In-Store Sales", value: 30},
-                    {label: "Mail-Order Sales", value: 20}
-                ]
+            $(function() {
+                var data = "";
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "service/POI/countPOIByDistrict",
+                    dataType: "text",
+                    success: function(text) {
+                        data = text;
+                    }
+                });
+                Highcharts.setOptions({
+                    lang: {
+                        drillUpText: '◁ <bean:message key="admin.barchart.back" />'
+                    }
+                });
+                Highcharts.data({
+                    csv: data,
+                    itemDelimiter: '-',
+                    parsed: function(columns) {
+                        var brands = {},
+                                brandsData = [],
+                                districts = {},
+                                drilldownSeries = [];
+
+                        $.each(columns[0], function(idx, city) {
+                            var district;
+                            city = columns[0][idx];
+                            district = columns[1][idx];
+
+                            if (!brands[city]) {
+                                brands[city] = columns[2][idx];
+                            } else {
+                                brands[city] += columns[2][idx];
+                            }
+
+                            if (district !== null) {
+                                if (!districts[city]) {
+                                    districts[city] = [];
+                                }
+                                districts[city].push([district, columns[2][idx]]);
+                            }
+                        });
+
+                        $.each(brands, function(city, y) {
+                            brandsData.push({
+                                name: city,
+                                y: y,
+                                drilldown: districts[city] ? city : null
+                            });
+                        });
+
+                        $.each(districts, function(key, value) {
+                            drilldownSeries.push({
+                                name: key,
+                                id: key,
+                                data: value
+                            })
+                        });
+
+                        $('#bar-chart').highcharts({
+                            chart: {type: 'column'},
+                            title: {text: '<bean:message key="admin.barchart.title"/>'},
+                            subtitle: {text: '<bean:message key="admin.barchart.subtitle"/>'},
+                            xAxis: {
+                                type: 'category',
+                                labels: {
+                                    rotation: -45,
+                                    align: 'right',
+                                    style: {fontSize: '13px'}
+                                }
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {text: '<bean:message key="admin.barchart.title" />'},
+                                tickPositioner: function() {
+                                    var positions = [],
+                                            tick = Math.floor(this.dataMin),
+                                            increment = 1;
+                                    for (; tick - increment <= this.dataMax; tick += increment) {
+                                        positions.push(tick);
+                                    }
+                                    return positions;
+                                }
+                            },
+                            legend: {enabled: false},
+                            tooltip: {
+                                pointFormat: '<span style="font-size:10px">{point.key}</span><b>{point.y}</b>'
+                            },
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y}'
+                                    }
+                                }
+                            },
+                            series: [{
+                                    name: '<bean:message key="admin.barchart.title" />',
+                                    data: brandsData
+                                }],
+                            drilldown: {
+                                series: drilldownSeries
+                            }
+                        });
+                    }
+                });
             });
         </script>
     </body>

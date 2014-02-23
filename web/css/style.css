@@ -1292,22 +1292,6 @@ legend {
     margin-top: 15px;
 }
 
-.chart-header {
-    font-size: 18px;
-    margin: 0;
-    padding: 10px;
-}
-
-.chart-header h3 {
-    margin-top: 0;
-}
-
-.chart-header small {
-    font-size: 14px;
-    -moz-opacity: .8;
-    filter: alpha(opacity:80);
-    opacity: .8;
-}
 
 .chart-content-wrapper {
     border-bottom-left-radius: 3px;

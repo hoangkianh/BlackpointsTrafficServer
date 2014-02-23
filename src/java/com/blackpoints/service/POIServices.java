@@ -12,6 +12,8 @@ import com.blackpoints.utils.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
@@ -93,6 +95,7 @@ public class POIServices {
 
     @GET
     @Path("getPOIInDistrict/{district}/{city}")
+    @Produces("application/json; charset=UTF-8")
     public String getPOIInDistrict(@PathParam("district") String district, @PathParam("city") String city) {
         List<POI> inDistrictList = new ArrayList<POI>();
         City c = new CityDAO().getCityByName(city);
@@ -105,5 +108,24 @@ public class POIServices {
             }
         }
         return new Gson().toJson(inDistrictList);
+    }
+    
+    @GET
+    @Path("countPOIByDistrict")
+    @Produces("text/plain; charset=UTF-8")
+    public String countPOIByDistrict(){
+        Map<String, Map<String, Integer>> map = new POIDAO().countPOIByDistrict();
+        String data = "";
+        if (map != null) {
+            Set<Map.Entry<String, Map<String, Integer>>> entrySet = map.entrySet();
+            for (Map.Entry<String, Map<String, Integer>> entry : entrySet) {
+                Set<Map.Entry<String, Integer>> subEntrySet = entry.getValue().entrySet();
+                for (Map.Entry<String, Integer> subEntry : subEntrySet) {                    
+                    data += entry.getKey() + "-" + subEntry.getKey() + "-" + subEntry.getValue() + "\n";
+                }
+            }
+        }
+        
+        return data;
     }
 }

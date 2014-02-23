@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -256,46 +258,6 @@ public class POIDAO {
         }
         return kq;
     }
-    
-    public int countPOI(boolean isDeleted) {
-        int count = 0;
-        Connection conn = DBUtil.getConnection();
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE isDeleted=?");
-            stm.setBoolean(1, isDeleted);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                count = rs.getInt("count");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
-        } finally {
-            DBUtil.closeAll(conn, stm, rs);
-        }
-        return count;
-    }
-    
-    public int countNewPOI(boolean isDeleted) {
-        int count = 0;
-        Connection conn = DBUtil.getConnection();
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE DATE( createdOnDate ) = CURDATE() AND isDeleted=?");
-            stm.setBoolean(1, isDeleted);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                count = rs.getInt("count");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
-        } finally {
-            DBUtil.closeAll(conn, stm, rs);
-        }
-        return count;
-    }
 
     public List<POI> getAllPOIsInDistrict(int city, int district) {
         List<POI> list = new ArrayList<POI>();
@@ -359,5 +321,96 @@ public class POIDAO {
             DBUtil.closeAll(conn, stm, rs);
         }
         return list;
+    }
+
+    public int countPOI(boolean isDeleted) {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE isDeleted=?");
+            stm.setBoolean(1, isDeleted);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
+
+    public int countNewPOI(boolean isDeleted) {
+        int count = 0;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT COUNT(*) AS count FROM poi WHERE DATE( createdOnDate ) = CURDATE() AND isDeleted=?");
+            stm.setBoolean(1, isDeleted);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return count;
+    }
+
+    public Map<String, Integer> countPOIByCity() {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareCall("{CALL countPOIByCity ()}");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String city = rs.getString("city");
+                int count = rs.getInt("count");
+                map.put(city, count);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return map;
+    }
+
+    public Map<String, Map<String, Integer>> countPOIByDistrict() {
+        Map<String, Map<String, Integer>> map = new HashMap<String, Map<String, Integer>>();
+        Map<String, Integer> subMap = null;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareCall("{CALL countPOIByDistrict ( )}");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String city = rs.getString("city");
+                String district = rs.getString("district");
+                int count = rs.getInt("count");
+
+                if (!map.containsKey(city)) {
+                    subMap = new HashMap<String, Integer>();
+                    map.put(city, subMap);
+                } else {
+                    subMap = map.get(city);
+                }
+                subMap.put(district, count);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return map;
     }
 }
