@@ -136,18 +136,18 @@
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span12">
-                        <div class="span8 chart border-red">
-                            <div class="chart-content-wrapper">
-                                <div id="data-for-bar-chart">
-                                </div>
-                                <div class="chart-content" id="bar-chart"></div>
+                    <div class="span12 chart border-red">
+                        <div class="chart-content-wrapper">
+                            <div id="data-for-bar-chart">
                             </div>
+                            <div class="chart-content" id="bar-chart" style="height: 450px;"></div>
                         </div>
-                        <div class="span4 chart border-green">
-                            <div class="chart-content-wrapper">
-                                <div class="chart-content" id="donut-chart"></div>
-                            </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 chart border-green">
+                        <div class="chart-content-wrapper">
+                            <div class="chart-content" id="pie-chart" style="height: 450px;"></div>
                         </div>
                     </div>
                 </div>
@@ -174,40 +174,73 @@
                     csv: data,
                     itemDelimiter: '-',
                     parsed: function(columns) {
-                        var brands = {},
-                                brandsData = [],
-                                districts = {},
-                                drilldownSeries = [];
+                        var totalPOI = 0,
+                            brandsBarChart = {},
+                                brandsDataBarChart = [],
+                                districtsBarChart = {},
+                                drilldownSeriesBarChart = [],
+                                brandsPieChart = {},
+                                brandsDataPieChart = [],
+                                districtsPieChart = {},
+                                drilldownSeriesPieChart = [];
 
                         $.each(columns[0], function(idx, city) {
                             var district;
                             city = columns[0][idx];
                             district = columns[1][idx];
 
-                            if (!brands[city]) {
-                                brands[city] = columns[2][idx];
+                            if (!brandsBarChart[city]) {
+                                brandsBarChart[city] = columns[2][idx];
                             } else {
-                                brands[city] += columns[2][idx];
+                                brandsBarChart[city] += columns[2][idx];
+                            }
+
+                            if (!brandsPieChart[city]) {
+                                brandsPieChart[city] = columns[2][idx];
+                            } else {
+                                brandsPieChart[city] += columns[2][idx];
                             }
 
                             if (district !== null) {
-                                if (!districts[city]) {
-                                    districts[city] = [];
+                                if (!districtsBarChart[city]) {
+                                    districtsBarChart[city] = [];
                                 }
-                                districts[city].push([district, columns[2][idx]]);
+                                if (!districtsPieChart[city]) {
+                                    districtsPieChart[city] = [];
+                                }
+                                districtsBarChart[city].push([district, columns[2][idx]]);
+                                districtsPieChart[city].push([district, columns[3][idx]]);
                             }
                         });
-
-                        $.each(brands, function(city, y) {
-                            brandsData.push({
+                        
+                        $.each(brandsBarChart, function(city, y) {
+                            totalPOI += brandsBarChart[city];
+                            brandsDataBarChart.push({
                                 name: city,
                                 y: y,
-                                drilldown: districts[city] ? city : null
+                                drilldown: districtsBarChart[city] ? city : null
                             });
                         });
 
-                        $.each(districts, function(key, value) {
-                            drilldownSeries.push({
+                        $.each(brandsPieChart, function(city, y) {
+                            y = (brandsPieChart[city]/totalPOI)*100;
+                            brandsDataPieChart.push({
+                                name: city,
+                                y: y,
+                                drilldown: districtsPieChart[city] ? city : null
+                            });
+                        });
+
+                        $.each(districtsBarChart, function(key, value) {
+                            drilldownSeriesBarChart.push({
+                                name: key,
+                                id: key,
+                                data: value
+                            })
+                        });
+
+                        $.each(districtsPieChart, function(key, value) {
+                            drilldownSeriesPieChart.push({
                                 name: key,
                                 id: key,
                                 data: value
@@ -254,10 +287,36 @@
                             },
                             series: [{
                                     name: '<bean:message key="admin.barchart.title" />',
-                                    data: brandsData
+                                    colorByPoint: true,
+                                    data: brandsDataBarChart
                                 }],
                             drilldown: {
-                                series: drilldownSeries
+                                series: drilldownSeriesBarChart
+                            }
+                        });
+                        $('#pie-chart').highcharts({
+                            chart: {type: 'pie'},
+                            title: {text: '<bean:message key="admin.piechart.title"/>'},
+                            subtitle: {text: '<bean:message key="admin.piechart.subtitle"/>'},
+                            plotOptions: {
+                                series: {
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.name}: {point.y:.1f}%'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b><br/>'
+                            },
+                            series: [{
+                                    name: '<bean:message key="admin.piechart.title"/>',
+                                    colorByPoint: true,
+                                    data: brandsDataPieChart
+                                }],
+                            drilldown: {
+                                series: drilldownSeriesPieChart
                             }
                         });
                     }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
@@ -48,7 +49,7 @@ public class POIServices {
         String json = new Gson().toJson(pois);
         return json;
     }
-    
+
     @GET
     @Path("getPOIByID/{id}")
     @Produces("application/json; charset=UTF-8")
@@ -109,23 +110,30 @@ public class POIServices {
         }
         return new Gson().toJson(inDistrictList);
     }
-    
+
     @GET
     @Path("countPOIByDistrict")
     @Produces("text/plain; charset=UTF-8")
-    public String countPOIByDistrict(){
-        Map<String, Map<String, Integer>> map = new POIDAO().countPOIByDistrict();
+    public String countPOIByDistrict() {
+        POIDAO poidao = new POIDAO();
+        TreeMap<String, Map<String, Integer>> map = (TreeMap<String, Map<String, Integer>>) poidao.countPOIByDistrict();
+        Map<String, Integer> totalPOIMap = poidao.countPOIByCity();
         String data = "";
         if (map != null) {
+            
             Set<Map.Entry<String, Map<String, Integer>>> entrySet = map.entrySet();
+            
             for (Map.Entry<String, Map<String, Integer>> entry : entrySet) {
                 Set<Map.Entry<String, Integer>> subEntrySet = entry.getValue().entrySet();
-                for (Map.Entry<String, Integer> subEntry : subEntrySet) {                    
-                    data += entry.getKey() + "-" + subEntry.getKey() + "-" + subEntry.getValue() + "\n";
+                for (Map.Entry<String, Integer> subEntry : subEntrySet) {
+                    double percent = 0.0;
+                    if (totalPOIMap.get(entry.getKey()) > 0.0) {
+                        percent = subEntry.getValue() / (double) totalPOIMap.get(entry.getKey()) * 100.0;
+                    }
+                    data += entry.getKey() + "-" + subEntry.getKey() + "-" + subEntry.getValue() + "-" + percent + "\n";
                 }
             }
         }
-        
         return data;
     }
 }

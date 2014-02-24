@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -364,7 +365,7 @@ public class POIDAO {
     }
 
     public Map<String, Integer> countPOIByCity() {
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new TreeMap<String, Integer>();
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -385,7 +386,7 @@ public class POIDAO {
     }
 
     public Map<String, Map<String, Integer>> countPOIByDistrict() {
-        Map<String, Map<String, Integer>> map = new HashMap<String, Map<String, Integer>>();
+        Map<String, Map<String, Integer>> map = new TreeMap<String, Map<String, Integer>>();
         Map<String, Integer> subMap = null;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
@@ -399,7 +400,7 @@ public class POIDAO {
                 int count = rs.getInt("count");
 
                 if (!map.containsKey(city)) {
-                    subMap = new HashMap<String, Integer>();
+                    subMap = new TreeMap<String, Integer>();
                     map.put(city, subMap);
                 } else {
                     subMap = map.get(city);
