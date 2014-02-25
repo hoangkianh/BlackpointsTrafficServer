@@ -32,7 +32,6 @@
         <action input="/" name="POIForm" path="/GetAllPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction"/>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
-        <action input="/" name="UserForm" path="/GetAllUsersAction" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction"/>
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
             <forward name="normalUser_loginSuccess" path="/" redirect="true" />
             <forward name="admin_loginSuccess" path="/dashboard.do" redirect="true" />
@@ -84,12 +83,14 @@
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />
         <action path="/home" forward="/" />
-        <action path="/dashboard" name="StatisticForm" forward="/admin/dashboard.jsp" />
+        <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
         <action path="/poilist" forward="/admin/poi-list.jsp" />
         <action path="/deletedlist" forward="/admin/poi-deleted-list.jsp" />
         <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
         <action path="/category" forward="/admin/poi-category.jsp" />
-        <action path="/user" forward="/admin/user-list.jsp" />
+        <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        
+            <forward name="getAllUsersOK" path="/admin/user-list.jsp" />
+        </action>
         <action path="/usergroup" forward="/admin/user-group.jsp" />
         <action path="/admin" forward="/admin/user-admin.jsp" />
     </action-mappings>

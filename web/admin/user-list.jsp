@@ -73,43 +73,39 @@
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption>Danh sách người dùng</caption>
+                            <caption><bean:message key='admin.user.list.caption'/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
-                                    <th>Username</th>
-                                    <th>Tên hiển thị</th>
-                                    <th>Email</th>
-                                    <th>Thông tin thêm</th>
-                                    <th>Lần đăng nhập cuối</th>
-                                    <th>Ngày đăng ký</th>
-                                    <th>Ngày cập nhật gần nhất</th>
-                                    <th>Ngày xác thực tài khoản</th>
+                                    <th><bean:message key='admin.user.list.username'/></th>
+                                    <th><bean:message key='admin.user.list.displayname'/></th>
+                                    <th><bean:message key='admin.user.list.email'/></th>
+                                    <th><bean:message key='admin.user.list.description'/></th>
+                                    <th><bean:message key='admin.user.list.lastLogin'/></th>
+                                    <th><bean:message key='admin.user.list.registerDate'/></th>
+                                    <th><bean:message key='admin.user.list.updatedDate'/></th>
+                                    <th><bean:message key='admin.user.list.activateddate'/></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="center"><i class="fa fa-check-circle" title="Tài khoản đã được xác thực"></i></td>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td class="center"></td>
-                                    <td>D</td>
-                                    <td>E</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                </tr>
+                                <logic:iterate id="row" name="UserForm" property="userList">                                    
+                                    <tr>
+                                        <logic:equal name="row" property="activated" value="true">
+                                            <td class="center"><i class="fa fa-check-circle" title="Tài khoản đã được xác thực"></i></td>
+                                        </logic:equal>
+                                        <logic:equal name="row" property="activated" value="false">
+                                            <td class="center"></td>
+                                        </logic:equal>
+                                        <td><bean:write name="row" property="userName"/></td>
+                                        <td><bean:write name="row" property="displayName"/></td>
+                                        <td><bean:write name="row" property="email"/></td>
+                                        <td><bean:write name="row" property="description"/></td>
+                                        <td><bean:write name="row" property="lastLogin"/></td>
+                                        <td><bean:write name="row" property="createdOnDate"/></td>
+                                        <td><bean:write name="row" property="updatedOnDate"/></td>
+                                        <td><bean:write name="row" property="activatedOnDate"/></td>
+                                    </tr>
+                                </logic:iterate>
                             </tbody>
                         </table>
                     </div>

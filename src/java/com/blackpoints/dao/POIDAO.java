@@ -6,10 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -58,21 +58,21 @@ public class POIDAO {
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
-                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
-                if (createdDateSQL != null) {
-                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
+                Timestamp restoreDateTimeStamp = rs.getTimestamp("restoreOnDate");
+                if (lastLoginTimeStamp != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedDateTimeStamp != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
-                if (deletedDateSQL != null) {
-                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                if (deletedDateTimeStamp != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateTimeStamp.getTime())));
                 }
-                if (restoreDateSQL != null) {
-                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                if (restoreDateTimeStamp != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateTimeStamp.getTime())));
                 }
 
                 list.add(p);
@@ -120,21 +120,21 @@ public class POIDAO {
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
-                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
-                if (createdDateSQL != null) {
-                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
+                Timestamp restoreDateTimeStamp = rs.getTimestamp("restoreOnDate");
+                if (lastLoginTimeStamp != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedDateTimeStamp != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
-                if (deletedDateSQL != null) {
-                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                if (deletedDateTimeStamp != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateTimeStamp.getTime())));
                 }
-                if (restoreDateSQL != null) {
-                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                if (restoreDateTimeStamp != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateTimeStamp.getTime())));
                 }
             }
         } catch (SQLException ex) {
@@ -297,21 +297,21 @@ public class POIDAO {
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                java.sql.Date deletedDateSQL = rs.getDate("deletedOnDate");
-                java.sql.Date restoreDateSQL = rs.getDate("restoreOnDate");
-                if (createdDateSQL != null) {
-                    p.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
+                Timestamp restoreDateTimeStamp = rs.getTimestamp("restoreOnDate");
+                if (lastLoginTimeStamp != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedDateTimeStamp != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
-                if (deletedDateSQL != null) {
-                    p.setDeletedOnDate(sdf.format(new Date(deletedDateSQL.getTime())));
+                if (deletedDateTimeStamp != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateTimeStamp.getTime())));
                 }
-                if (restoreDateSQL != null) {
-                    p.setRestoreOnDate(sdf.format(new Date(restoreDateSQL.getTime())));
+                if (restoreDateTimeStamp != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateTimeStamp.getTime())));
                 }
 
                 list.add(p);

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,13 +42,13 @@ public class TempPOIDAO {
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    tp.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    tp.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    tp.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedTimeStamp != null) {
+                    tp.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
                 }
                 
                 list.add(tp);
@@ -86,13 +87,13 @@ public class TempPOIDAO {
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    tp.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    tp.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    tp.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedTimeStamp != null) {
+                    tp.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
                 }
             }
         } catch (SQLException ex) {

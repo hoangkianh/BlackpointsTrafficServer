@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author hka
  */
 public class UserDAO {
-
+    
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<User>();
         Connection conn = DBUtil.getConnection();
@@ -38,19 +39,23 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
                 u.setActivated(rs.getBoolean("isActivated"));
                 u.setSalt(rs.getString("salt"));
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date activatedDateSQL = rs.getDate("activatedOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("lastLogin");
+                Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp activatedDateTimeStamp = rs.getTimestamp("activatedOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (lastLoginTimeStamp != null) {
+                    u.setLastLogin(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (activatedDateSQL != null) {
-                    u.setActivatedOnDate(sdf.format(new Date(activatedDateSQL.getTime())));
+                if (createdDateTimeStamp != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (activatedDateTimeStamp != null) {
+                    u.setActivatedOnDate(sdf.format(new Date(activatedDateTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
 
                 list.add(u);
@@ -87,17 +92,21 @@ public class UserDAO {
                 u.setSalt(rs.getString("salt"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date activatedDateSQL = rs.getDate("activatedOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("lastLogin");
+                Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp activatedDateTimeStamp = rs.getTimestamp("activatedOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (lastLoginTimeStamp != null) {
+                    u.setLastLogin(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (activatedDateSQL != null) {
-                    u.setActivatedOnDate(sdf.format(new Date(activatedDateSQL.getTime())));
+                if (createdDateTimeStamp != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (activatedDateTimeStamp != null) {
+                    u.setActivatedOnDate(sdf.format(new Date(activatedDateTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
             }
         } catch (SQLException ex) {
@@ -107,7 +116,7 @@ public class UserDAO {
         }
         return u;
     }
-    
+
     public User getUserByEmail(String email) {
         User u = null;
         Connection conn = DBUtil.getConnection();
@@ -132,17 +141,21 @@ public class UserDAO {
                 u.setSalt(rs.getString("salt"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date activatedDateSQL = rs.getDate("activatedOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("lastLogin");
+                Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp activatedDateTimeStamp = rs.getTimestamp("activatedOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (lastLoginTimeStamp != null) {
+                    u.setLastLogin(sdf.format(new Date(lastLoginTimeStamp.getTime())));
                 }
-                if (activatedDateSQL != null) {
-                    u.setActivatedOnDate(sdf.format(new Date(activatedDateSQL.getTime())));
+                if (createdDateTimeStamp != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (activatedDateTimeStamp != null) {
+                    u.setActivatedOnDate(sdf.format(new Date(activatedDateTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
             }
         } catch (SQLException ex) {
@@ -289,13 +302,14 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    u.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+
+                if (createdDateTimeStamp != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedDateTimeStamp != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
                 }
 
                 stm = conn.prepareStatement(updateLoginDateQuery);
@@ -356,7 +370,7 @@ public class UserDAO {
 
         return isExist;
     }
-    
+
     public int countUser() {
         int count = 0;
         Connection conn = DBUtil.getConnection();
@@ -375,7 +389,7 @@ public class UserDAO {
         }
         return count;
     }
-    
+
     public int countNewUser() {
         int count = 0;
         Connection conn = DBUtil.getConnection();

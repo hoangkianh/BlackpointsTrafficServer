@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,13 +37,13 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));                
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    ug.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    ug.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    ug.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedTimeStamp != null) {
+                    ug.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
                 }
 
                 list.add(ug);
@@ -75,13 +76,13 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                java.sql.Date createdDateSQL = rs.getDate("createdOnDate");
-                java.sql.Date updatedDateSQL = rs.getDate("updatedOnDate");
-                if (createdDateSQL != null) {
-                    ug.setCreatedOnDate(sdf.format(new Date(createdDateSQL.getTime())));
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    ug.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
                 }
-                if (updatedDateSQL != null) {
-                    ug.setUpdatedOnDate(sdf.format(new Date(updatedDateSQL.getTime())));
+                if (updatedTimeStamp != null) {
+                    ug.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
                 }
             }
         } catch (SQLException ex) {
