@@ -39,30 +39,31 @@
             var oTable;
 
             $(function() {
-            oTable = $('#myTable').dataTable({
-            "bProcessing": true,
+                oTable = $('#myTable').dataTable({
+                    "bProcessing": true,
                     "aaSorting": [[3, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
                     "oLanguage": {
-                    "sProcessing": "<bean:message key='admin.table.processing'/>",
-                            "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
-                                                "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                                "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
-                                                "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                                "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
-                                                "sInfoPostFix": "",
-                                                "sSearch": "<bean:message key='admin.table.search'/>",
-                                                "sUrl": "",
-                                                "oPaginate": {
-                                                "sFirst": "<bean:message key='admin.table.first'/>",
-                                                        "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                                        "sNext": "<bean:message key='admin.table.next'/>",
-                                                        "sLast": "<bean:message key='admin.table.last'/>"
-                                                }
-                                        }
-                                });
+                        "sProcessing": "<bean:message key='admin.table.processing'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
+                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
+                        "sInfoPostFix": "",
+                        "sSearch": "<bean:message key='admin.table.search'/>",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "<bean:message key='admin.table.first'/>",
+                            "sPrevious": "<bean:message key='admin.table.pre'/>",
+                            "sNext": "<bean:message key='admin.table.next'/>",
+                            "sLast": "<bean:message key='admin.table.last'/>"
+                        }
+                    }
+                });
+            });
         </script>
     </head>
     <body>
@@ -72,7 +73,7 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="#" class="btn btn-primary"><bean:message key="admin.usergroup.list.addNewBtn" /></a>
+                        <a href="newgroup.do" class="btn btn-primary"><bean:message key="admin.usergroup.list.addNewBtn" /></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
                             <caption><bean:message key="admin.usergroup.list.caption" /></caption>
                             <thead>
@@ -101,15 +102,15 @@
                                                     </c:if>
                                                     <c:choose>
                                                         <c:when test="${userStr[3] eq 1}">
-                                                            <td class="center delete">
-                                                                <a href="#" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
-                                                            </td>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
+                                                    <td class="center delete">
+                                                        <a href="#" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                    </td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="level"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>

@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
@@ -12,12 +18,13 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  *
- * @author hka
+ * @author HKA
  */
-public class GetAllUsersAction extends org.apache.struts.action.Action {
-        
+public class GetAllAdmin extends org.apache.struts.action.Action {
+
     /**
      * This is the action called from the Struts framework.
+     *
      * @param mapping The ActionMapping used to select this instance.
      * @param form The optional ActionForm bean for this request.
      * @param request The HTTP Request we are processing.
@@ -30,8 +37,8 @@ public class GetAllUsersAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         UserForm uf = (UserForm) form;
-        List<User> list = new UserDAO().getAllUsers(true);
+        List<User> list = new UserDAO().getAllUsers(false);
         uf.setUserList(list);
-        return mapping.findForward("getAllUsersOK");
+        return mapping.findForward("getAllAdminOK");
     }
 }

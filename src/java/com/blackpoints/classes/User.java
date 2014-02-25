@@ -1,5 +1,6 @@
 package com.blackpoints.classes;
 
+import com.blackpoints.dao.UserGroupDAO;
 import java.io.Serializable;
 
 /**
@@ -133,5 +134,13 @@ public class User implements Serializable {
 
     public void setActivatedOnDate(String activatedOnDate) {
         this.activatedOnDate = activatedOnDate;
+    }
+    
+    public int getLevel() {
+        UserGroup ug = new UserGroupDAO().getUserGroupByID(groupID);
+        if (ug != null) {
+            return ug.getLevel();
+        }
+        return 0;
     }
 }

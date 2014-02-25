@@ -72,48 +72,59 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="#" class="btn btn-primary">Thêm admin mới</a>
+                        <a href="#" class="btn btn-primary"><bean:message key="admin.useradmin.list.addNewAdmin"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption>Danh sách admin</caption>
+                            <caption><bean:message key="admin.useradmin.list.caption"/></caption>
                             <thead>
                                 <tr>
-                                    <th>Username</th>
-                                    <th>Tên hiển thị</th>
-                                    <th>Email</th>
-                                    <th>Thông tin thêm</th>
-                                    <th>Lần đăng nhập cuối</th>
-                                    <th>Ngày đăng ký</th>
-                                    <th>Ngày cập nhật gần nhất</th>
-                                    <th>Ngày xác thực tài khoản</th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
+                                    <th><bean:message key="admin.user.list.username"/></th>
+                                    <th><bean:message key="admin.usergroup.list.level"/></th>
+                                    <th><bean:message key="admin.user.list.displayname"/></th>
+                                    <th><bean:message key="admin.user.list.email"/></th>
+                                    <th><bean:message key="admin.user.list.description"/></th>
+                                    <th><bean:message key="admin.user.list.lastLogin"/></th>
+                                    <th><bean:message key="admin.user.list.registerDate"/></th>
+                                    <th><bean:message key="admin.user.list.updatedDate"/></th>
+                                    <th><bean:message key="admin.user.list.activateddate"/></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times" title="Hủy quyền admin"></i></a></td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>D</td>
-                                    <td>E</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times" title="Hủy quyền admin"></i></a></td>
-                                </tr>
+                                <logic:iterate id="row" name="UserForm" property="userList">                                    
+                                    <tr>
+                                        <td class="center"><a href="#"><i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i></a></td>
+                                        <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
+                                            <c:if test="${not empty sessionScope.blackpoints}">
+                                                <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
+                                            </c:if>
+                                            <c:if test="${not empty cookie.blackpoints}">
+                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
+                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${userStr[3] eq 1}">
+                                                    <td class="center delete">
+                                                        <a href="#" class="delete"><i class="fa fa-times" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
+                                                    </td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td class="center delete">
+                                                        <i class="fa fa-times muted" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
+                                                    </td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                        <td><bean:write name="row" property="userName"/></td>
+                                        <td><bean:write name="row" property="level"/></td>
+                                        <td><bean:write name="row" property="displayName"/></td>
+                                        <td><bean:write name="row" property="email"/></td>
+                                        <td><bean:write name="row" property="description"/></td>
+                                        <td><bean:write name="row" property="lastLogin"/></td>
+                                        <td><bean:write name="row" property="createdOnDate"/></td>
+                                        <td><bean:write name="row" property="updatedOnDate"/></td>
+                                        <td><bean:write name="row" property="activatedOnDate"/></td>
+                                    </tr>
+                                </logic:iterate>
                             </tbody>
                         </table>
                     </div>

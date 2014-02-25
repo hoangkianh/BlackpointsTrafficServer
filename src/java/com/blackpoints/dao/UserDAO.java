@@ -17,14 +17,21 @@ import java.util.List;
  * @author hka
  */
 public class UserDAO {
-    
-    public List<User> getAllUsers() {
+
+    public List<User> getAllUsers(boolean getNormalUsers) {
         List<User> list = new ArrayList<User>();
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
+        String query = getNormalUsers ?
+                "SELECT * FROM user" :
+                "SELECT B.* \n"
+                + "FROM usergroup A\n"
+                + "INNER JOIN user B\n"
+                + "ON A.userGroupID = B.groupID\n"
+                + "WHERE A.level = 1 OR A.level = 2";
         try {
-            stm = conn.prepareStatement("SELECT * FROM user");
+            stm = conn.prepareStatement(query);
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -39,7 +46,7 @@ public class UserDAO {
                 u.setGroupID(rs.getInt("groupID"));
                 u.setActivated(rs.getBoolean("isActivated"));
                 u.setSalt(rs.getString("salt"));
-                
+
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp lastLoginTimeStamp = rs.getTimestamp("lastLogin");
                 Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");

@@ -93,7 +93,10 @@
         <action input="/" name="UserGroupForm" validate="false" path="/usergroup" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction">
             <forward name="getAllUserGroupsOK" path="/admin/user-group.jsp" />
         </action>
-        <action path="/admin" forward="/admin/user-admin.jsp" />
+        <action path="/newgroup" forward="/admin/user-new-group.jsp" />        
+        <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdmin">
+            <forward name="getAllAdminOK" path="/admin/user-admin.jsp" />
+        </action>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
