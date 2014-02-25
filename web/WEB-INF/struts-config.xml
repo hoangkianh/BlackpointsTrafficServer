@@ -97,6 +97,7 @@
         <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdmin">
             <forward name="getAllAdminOK" path="/admin/user-admin.jsp" />
         </action>
+        <action input="/admin/user-new-group.jsp" name="UserGroupForm" path="/AddNewUserGroupAction" scope="request" type="com.blackpoints.struts.action.AddNewUserGroupAction"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

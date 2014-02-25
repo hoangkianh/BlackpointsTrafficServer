@@ -1303,7 +1303,7 @@ legend {
     height: 300px;
 }
 /*table style */
-.table-list {
+.table-list, .form-admin {
     margin-top: 15px;
     padding: 15px;
     background: #fff;
@@ -1311,6 +1311,7 @@ legend {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border: 1px solid #ccc;
+    min-height: 300px !important;
 }
 
 .table-list .btn {
@@ -1415,4 +1416,13 @@ table .headerSortUp:after {
     -khtml-opacity: 0.6;
     -moz-opacity: 0.6;
     opacity: 0.6;
+}
+
+/*form admin style*/
+.form-admin h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ff5757;
 }

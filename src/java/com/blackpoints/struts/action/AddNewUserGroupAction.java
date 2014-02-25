@@ -1,8 +1,8 @@
 package com.blackpoints.struts.action;
 
-import com.blackpoints.classes.TempPOI;
-import com.blackpoints.dao.TempPOIDAO;
-import com.blackpoints.struts.form.TempPOIForm;
+import com.blackpoints.classes.UserGroup;
+import com.blackpoints.dao.UserGroupDAO;
+import com.blackpoints.struts.form.UserGroupForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class AddNewTempPOIAction extends org.apache.struts.action.Action {
+public class AddNewUserGroupAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -34,30 +34,30 @@ public class AddNewTempPOIAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        TempPOIForm tempPOIForm = (TempPOIForm) form;
-        TempPOI tempPOI = new TempPOI();
-        BeanUtils.copyProperties(tempPOI, tempPOIForm);
+        UserGroupForm userGroupForm = (UserGroupForm) form;
+        UserGroup ug = new UserGroup();
+        BeanUtils.copyProperties(ug, userGroupForm);
         HttpSession session = request.getSession(true);
         String str = (String) session.getAttribute("blackpoints");
         if (str == null) {
             Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
             str = c.getValue();
         }
-
-        tempPOI.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
-
+        
+        ug.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
+        
         response.setContentType("text/text;charset=utf-8");
         response.setHeader("cache-control", "no-cache");
         PrintWriter out = response.getWriter();
-
-        if (new TempPOIDAO().addNewTempPOI(tempPOI)) {
+        
+        if (new UserGroupDAO().addNewUserGroup(ug)) {
             out.println("success");
         } else {
             out.println("failure");
         }
-
+        
         out.flush();
-
-        return null;
+        
+        return mapping.findForward("");
     }
 }

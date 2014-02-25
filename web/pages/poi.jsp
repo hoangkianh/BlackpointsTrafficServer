@@ -26,7 +26,7 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="span7 offset2">
+                    <div class="span7 offset2" style="min-height: 550px !important;">
                         <html:form styleId="tempPOIForm" method="POST" action="/AddNewTempPOIAction" styleClass="form-horizontal my-form">
                             <fieldset>
                                 <legend><bean:message key="poi.legend.step1"/></legend>
@@ -83,7 +83,7 @@
                             </fieldset>
                             <fieldset>
                                 <legend><bean:message key="poi.legend.step2"/></legend>
-                                <div class="control-group" id="rating-div">
+                                <div class="control-group">
                                     <label class="control-label" for="rating"><bean:message key="poi.rating" /></label>
                                     <div class="controls">
                                         <html:select styleId="rating" name="TempPOIForm" property="rating">
@@ -113,7 +113,6 @@
         </section>
         <%@include file="../includes/footer.jsp" %>
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
         <script type="text/javascript">
@@ -172,7 +171,7 @@
                             maxlength: "<bean:message key="errors.maxlength" arg0="Địa chỉ" arg1="100" />"
                         },
                         categoryID: {
-                            checkSelect: "<bean:message key="errors.required" arg0="Kiểu điểm đen" />"
+                            checkSelectCategory: "<bean:message key="errors.required" arg0="Kiểu điểm đen" />"
                         },
                         description: {
                             maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="500" />"
@@ -203,7 +202,7 @@
                         // redirect
                         setTimeout(function() {
                             window.location.href = "poi.do";
-                        }, 5000);
+                        }, 4000);
                     }
                 });
             });

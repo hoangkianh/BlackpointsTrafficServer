@@ -99,12 +99,11 @@ public List<UserGroup> getAllUserGroups() {
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("INSERT INTO userGroup (name, level, description, createdOnDate, createdByUserID)"
-                    + " VALUES(?, ?, ?, ?, ?)");
+                    + " VALUES(?, ?, ?, NOW(), ?)");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
             stm.setString(3, ug.getDescription());
-            stm.setString(4, ug.getCreatedOnDate());
-            stm.setInt(5, ug.getCreatedByUserID());
+            stm.setInt(4, ug.getCreatedByUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
