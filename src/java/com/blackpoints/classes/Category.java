@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hka
  */
-public class Category {
+public class Category  implements Serializable{
 
     private int categoryID;
     private String name;

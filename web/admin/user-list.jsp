@@ -91,7 +91,7 @@
                                 <logic:iterate id="row" name="UserForm" property="userList">                                    
                                     <tr>
                                         <logic:equal name="row" property="activated" value="true">
-                                            <td class="center"><i class="fa fa-check-circle" title="Tài khoản đã được xác thực"></i></td>
+                                            <td class="center"><i class="fa fa-check-circle" title="<bean:message key="admin.table.activated"/>"></i></td>
                                         </logic:equal>
                                         <logic:equal name="row" property="activated" value="false">
                                             <td class="center"></td>

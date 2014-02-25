@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hka
  */
-public class User {
+public class User implements Serializable {
 
     private int userID;
     private String userName;

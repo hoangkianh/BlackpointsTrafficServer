@@ -45,7 +45,6 @@
             <forward name="registerFailure" path="/failure.do?f=2" />
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
-        <action input="/" name="UserGroupForm" path="/GetAllUserGroupsAction" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction"/>
         <action path="/login" forward="/pages/login.jsp" />
         <action path="/register" forward="/pages/register.jsp" />
         <action path="/activate" type="com.blackpoints.struts.action.ActivateAction">
@@ -91,7 +90,9 @@
         <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        
             <forward name="getAllUsersOK" path="/admin/user-list.jsp" />
         </action>
-        <action path="/usergroup" forward="/admin/user-group.jsp" />
+        <action input="/" name="UserGroupForm" validate="false" path="/usergroup" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction">
+            <forward name="getAllUserGroupsOK" path="/admin/user-group.jsp" />
+        </action>
         <action path="/admin" forward="/admin/user-admin.jsp" />
     </action-mappings>
     

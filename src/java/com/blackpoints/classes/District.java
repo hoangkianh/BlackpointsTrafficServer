@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author HKA
  */
-public class District {
+public class District implements Serializable {
     private int id;
     private String name;
     private int city;

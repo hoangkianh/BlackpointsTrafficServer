@@ -1,10 +1,13 @@
 package com.blackpoints.classes;
 
+import com.blackpoints.dao.UserDAO;
+import java.io.Serializable;
+
 /**
  *
  * @author hka
  */
-public class UserGroup {
+public class UserGroup implements Serializable{
 
     private int userGroupID;
     private String name;
@@ -14,6 +17,11 @@ public class UserGroup {
     private int createdByUserID;
     private String updatedOnDate;
     private int updatedByUserID;
+    private final UserDAO userDao;
+
+    public UserGroup() {
+        userDao = new UserDAO();
+    }
 
     public int getUserGroupID() {
         return userGroupID;
@@ -78,5 +86,20 @@ public class UserGroup {
     public void setUpdatedByUserID(int updatedByUserID) {
         this.updatedByUserID = updatedByUserID;
     }
-
+    
+    public String getUserCreated () {
+        User u = this.userDao.getUserByID(createdByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "System";
+    }
+    
+    public String getUserUpdated () {
+        User u = this.userDao.getUserByID(updatedByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "";
+    }
 }

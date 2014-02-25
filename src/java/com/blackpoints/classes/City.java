@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author HKA
  */
-public class City {
+public class City  implements Serializable{
     private int id;
     private String name;
 

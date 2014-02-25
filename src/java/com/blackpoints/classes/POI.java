@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hka
  */
-public class POI {
+public class POI implements Serializable {
 
     private int id;
     private String name;

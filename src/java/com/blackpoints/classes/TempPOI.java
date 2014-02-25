@@ -1,10 +1,12 @@
 package com.blackpoints.classes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hka
  */
-public class TempPOI {
+public class TempPOI implements Serializable {
 
     private int id;
     private String name;
