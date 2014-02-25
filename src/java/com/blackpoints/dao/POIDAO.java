@@ -57,7 +57,7 @@ public class POIDAO {
                 p.setDeletedByUserID(rs.getInt("deletedByUserID"));
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
                 Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
                 Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
@@ -119,7 +119,7 @@ public class POIDAO {
                 p.setDeletedByUserID(rs.getInt("deletedByUserID"));
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
                 Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
                 Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
@@ -296,7 +296,7 @@ public class POIDAO {
                 p.setDeletedByUserID(rs.getInt("deletedByUserID"));
                 p.setRestoreByUserID(rs.getInt("restoreByUserID"));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
                 Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
                 Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");

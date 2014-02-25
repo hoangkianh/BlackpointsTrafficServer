@@ -41,7 +41,7 @@ public class TempPOIDAO {
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
                 Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
                 if (createdTimeStamp != null) {
@@ -86,7 +86,7 @@ public class TempPOIDAO {
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
                 Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
                 if (createdTimeStamp != null) {
