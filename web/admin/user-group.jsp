@@ -48,26 +48,57 @@
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
                         "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
-                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
-                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
-                        "sInfoPostFix": "",
-                        "sSearch": "<bean:message key='admin.table.search'/>",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "<bean:message key='admin.table.first'/>",
-                            "sPrevious": "<bean:message key='admin.table.pre'/>",
-                            "sNext": "<bean:message key='admin.table.next'/>",
-                            "sLast": "<bean:message key='admin.table.last'/>"
-                        }
-                    }
-                });
-            });
+                                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
+                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
+                                        "sInfoPostFix": "",
+                                        "sSearch": "<bean:message key='admin.table.search'/>",
+                                        "sUrl": "",
+                                        "oPaginate": {
+                                            "sFirst": "<bean:message key='admin.table.first'/>",
+                                            "sPrevious": "<bean:message key='admin.table.pre'/>",
+                                            "sNext": "<bean:message key='admin.table.next'/>",
+                                            "sLast": "<bean:message key='admin.table.last'/>"
+                                        }
+                                    }
+                                });
+                            });
         </script>
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
+        <div id="delete-confirm" class="modal fade hide">
+            <html:form styleId="deleteForm" method="POST" action="/DeleteUserGroupAction" styleClass="form-horizontal my-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3><bean:message key="admin.usergroup.delete.h3" /></h3>
+                </div>
+                <div class="modal-body">
+                    <html:hidden styleId="groupID" name="UserForm" property="groupID"/>
+                    <div class="alert alert-holder">
+                        <span><bean:message key="admin.usergroup.delete.warning" /></span>
+                    </div>
+                    <ul>
+                        <li><bean:message key="admin.usergroup.delete.warningMSG1" /></li>
+                        <li><bean:message key="admin.usergroup.delete.warningMSG2" /></li>
+                    </ul>
+                    <div class="control-group">
+                        <label class="control-label" for="name">
+                            <bean:message key="admin.usergroup.delete.password" />
+                            <span class="asterisk">*</span>
+                        </label>
+                        <div class="controls">
+                            <input type="password" id="password" name="password" placeholder="<bean:message key="admin.usergroup.delete.password" />"/>
+                            <label for="name" class="error"><html:errors property="name" /></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.form.delete" />" />
+                </div>
+            </html:form>
+        </div>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
             <div class="container">
@@ -106,15 +137,15 @@
                                             </c:if>
                                             <c:choose>
                                                 <c:when test="${userStr[3] eq 1}">
-                                                <td class="center delete">
-                                                    <a href="#" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
-                                                </td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:if>
+                                                    <td class="center delete">
+                                                        <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                    </td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="level"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
@@ -130,5 +161,64 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            $(function() {
+                $(".delete").click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+                    // reset password input
+                    $("#password").val('');
+                    
+                    var id = $(this).attr('id');
+                    $('#delete-confirm').modal();
+                    $("#groupID").val(id);
+                    return false;
+                });
+
+                $("#deleteForm").submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "DeleteUserGroupAction.do",
+                        data: $("#deleteForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "usergroup.do";
+                                    }, 1000);
+                                    break;
+                                case "cannotDelete":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.cannotDelete"/>');
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+            });
+        </script>
     </body>
 </html>

@@ -152,7 +152,7 @@
                                     $(".message-holder").append('<bean:message key="message.messageDiv"/>');
                                 }
                                 $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                $("#message").html('<bean:message key="updateinfo.failure"/>');
+                                    $("#message").html('<bean:message key="admin.usergroup.edit.failure"/>');
                             }
                         });
                     }

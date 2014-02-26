@@ -904,9 +904,13 @@ footer p {
     /* Styles */
 }
 
-.modal {
-    position: relative;
+.modal-alt {
+    position: relative !important;
     top: 50px;
+}
+
+.modal ul {
+    margin-left:2em;
 }
 
 .modal-body {

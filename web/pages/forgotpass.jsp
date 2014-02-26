@@ -52,7 +52,7 @@
             <div id="headerwrap">
                 <header class="clearfix">
                     <div class="container">
-                        <div class="modal">
+                        <div class="modal modal-alt">
                         <html:form action="/ForgotPassAction" method="POST" styleClass="form-horizontal my-form" styleId="forgotpassForm">
                             <div class="modal-header">
                                 <bean:message key="forgotpass.header" />

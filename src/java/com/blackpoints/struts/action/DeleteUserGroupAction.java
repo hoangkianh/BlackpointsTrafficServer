@@ -1,17 +1,16 @@
 package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.User;
-import com.blackpoints.classes.UserGroup;
 import com.blackpoints.dao.UserDAO;
 import com.blackpoints.dao.UserGroupDAO;
-import com.blackpoints.struts.form.UpdateInfoForm;
+import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.utils.CookieUtils;
+import com.blackpoints.utils.MD5Hashing;
 import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,7 +19,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class UpdateInfoAction extends org.apache.struts.action.Action {
+public class DeleteUserGroupAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -36,11 +35,14 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        UpdateInfoForm infoForm = (UpdateInfoForm) form;
+        UserForm userForm = (UserForm) form;
+        UserGroupDAO userGroupDAO = new UserGroupDAO();
         UserDAO userDAO = new UserDAO();
+
         PrintWriter out = response.getWriter();
         String kq = "success";
 
+        // Get userID
         int id = 0;
         HttpSession session = request.getSession(true);
         String s = (String) session.getAttribute("blackpoints");
@@ -59,31 +61,25 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
             id = Integer.parseInt(s.split("~")[0]);
             User u = userDAO.getUserByID(id);
 
+            // compare password
             if (u == null) {
                 kq = "failure";
-            }
-
-            BeanUtils.copyProperties(u, infoForm);
-
-            if (!userDAO.updateUser(u)) {
-                kq = "failure";
-            }
-
-            if (kq.equals("success")) {
-                Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
-                if (cookie != null) {
-                    UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
-                    cookie.setValue(u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
-                    cookie.setMaxAge(7 * 24 * 60 * 60);
-                    response.addCookie(cookie);
-
-                    session.setAttribute("blackpoints",
-                            u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
+            } else {
+                if (!u.getPassword().equals(MD5Hashing.encryptPassword(userForm.getPassword()))) {
+                    kq = "passwordNotCorrect";
+                } else {
+                    // count user in group
+                    if (userGroupDAO.countUserInGroup(userForm.getGroupID()) > 0) {
+                        kq = "cannotDelete";
+                    } else {
+                        // if delete failure
+                        if (!userGroupDAO.deleteUserGroup(userForm.getGroupID())) {
+                            kq = "failure";
+                        }
+                    }
                 }
             }
-            
-            kq += "~" + u.getDisplayName();
-        } catch (Exception ex) {
+        } catch (Exception e) {
             kq = "failure";
         }
 

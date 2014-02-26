@@ -19,7 +19,7 @@
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
-        <div class="modal">
+        <div class="modal modal-alt">
             <div class="modal-header">
                 <h3>
                     <bean:message key="updateinfo.header" /> - <bean:write name="UserForm" property="userName" />

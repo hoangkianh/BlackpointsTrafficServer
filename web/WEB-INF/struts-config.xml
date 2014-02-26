@@ -101,6 +101,7 @@
             <forward name="getUserGroupDetailsFailure" path="/failure.do?f=9" />
             <forward name="getUserGroupDetailsSuccess" path="/admin/user-group-edit.jsp" />
         </action>
+        <action input="/usergroup.do" name="UserForm" validate="false" path="/DeleteUserGroupAction" scope="session" type="com.blackpoints.struts.action.DeleteUserGroupAction"/>
         <action input="/admin/user-group-edit.jsp" name="UserGroupForm" path="/UpdateUserGroupAction" scope="request" type="com.blackpoints.struts.action.UpdateUserGroupAction"/>
         <action input="/admin/user-new-group.jsp" name="UserGroupForm" path="/AddNewUserGroupAction" scope="request" type="com.blackpoints.struts.action.AddNewUserGroupAction"/>
     </action-mappings>
