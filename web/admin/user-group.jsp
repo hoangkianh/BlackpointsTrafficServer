@@ -68,43 +68,47 @@
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
-        <div id="delete-confirm" class="modal fade hide">
-            <html:form styleId="deleteForm" method="POST" action="/DeleteUserGroupAction" styleClass="form-horizontal my-form">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3><bean:message key="admin.usergroup.delete.h3" /></h3>
-                </div>
-                <div class="modal-body">
-                    <html:hidden styleId="groupID" name="UserForm" property="groupID"/>
-                    <div class="alert alert-holder">
-                        <span><bean:message key="admin.usergroup.delete.warning" /></span>
+        <c:if test="${userStr[3] eq 1}">
+            <div id="delete-confirm" class="modal fade hide">
+                <html:form styleId="deleteForm" method="POST" action="/DeleteUserGroupAction" styleClass="form-horizontal my-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3><bean:message key="admin.usergroup.delete.h3" /></h3>
                     </div>
-                    <ul>
-                        <li><bean:message key="admin.usergroup.delete.warningMSG1" /></li>
-                        <li><bean:message key="admin.usergroup.delete.warningMSG2" /></li>
-                    </ul>
-                    <div class="control-group">
-                        <label class="control-label" for="name">
-                            <bean:message key="admin.usergroup.delete.password" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="password" id="password" name="password" placeholder="<bean:message key="admin.usergroup.delete.password" />"/>
-                            <label for="name" class="error"><html:errors property="name" /></label>
+                    <div class="modal-body">
+                        <html:hidden styleId="groupID" name="UserForm" property="groupID"/>
+                        <div class="alert alert-holder">
+                            <span><bean:message key="admin.usergroup.delete.warning" /></span>
+                        </div>
+                        <ul>
+                            <li><bean:message key="admin.usergroup.delete.warningMSG1" /></li>
+                            <li><bean:message key="admin.usergroup.delete.warningMSG2" /></li>
+                        </ul>
+                        <div class="control-group">
+                            <label class="control-label" for="name">
+                                <bean:message key="admin.usergroup.delete.password" />
+                                <span class="asterisk">*</span>
+                            </label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="<bean:message key="admin.usergroup.delete.password" />"/>
+                                <label for="name" class="error"><html:errors property="name" /></label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.form.delete" />" />
-                </div>
-            </html:form>
-        </div>
+                    <div class="modal-footer">
+                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.form.delete" />" />
+                    </div>
+                </html:form>
+            </div>
+        </c:if>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="newgroup.do" class="btn btn-primary"><bean:message key="admin.usergroup.list.addNewBtn" /></a>
+                        <c:if test="${userStr[3] eq 1}">
+                            <a href="newgroup.do" class="btn btn-primary"><bean:message key="admin.usergroup.list.addNewBtn" /></a>
+                        </c:if>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
                             <caption><bean:message key="admin.usergroup.list.caption" /></caption>
                             <thead>
@@ -124,28 +128,28 @@
                                 <logic:iterate id="row" name="UserGroupForm" property="userGroupList">
                                     <tr>
                                         <td class="center">
-                                            <html:link action="editgroup.do" paramId="id" paramName="row" paramProperty="userGroupID">
-                                                <i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i>
-                                            </html:link>
-                                        </td>
-                                        <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
-                                            <c:if test="${not empty sessionScope.blackpoints}">
-                                                <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
-                                            </c:if>
-                                            <c:if test="${not empty cookie.blackpoints}">
-                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
-                                            </c:if>
                                             <c:choose>
                                                 <c:when test="${userStr[3] eq 1}">
-                                                    <td class="center delete">
-                                                        <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
-                                                    </td>
+                                                    <html:link action="editgroup.do" paramId="id" paramName="row" paramProperty="userGroupID">
+                                                        <i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i>
+                                                    </html:link>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:if>
+                                                    <i class="fa fa-pencil muted" title="<bean:message key="admin.table.editDisable"/>"></i>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                        </td>
+                                        <td class="center delete">
+                                            <c:choose>
+                                                <c:when test="${userStr[3] eq 1}">
+                                                    <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="level"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
@@ -168,7 +172,7 @@
                     $("#messageDiv").remove();
                     // reset password input
                     $("#password").val('');
-                    
+
                     var id = $(this).attr('id');
                     $('#delete-confirm').modal();
                     $("#groupID").val(id);

@@ -72,7 +72,9 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="#" class="btn btn-primary"><bean:message key="admin.useradmin.list.addNewAdmin"/></a>
+                        <c:if test="${userStr[3] eq 1}">
+                            <a href="#" class="btn btn-primary"><bean:message key="admin.useradmin.list.addNewAdmin"/></a>
+                        </c:if>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
                             <caption><bean:message key="admin.useradmin.list.caption"/></caption>
                             <thead>
@@ -93,27 +95,26 @@
                             <tbody>
                                 <logic:iterate id="row" name="UserForm" property="userList">                                    
                                     <tr>
-                                        <td class="center"><a href="#"><i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i></a></td>
-                                        <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
-                                            <c:if test="${not empty sessionScope.blackpoints}">
-                                                <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
-                                            </c:if>
-                                            <c:if test="${not empty cookie.blackpoints}">
-                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
-                                            </c:if>
+                                        <td class="center">
                                             <c:choose>
-                                                <c:when test="${userStr[3] eq 1}">
-                                                    <td class="center delete">
-                                                        <a href="#" class="delete"><i class="fa fa-times" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
-                                                    </td>
+                                                <c:when test="${(userStr[3] ne 1) or (row.level eq 1)}">
+                                                    <i class="fa fa-pencil muted" title="<bean:message key="admin.table.editDisable"/>"></i>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td class="center delete">
-                                                        <i class="fa fa-times muted" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
-                                                    </td>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:if>
+                                                    <a href="#"><i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i></a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                        </td>
+                                        <td class="center delete">
+                                            <c:choose>
+                                                <c:when test="${(userStr[3] ne 1) or (row.level eq 1)}">
+                                                    <i class="fa fa-times muted" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="#" class="delete"><i class="fa fa-times" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                        </td>
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="level"/></td>
                                         <td><bean:write name="row" property="displayName"/></td>

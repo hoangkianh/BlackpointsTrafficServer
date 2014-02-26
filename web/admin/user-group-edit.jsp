@@ -16,7 +16,7 @@
         <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
     </c:if>
     <c:choose>
-        <c:when test="${userStr[3] eq 3}">
+        <c:when test="${userStr[3] ne 1}">
             <jsp:forward page="/failure.do">
                 <jsp:param name="f" value="6" />
             </jsp:forward>

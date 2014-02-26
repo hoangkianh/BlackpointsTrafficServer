@@ -94,7 +94,7 @@
             <forward name="getAllUserGroupsOK" path="/admin/user-group.jsp" />
         </action>
         <action path="/newgroup" forward="/admin/user-group-new.jsp" />        
-        <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdmin">
+        <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdminAction">
             <forward name="getAllAdminOK" path="/admin/user-admin.jsp" />
         </action>
         <action input="/" name="UserGroupForm" validate="false" path="/editgroup" scope="request" type="com.blackpoints.struts.action.GetUserGroupDetailsAction">
