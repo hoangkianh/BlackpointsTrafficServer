@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.title.usergroup" /> | <bean:message key="admin.usergroup.new.title" /></title>
+        <title><bean:message key="admin.usergroup.edit.title" /> | <bean:message key="admin.title.usergroup" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -40,46 +40,52 @@
                 <div class="row-fluid">
                     <div class="span12 form-admin border-red">
                         <div class="span8 offset2">
-                            <h3><bean:message key="admin.usergroup.new.caption" /></h3>
-                            <html:form styleId="userGroupForm" method="POST" action="/AddNewUserGroupAction" styleClass="form-horizontal my-form">
+                            <div class="alert-holder">
+                                <div class="alert alert-block alert-holder fade in">
+                                    <bean:message key="warning.javascript"/>
+                                </div>
+                            </div>
+                            <div class="message-holder"></div>
+                            <h3><bean:message key="admin.usergroup.edit.caption" /></h3>
+                            <html:form styleId="userGroupForm" method="POST" action="/UpdateUserGroupAction" styleClass="form-horizontal my-form">
+                                <html:hidden name="UserGroupForm" property="userGroupID"/>
                                 <div class="control-group">
                                     <label class="control-label" for="name">
-                                        <bean:message key="admin.usergroup.new.name" />
+                                        <bean:message key="admin.usergroup.form.name" />
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <input type="text" id="name" name="name" placeholder="<bean:message key="admin.usergroup.new.name" />"
+                                        <input type="text" id="name" name="name" placeholder="<bean:message key="admin.usergroup.form.name" />"
                                                value="<bean:write name="UserGroupForm" property="name" />"/>
                                         <label for="name" class="error"><html:errors property="name" /></label>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="level">
-                                        <bean:message key="admin.usergroup.new.level" />
+                                        <bean:message key="admin.usergroup.form.level" />
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
                                         <html:select styleId="level" name="UserGroupForm" property="level">
-                                            <html:option value="0"><bean:message key="admin.usergroup.new.selectLevel"/></html:option>
-                                            <html:option value="1"><bean:message key="admin.usergroup.new.level1"/></html:option>
-                                            <html:option value="2"><bean:message key="admin.usergroup.new.level2"/></html:option>
-                                            <html:option value="3"><bean:message key="admin.usergroup.new.level3"/></html:option>
+                                            <html:option value="0"><bean:message key="admin.usergroup.form.selectLevel"/></html:option>
+                                            <html:option value="1"><bean:message key="admin.usergroup.form.level1"/></html:option>
+                                            <html:option value="2"><bean:message key="admin.usergroup.form.level2"/></html:option>
+                                            <html:option value="3"><bean:message key="admin.usergroup.form.level3"/></html:option>
                                         </html:select>
                                         <label for="level" class="error"><html:errors property="level" /></label>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="description"><bean:message key="admin.usergroup.new.description"/></label>
+                                    <label class="control-label" for="description"><bean:message key="admin.usergroup.form.description"/></label>
                                     <div class="controls">
-                                        <textarea id="description" name="description" placeholder="<bean:message key="admin.usergroup.new.description" />"><bean:write name="UserGroupForm" property="description" /></textarea>
+                                        <textarea id="description" name="description" placeholder="<bean:message key="admin.usergroup.form.description" />"><bean:write name="UserGroupForm" property="description" /></textarea>
                                         <label for="description" class="error"><html:errors property="description" /></label>
                                     </div>
                                 </div>
-                                <a href="usergroup.do" title="<bean:message key="admin.usergroup.new.back"/>"><bean:message key="admin.usergroup.new.back"/></a>
-                                <input type="reset" id="reset" class="btn pull-right" value="<bean:message key="admin.usergroup.new.reset"/>" />
-                                <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.new.submit"/>" />
+                                <a href="usergroup.do" title="<bean:message key="admin.usergroup.form.back"/>"><bean:message key="admin.usergroup.form.back"/></a>
+                                <input type="reset" id="reset" class="btn pull-right" value="<bean:message key="admin.usergroup.form.reset"/>" />
+                                <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.edit.submit"/>" />
                             </html:form>
-                            <div id="loading"></div>
                         </div>
                     </div>
                 </div>
@@ -90,6 +96,8 @@
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
         <script type="text/javascript">
             $(function() {
+                $(".alert-holder").remove();
+
                 $.validator.addMethod("checkSelectLevel", function(value, element) {
                     return this.optional(element) || value !== "0";
                 }, "<bean:message key="errors.select" arg0="level cho nhóm" />");
@@ -123,31 +131,30 @@
                         }
                     },
                     submitHandler: function(form) {
-                        $("#userGroupForm").fadeOut();
-                        $('#loading').html('<img src="img/loading.GIF">' + '<bean:message key="admin.loading"/>');
                         $.ajax({
                             type: "POST",
-                            url: "AddNewUserGroupAction.do",
+                            url: "UpdateUserGroupAction.do",
                             data: $("#userGroupForm").serialize(),
                             success: function(data) {
-                                setTimeout(function() {
-                                    if (data.trim() === "success") {
-                                        $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="admin.usergroup.new.success"/>' + '</p>');
-                                    } else {
-                                        $('#loading').html('<p class="error">' + '<bean:message key="admin.usergroup.new.failure"/>' + '</p>');
-                                    }
-                                }, 2000);
+                                if ($("#messageDiv").length === 0) {
+                                    $(".message-holder").append('<bean:message key="message.messageDiv"/>');
+                                }
+                                if (data.trim() === "success") {
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.usergroup.edit.success"/>');
+                                } else {
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.edit.failure"/>');
+                                }
                             },
                             error: function(e) {
-                                setTimeout(function() {
-                                    $('#loading').html('<p class="error">' + '<bean:message key="admin.usergroup.new.failure"/>' + '</p>');
-                                }, 2000);
+                                if ($("#messageDiv").length === 0) {
+                                    $(".message-holder").append('<bean:message key="message.messageDiv"/>');
+                                }
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="updateinfo.failure"/>');
                             }
                         });
-                        // redirect
-                        setTimeout(function() {
-                            window.location.href = "usergroup.do";
-                        }, 3000);
                     }
                 });
             });

@@ -111,7 +111,6 @@
         <script type="text/javascript">
             $("#tabs").tabs();
             $(".alert-holder").remove();
-
             $("#infoForm").validate({
                 rules: {
                     displayName: {
@@ -140,18 +139,25 @@
                         data: $("#infoForm").serialize(),
                         success: function(data) {
                             if ($("#messageDiv").length === 0) {
-                                $(".modal-header").append('<bean:message key="updateinfo.messageDiv"/>');
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
                             msg = data.trim().split("~");
                             if (msg[0] === "success") {
                                 $("#messageDiv").addClass("alert-success").removeClass("alert-error");
                                 $("#message").html('<bean:message key="updateinfo.success"/>');
 
-                                $("#menu-main li:eq(1)").html('<a href="updateinfo.do">' + msg[1] + '</a>');
+                                $("#menu-main li:eq(2)").html('<a href="updateinfo.do">' + msg[1] + '</a>');
                             } else {
                                 $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                $("#message").html('<bean:message key="updateinfo.error"/>');
+                                $("#message").html('<bean:message key="updateinfo.failure"/>');
                             }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="updateinfo.failure"/>');
                         }
                     });
                 }
@@ -197,7 +203,7 @@
                             if (data.trim() === "success") {
                                 $("#messageDiv").addClass("alert-success").removeClass("alert-error");
                                 $("#message").html('<bean:message key="updateinfo.success"/>');
-                                
+
                                 $("#oldPass").val("");
                                 $("#newPass").val("");
                                 $("#newPass2").val("");
@@ -206,9 +212,16 @@
                                 if (data.trim().indexOf("passNotCorrect") !== -1) {
                                     $("#message").html('<bean:message key="errors.notCorrect" arg0="Mật khẩu cũ"/>');
                                 } else {
-                                    $("#message").html('<bean:message key="updateinfo.error"/>');
+                                    $("#message").html('<bean:message key="updateinfo.failure"/>');
                                 }
                             }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="updateinfo.failure"/>');
                         }
                     });
                 }

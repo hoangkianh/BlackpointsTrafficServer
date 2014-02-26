@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.District;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author HKA
  */
-public class DistrictDAO {
+public class DistrictDAO implements Serializable {
 
     public List<District> getAllDistricts() {
         List<District> list = new ArrayList<District>();

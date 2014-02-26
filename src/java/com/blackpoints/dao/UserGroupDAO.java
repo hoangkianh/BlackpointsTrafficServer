@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.UserGroup;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author hka
  */
-public class UserGroupDAO {
+public class UserGroupDAO implements Serializable {
     
 public List<UserGroup> getAllUserGroups() {
         List<UserGroup> list = new ArrayList<UserGroup>();
@@ -116,19 +117,18 @@ public List<UserGroup> getAllUserGroups() {
         return kq;
     }
 
-    public boolean updateUserGrop (UserGroup ug) {
+    public boolean updateUserGroup (UserGroup ug) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("UPDATE userGroup SET name=?, level=?, description=?"
-                    + ", updatedByUserID=?, updatedOnDate=? WHERE userGroupID=?");
+                    + ", updatedByUserID=?, updatedOnDate=NOW() WHERE userGroupID=?");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
             stm.setString(3, ug.getDescription());
             stm.setInt(4, ug.getUpdatedByUserID());
-            stm.setString(5, ug.getUpdatedOnDate());
-            stm.setInt(6, ug.getUserGroupID());
+            stm.setInt(5, ug.getUserGroupID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

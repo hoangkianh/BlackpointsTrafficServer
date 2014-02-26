@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.City;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author HKA
  */
-public class CityDAO {
+public class CityDAO implements Serializable {
 
     public List<City> getAllCities() {
         List<City> list = new ArrayList<City>();

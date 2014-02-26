@@ -44,7 +44,7 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
         int id = 0;
         HttpSession session = request.getSession(true);
         String s = (String) session.getAttribute("blackpoints");
-        if (s == null || s.isEmpty()) {
+        if (s == null) {
             Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
             if (cookie == null) {
                 kq = "error";
@@ -60,13 +60,13 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
             User u = userDAO.getUserByID(id);
 
             if (u == null) {
-                kq = "error";
+                kq = "failure";
             }
 
             BeanUtils.copyProperties(u, infoForm);
 
             if (!userDAO.updateUser(u)) {
-                kq = "error";
+                kq = "failure";
             }
 
             if (kq.equals("success")) {
@@ -84,7 +84,7 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
             
             kq += "~" + u.getDisplayName();
         } catch (Exception ex) {
-            kq = "error";
+            kq = "failure";
         }
 
         out.print(kq);

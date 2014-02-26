@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class AddNewUserGroupAction extends org.apache.struts.action.Action {
+public class UpdateUserGroupAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -35,29 +35,41 @@ public class AddNewUserGroupAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         UserGroupForm userGroupForm = (UserGroupForm) form;
-        UserGroup ug = new UserGroup();
-        BeanUtils.copyProperties(ug, userGroupForm);
-        HttpSession session = request.getSession(true);
-        String str = (String) session.getAttribute("blackpoints");
-        if (str == null) {
-            Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
-            str = c.getValue();
-        }
-        
-        ug.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
-        
-        response.setContentType("text/text;charset=utf-8");
-        response.setHeader("cache-control", "no-cache");
+        UserGroupDAO ugDAO = new UserGroupDAO();
         PrintWriter out = response.getWriter();
-        
-        if (new UserGroupDAO().addNewUserGroup(ug)) {
-            out.println("success");
-        } else {
-            out.println("failure");
+        String kq = "success";
+
+        try {
+            int id = userGroupForm.getUserGroupID();
+            UserGroup ug = ugDAO.getUserGroupByID(id);
+
+            if (ug == null) {
+                kq = "failure";
+            }
+
+            HttpSession session = request.getSession(true);
+            String s = (String) session.getAttribute("blackpoints");
+            if (s == null) {
+                Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
+                if (cookie == null) {
+                    kq = "error";
+                } else {
+                    s = cookie.getValue();
+                }
+            }
+            BeanUtils.copyProperties(ug, userGroupForm);
+            ug.setUpdatedByUserID(Integer.parseInt(s.split("~")[0]));
+
+            if (!ugDAO.updateUserGroup(ug)) {
+                kq = "failure";
+            }
+        } catch (Exception e) {
+            kq = "failure";
         }
-        
+
+        out.print(kq);
         out.flush();
-        
+
         return null;
     }
 }

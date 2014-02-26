@@ -93,10 +93,15 @@
         <action input="/" name="UserGroupForm" validate="false" path="/usergroup" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction">
             <forward name="getAllUserGroupsOK" path="/admin/user-group.jsp" />
         </action>
-        <action path="/newgroup" forward="/admin/user-new-group.jsp" />        
+        <action path="/newgroup" forward="/admin/user-group-new.jsp" />        
         <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdmin">
             <forward name="getAllAdminOK" path="/admin/user-admin.jsp" />
         </action>
+        <action input="/" name="UserGroupForm" validate="false" path="/editgroup" scope="request" type="com.blackpoints.struts.action.GetUserGroupDetailsAction">
+            <forward name="getUserGroupDetailsFailure" path="/failure.do?f=9" />
+            <forward name="getUserGroupDetailsSuccess" path="/admin/user-group-edit.jsp" />
+        </action>
+        <action input="/admin/user-group-edit.jsp" name="UserGroupForm" path="/UpdateUserGroupAction" scope="request" type="com.blackpoints.struts.action.UpdateUserGroupAction"/>
         <action input="/admin/user-new-group.jsp" name="UserGroupForm" path="/AddNewUserGroupAction" scope="request" type="com.blackpoints.struts.action.AddNewUserGroupAction"/>
     </action-mappings>
     

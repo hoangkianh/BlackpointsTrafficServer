@@ -92,25 +92,29 @@
                             <tbody>
                                 <logic:iterate id="row" name="UserGroupForm" property="userGroupList">
                                     <tr>
-                                        <td class="center"><a href="#"><i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i></a></td>
-                                                <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
-                                                    <c:if test="${not empty sessionScope.blackpoints}">
-                                                        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
-                                                    </c:if>
-                                                    <c:if test="${not empty cookie.blackpoints}">
-                                                        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
-                                                    </c:if>
-                                                    <c:choose>
-                                                        <c:when test="${userStr[3] eq 1}">
-                                                    <td class="center delete">
-                                                        <a href="#" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
-                                                    </td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                        <td class="center">
+                                            <html:link action="editgroup.do" paramId="id" paramName="row" paramProperty="userGroupID">
+                                                <i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i>
+                                            </html:link>
+                                        </td>
+                                        <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
+                                            <c:if test="${not empty sessionScope.blackpoints}">
+                                                <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
                                             </c:if>
+                                            <c:if test="${not empty cookie.blackpoints}">
+                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
+                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${userStr[3] eq 1}">
+                                                <td class="center delete">
+                                                    <a href="#" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                </td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td class="center delete"><i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i></td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="level"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>

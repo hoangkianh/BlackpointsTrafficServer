@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.TempPOI;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author hka
  */
-public class TempPOIDAO {
+public class TempPOIDAO implements Serializable {
 
     public List<TempPOI> getAllTempPOIs() {
         List<TempPOI> list = new ArrayList<TempPOI>();

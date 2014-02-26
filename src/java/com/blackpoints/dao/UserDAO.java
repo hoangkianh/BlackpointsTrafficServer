@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.User;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author hka
  */
-public class UserDAO {
+public class UserDAO implements Serializable {
 
     public List<User> getAllUsers(boolean getNormalUsers) {
         List<User> list = new ArrayList<User>();

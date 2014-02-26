@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.POI;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.util.TreeMap;
  *
  * @author hka
  */
-public class POIDAO {
+public class POIDAO implements Serializable {
 
     public List<POI> getAllPOIs(boolean getAllFlag) {
         List<POI> list = new ArrayList<POI>();

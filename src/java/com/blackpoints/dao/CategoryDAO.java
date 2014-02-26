@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.Category;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author hka
  */
-public class CategoryDAO {
+public class CategoryDAO implements Serializable {
 
     public List<Category> getAllCategories() {
         List<Category> list = new ArrayList<Category>();

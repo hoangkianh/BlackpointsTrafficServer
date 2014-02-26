@@ -2,6 +2,7 @@ package com.blackpoints.dao;
 
 import com.blackpoints.classes.POIProperty;
 import com.blackpoints.utils.DBUtil;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author hka
  */
-public class POIPropertyDAO {
+public class POIPropertyDAO implements Serializable {
 
     public List<POIProperty> getAllProperties() {
         List<POIProperty> list = new ArrayList<POIProperty>();
