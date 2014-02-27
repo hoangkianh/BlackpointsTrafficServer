@@ -106,6 +106,49 @@
                 </div>
             </html:form>
         </div>
+        <div id="remove-admin-confirm" class="modal fade hide">
+            <html:form styleId="removeAdminForm" method="POST" action="/RemoveAdminAction" styleClass="form-horizontal my-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3><bean:message key="admin.useradmin.delete.h3" /></h3>
+                </div>
+                <div class="modal-body">
+                    <html:hidden styleId="userID" name="UserForm" property="userID"/>
+                    <div class="alert alert-holder">
+                        <span><bean:message key="admin.useradmin.delete.warning" /></span>
+                    </div>
+                    <ul>
+                            <li><bean:message key="admin.useradmin.delete.warningMSG1" /></li>
+                            <li><bean:message key="admin.useradmin.delete.warningMSG2" /></li>
+                        </ul>
+                    <div class="control-group">
+                        <label class="control-label" for="userGroup">
+                            <bean:message key="admin.useradmin.delete.usergroup" />
+                        </label>
+                        <div class="controls">
+                            <html:select styleId="userGroup" name="UserForm" property="groupID">
+                                <html:option value="0"><bean:message key="admin.useradmin.delete.select"/></html:option>
+                                <logic:iterate id="g" name="UserForm" property="normalUserGroup">
+                                    <option value="<bean:write name="g" property="userGroupID"/>"><bean:write name="g" property="name"/> </option>
+                                </logic:iterate>
+                            </html:select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="name">
+                            <bean:message key="admin.useradmin.delete.password" />
+                            <span class="asterisk">*</span>
+                        </label>
+                        <div class="controls">
+                            <input type="password" id="password" name="password" placeholder="<bean:message key="admin.useradmin.delete.password" />"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.delete.remove" />" />
+                </div>
+            </html:form>
+        </div>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
@@ -153,7 +196,9 @@
                                                     <i class="fa fa-times muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="#" class="delete"><i class="fa fa-times" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
+                                                    <a href="#remove-admin-confirm" class="delete">
+                                                        <i class="fa fa-times" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdmin"/>"></i>
+                                                    </a>
                                                     </c:otherwise>
                                                 </c:choose>
                                         </td>
@@ -188,7 +233,7 @@
                     var id = $(this).attr('id');
                     $("#userID").val(id);
                     return false;
-                });
+                });                
 
                 $('#updateForm').submit(function(event) {
                     $.ajax({
@@ -197,7 +242,7 @@
                         data: $("#updateForm").serialize(),
                         success: function(data) {
                             if ($("#messageDiv").length === 0) {
-                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                                $("#updateForm .modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
                             switch (data.trim())
                             {
@@ -225,9 +270,67 @@
                         },
                         error: function(e) {
                             if ($("#messageDiv").length === 0) {
-                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                                $("#updateForm .modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
                             $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.usergroup.update.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+                
+                $('a.delete').click(function() {
+                    // remove messageDiv
+                    $('#messageDiv-alt').remove();
+                    // reset password input
+                    $('#password').val('');
+                    // reset select box
+                    $('#userGroup').val('0');
+                    $('#remove-admin-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#userID").val(id);
+                    return false;
+                });
+                
+                $('#removeAdminForm').submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "RemoveAdminAction.do",
+                        data: $("#removeAdminForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv-alt").length === 0) {
+                                $("#removeAdminForm .modal-header").append('<bean:message key="message.messageDivAlt"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv-alt").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "admin.do";
+                                    }, 1000);
+                                    break;
+                                case "notSelectGroup":
+                                    $("#messageDiv-alt").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.notSelectGroup"/>');
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv-alt").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv-alt").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv-alt").length === 0) {
+                                $("#removeAdminForm .modal-header").append('<bean:message key="message.messageDivAlt"/>');
+                            }
+                            $("#messageDiv-alt").addClass("alert-error").removeClass("alert-success");
                             $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
                         }
                     });

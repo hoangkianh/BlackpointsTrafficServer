@@ -217,7 +217,7 @@
                                 $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
                             $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                            $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
+                            $("#message").html('<bean:message key="admin.usergroup.newadmin.failure"/>');
                         }
                     });
                     event.preventDefault();

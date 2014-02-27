@@ -167,7 +167,7 @@
         <script type="text/javascript">
             $(function() {
                 $('[rel=tooltip]').tooltip(); 
-                $(".delete").click(function() {
+                $("a.delete").click(function() {
                     // remove messageDiv
                     $("#messageDiv").remove();
                     // reset password input
