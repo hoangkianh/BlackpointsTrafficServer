@@ -67,6 +67,45 @@
         </script>
     </head>
     <body>
+        <div id="update-confirm" class="modal fade hide">
+            <html:form styleId="updateForm" method="POST" action="/UpdateAminAction" styleClass="form-horizontal my-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3><bean:message key="admin.useradmin.update.h3" /></h3>
+                </div>
+                <div class="modal-body">
+                    <html:hidden styleId="userID" name="UserForm" property="userID"/>
+                    <div class="alert alert-holder">
+                        <span><bean:message key="admin.useradmin.update.warning" /></span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="userGroup">
+                            <bean:message key="admin.useradmin.update.usergroup" />
+                        </label>
+                        <div class="controls">
+                            <html:select styleId="userGroup" name="UserForm" property="groupID">
+                                <html:option value="0"><bean:message key="admin.useradmin.update.select"/></html:option>
+                                <logic:iterate id="g" name="UserForm" property="adminGroup">
+                                    <option value="<bean:write name="g" property="userGroupID"/>"><bean:write name="g" property="name"/> </option>
+                                </logic:iterate>
+                            </html:select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="name">
+                            <bean:message key="admin.useradmin.update.password" />
+                            <span class="asterisk">*</span>
+                        </label>
+                        <div class="controls">
+                            <input type="password" id="password" name="password" placeholder="<bean:message key="admin.useradmin.update.password" />"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.update.update" />" />
+                </div>
+            </html:form>
+        </div>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
@@ -102,7 +141,9 @@
                                                     <i class="fa fa-pencil muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.editDisable"/>"></i>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="#"><i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i></a>
+                                                    <a href="#update-confirm" class="update" id="<bean:write name="row" property="userID"/>">
+                                                        <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i>
+                                                    </a>
                                                     </c:otherwise>
                                                 </c:choose>
                                         </td>
@@ -133,5 +174,66 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            $(function() {
+                $('.update').click(function() {
+                    // remove messageDiv
+                    $('#messageDiv').remove();
+                    // reset password input
+                    $('#password').val('');
+                    // reset select box
+                    $('#userGroup').val('0');
+                    $('#update-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#userID").val(id);
+                    return false;
+                });
+
+                $('#updateForm').submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "UpdateAminAction.do",
+                        data: $("#updateForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.usergroup.update.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "admin.do";
+                                    }, 1000);
+                                    break;
+                                case "notSelectGroup":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.update.notSelectGroup"/>');
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.update.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.usergroup.update.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.usergroup.delete.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+            });
+        </script>
     </body>
 </html>

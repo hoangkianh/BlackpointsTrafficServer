@@ -38,6 +38,7 @@
         <script type="text/javascript">
             var oTable;
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
                     "aaSorting": [[6, 'asc']],
@@ -49,7 +50,7 @@
                         "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.user'/>",
                                         "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
                                         "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.user'/>",
-                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.user'/>",
                                         "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.user'/>)",
                                         "sInfoPostFix": "",
                                         "sSearch": "<bean:message key='admin.table.search'/>",
@@ -83,7 +84,7 @@
                     </ul>
                     <div class="control-group">
                         <label class="control-label" for="userGroup">
-                            <bean:message key="admin.useradmin.newadmin.select" />
+                            <bean:message key="admin.useradmin.newadmin.usergroup" />
                         </label>
                         <div class="controls">
                             <html:select styleId="userGroup" name="UserForm" property="groupID">
@@ -164,8 +165,6 @@
         </section>
         <script type="text/javascript">
             $(function() {
-                $('[rel=tooltip]').tooltip();
-
                 $('.add-new').click(function() {
                     // remove messageDiv
                     $('#messageDiv').remove();
@@ -174,7 +173,7 @@
                     // reset select box
                     $('#userGroup').val('0');
                     $('#add-new-confirm').modal();
-                    
+
                     var id = $(this).attr('id');
                     $("#userID").val(id);
                     return false;
@@ -202,7 +201,7 @@
                                 case "notSelectGroup":
                                     $("#messageDiv").addClass("alert-error").removeClass("alert-success");
                                     $("#message").html('<bean:message key="admin.usergroup.newadmin.notSelectGroup"/>');
-                                    break;                                
+                                    break;
                                 case "passwordNotCorrect":
                                     $("#messageDiv").addClass("alert-error").removeClass("alert-success");
                                     $("#message").html('<bean:message key="admin.usergroup.newadmin.passwordNotCorrect"/>');
