@@ -118,9 +118,9 @@
                         <span><bean:message key="admin.useradmin.delete.warning" /></span>
                     </div>
                     <ul>
-                            <li><bean:message key="admin.useradmin.delete.warningMSG1" /></li>
-                            <li><bean:message key="admin.useradmin.delete.warningMSG2" /></li>
-                        </ul>
+                        <li><bean:message key="admin.useradmin.delete.warningMSG1" /></li>
+                        <li><bean:message key="admin.useradmin.delete.warningMSG2" /></li>
+                    </ul>
                     <div class="control-group">
                         <label class="control-label" for="userGroup">
                             <bean:message key="admin.useradmin.delete.usergroup" />
@@ -187,8 +187,8 @@
                                                     <a href="#update-confirm" class="update" id="<bean:write name="row" property="userID"/>">
                                                         <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i>
                                                     </a>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <td class="center delete">
                                             <c:choose>
@@ -199,12 +199,16 @@
                                                     <a href="#remove-admin-confirm" class="delete">
                                                         <i class="fa fa-times" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdmin"/>"></i>
                                                     </a>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="level"/></td>
-                                        <td><bean:write name="row" property="groupName"/></td>
+                                        <td>
+                                            <html:link action="group.do" paramId="id" paramName="row" paramProperty="groupID">
+                                                <bean:write name="row" property="groupName"/>
+                                            </html:link>
+                                        </td>
                                         <td><bean:write name="row" property="displayName"/></td>
                                         <td><bean:write name="row" property="email"/></td>
                                         <td><bean:write name="row" property="description"/></td>
@@ -233,7 +237,7 @@
                     var id = $(this).attr('id');
                     $("#userID").val(id);
                     return false;
-                });                
+                });
 
                 $('#updateForm').submit(function(event) {
                     $.ajax({
@@ -278,7 +282,7 @@
                     });
                     event.preventDefault();
                 });
-                
+
                 $('a.delete').click(function() {
                     // remove messageDiv
                     $('#messageDiv-alt').remove();
@@ -292,7 +296,7 @@
                     $("#userID").val(id);
                     return false;
                 });
-                
+
                 $('#removeAdminForm').submit(function(event) {
                     $.ajax({
                         type: "POST",

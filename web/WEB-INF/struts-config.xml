@@ -111,6 +111,10 @@
         <action input="/" name="UserForm" validate="false" path="/newadmin" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">
             <forward name="getAllUsersOK" path="/admin/user-admin-new.jsp" />
         </action>
+        <action input="/" name="UserForm" path="/group" scope="session" type="com.blackpoints.struts.action.GetAllUserInGroupAction" validate="false">
+            <forward name="getAllUserGroupsSuccess" path="/admin/user-in-group.jsp" />                        
+            <forward name="getAllUserInGroupFailure" path="/failure.do?f=9" />
+        </action>
         <action input="/admin.do" name="UserForm" path="/RemoveAdminAction" scope="session" type="com.blackpoints.struts.action.RemoveAdminAction" validate="false"/>
         <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAminAction" scope="session" type="com.blackpoints.struts.action.UpdateAminAction"/>
         <action input="/" name="UserForm" validate="false" path="/AddNewAdminAction" scope="session" type="com.blackpoints.struts.action.AddNewAdminAction"/>

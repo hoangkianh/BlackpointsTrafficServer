@@ -34,7 +34,7 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String updatedOnDate;
     private List<User> userList;
     private int level;
-    private UserGroupDAO userGroupDAO;
+    private final UserGroupDAO userGroupDAO;
 
     public UserForm() {
         userGroupDAO = new UserGroupDAO();
@@ -233,6 +233,14 @@ public class UserForm extends org.apache.struts.action.ActionForm {
 
     public void setActivatedOnDate(String activatedOnDate) {
         this.activatedOnDate = activatedOnDate;
+    }
+    
+    public String getGroupName () {
+        UserGroup ug = userGroupDAO.getUserGroupByID(groupID);
+        if (ug != null) {
+            return ug.getName();
+        }
+        return "";
     }
     
     public List<UserGroup> getNormalUserGroup () {

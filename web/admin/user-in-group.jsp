@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.title.user" /></title>
+        <title><bean:write name="UserForm" property="groupName" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -73,15 +73,17 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
+                        <a href="user.do"><bean:message key="admin.usergroup.list.caption" /></a> | 
+                        <a href="admin.do"><bean:message key="admin.useradmin.list.caption" /></a> |
+                        <a href="usergroup.do"><bean:message key="admin.usergroup.list.caption" /></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption><bean:message key='admin.user.list.caption'/></caption>
+                            <caption><bean:message key='admin.user.list.ingroup' /> <bean:write name="UserForm" property="groupName" /></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
                                     <th><bean:message key='admin.user.list.username'/></th>
                                     <th><bean:message key='admin.user.list.displayname'/></th>
                                     <th><bean:message key='admin.user.list.email'/></th>
-                                    <th><bean:message key="admin.usergroup.list.groupName" /></th>
                                     <th><bean:message key='admin.user.list.description'/></th>
                                     <th><bean:message key='admin.user.list.lastLogin'/></th>
                                     <th><bean:message key='admin.user.list.registerDate'/></th>
@@ -101,11 +103,6 @@
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="displayName"/></td>
                                         <td><bean:write name="row" property="email"/></td>
-                                        <td>
-                                            <html:link action="group.do" paramId="id" paramName="row" paramProperty="groupID">
-                                                <bean:write name="row" property="groupName"/>
-                                            </html:link>
-                                        </td>
                                         <td><bean:write name="row" property="description"/></td>
                                         <td><bean:write name="row" property="lastLogin"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>

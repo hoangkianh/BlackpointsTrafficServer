@@ -149,7 +149,11 @@
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="displayName"/></td>
                                         <td><bean:write name="row" property="email"/></td>
-                                        <td><bean:write name="row" property="groupName"/></td>
+                                        <td>
+                                            <html:link action="group.do" paramId="id" paramName="row" paramProperty="groupID">
+                                                <bean:write name="row" property="groupName"/>
+                                            </html:link>
+                                        </td>
                                         <td><bean:write name="row" property="description"/></td>
                                         <td><bean:write name="row" property="lastLogin"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>

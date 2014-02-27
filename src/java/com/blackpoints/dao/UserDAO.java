@@ -72,6 +72,58 @@ public class UserDAO implements Serializable {
         }
         return list;
     }
+    
+    public List<User> getAllUsersInGroup(int groupID) {
+        List<User> list = new ArrayList<User>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM user WHERE groupID=?";
+        try {
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, groupID);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setUserID(rs.getInt("userID"));
+                u.setUserName(rs.getString("userName"));
+                u.setPassword(rs.getString("password"));
+                u.setDisplayName(rs.getString("displayName"));
+                u.setDescription(rs.getString("description"));
+                u.setEmail(rs.getString("email"));
+                u.setPhoto(rs.getString("photo"));
+                u.setGroupID(rs.getInt("groupID"));
+                u.setActivated(rs.getBoolean("isActivated"));
+                u.setSalt(rs.getString("salt"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("lastLogin");
+                Timestamp createdDateTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp activatedDateTimeStamp = rs.getTimestamp("activatedOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (lastLoginTimeStamp != null) {
+                    u.setLastLogin(sdf.format(new Date(lastLoginTimeStamp.getTime())));
+                }
+                if (createdDateTimeStamp != null) {
+                    u.setCreatedOnDate(sdf.format(new Date(createdDateTimeStamp.getTime())));
+                }
+                if (activatedDateTimeStamp != null) {
+                    u.setActivatedOnDate(sdf.format(new Date(activatedDateTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    u.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
+                }
+
+                list.add(u);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
+    }
 
     public User getUserByID(int id) {
         User u = null;
