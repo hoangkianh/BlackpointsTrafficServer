@@ -18,8 +18,8 @@ import java.util.List;
  * @author hka
  */
 public class UserGroupDAO implements Serializable {
-    
-public List<UserGroup> getAllUserGroups() {
+
+    public List<UserGroup> getAllUserGroups() {
         List<UserGroup> list = new ArrayList<UserGroup>();
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
@@ -35,7 +35,47 @@ public List<UserGroup> getAllUserGroups() {
                 ug.setLevel(rs.getInt("level"));
                 ug.setDescription(rs.getString("description"));
                 ug.setCreatedByUserID(rs.getInt("createdByUserID"));
-                ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));                
+                ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    ug.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
+                }
+                if (updatedTimeStamp != null) {
+                    ug.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
+                }
+
+                list.add(ug);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
+    }
+    
+    public List<UserGroup> getUserGroups(boolean getNormalUserGroup) {
+        List<UserGroup> list = new ArrayList<UserGroup>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM userGroup ";
+        query += getNormalUserGroup ? "WHERE level=3" :  "WHERE level=1 OR level=2";
+        try {
+            stm = conn.prepareStatement(query);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                UserGroup ug = new UserGroup();
+                ug.setUserGroupID(rs.getInt("userGroupID"));
+                ug.setName(rs.getString("name"));
+                ug.setLevel(rs.getInt("level"));
+                ug.setDescription(rs.getString("description"));
+                ug.setCreatedByUserID(rs.getInt("createdByUserID"));
+                ug.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
@@ -94,7 +134,7 @@ public List<UserGroup> getAllUserGroups() {
         return ug;
     }
 
-    public boolean addNewUserGroup (UserGroup ug) {
+    public boolean addNewUserGroup(UserGroup ug) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
@@ -117,7 +157,7 @@ public List<UserGroup> getAllUserGroups() {
         return kq;
     }
 
-    public boolean updateUserGroup (UserGroup ug) {
+    public boolean updateUserGroup(UserGroup ug) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
@@ -140,8 +180,8 @@ public List<UserGroup> getAllUserGroups() {
         }
         return kq;
     }
-    
-    public boolean deleteUserGroup (int id) {
+
+    public boolean deleteUserGroup(int id) {
         boolean kq = false;
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
@@ -169,7 +209,7 @@ public List<UserGroup> getAllUserGroups() {
             stm = conn.prepareStatement("{CALL countUserInGroup(?)}");
             stm.setInt(1, groupID);
             rs = stm.executeQuery();
-            
+
             if (rs.next()) {
                 count = rs.getInt("count");
             }

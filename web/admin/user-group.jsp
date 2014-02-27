@@ -47,7 +47,7 @@
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
-                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.usergroup'/>",
                                         "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
                                         "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
                                         "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
@@ -67,7 +67,6 @@
         </script>
     </head>
     <body>
-        <%@include file="../includes/navbar-alter.jsp" %>
         <c:if test="${userStr[3] eq 1}">
             <div id="delete-confirm" class="modal fade hide">
                 <html:form styleId="deleteForm" method="POST" action="/DeleteUserGroupAction" styleClass="form-horizontal my-form">
@@ -91,7 +90,6 @@
                             </label>
                             <div class="controls">
                                 <input type="password" id="password" name="password" placeholder="<bean:message key="admin.usergroup.delete.password" />"/>
-                                <label for="name" class="error"><html:errors property="name" /></label>
                             </div>
                         </div>
                     </div>
@@ -101,6 +99,7 @@
                 </html:form>
             </div>
         </c:if>
+        <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
             <div class="container">
@@ -131,11 +130,11 @@
                                             <c:choose>
                                                 <c:when test="${userStr[3] eq 1}">
                                                     <html:link action="editgroup.do" paramId="id" paramName="row" paramProperty="userGroupID">
-                                                        <i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i>
+                                                        <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i>
                                                     </html:link>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <i class="fa fa-pencil muted" title="<bean:message key="admin.table.editDisable"/>"></i>
+                                                    <i class="fa fa-pencil muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.editDisable"/>"></i>
                                                 </c:otherwise>
                                             </c:choose>
 
@@ -143,10 +142,10 @@
                                         <td class="center delete">
                                             <c:choose>
                                                 <c:when test="${userStr[3] eq 1}">
-                                                    <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                    <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.delete"/>"></i></a>
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <i class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable"/>"></i>
+                                                    <i class="fa fa-times-circle muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.deleteDisable"/>"></i>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -167,14 +166,15 @@
         </section>
         <script type="text/javascript">
             $(function() {
+                $('[rel=tooltip]').tooltip(); 
                 $(".delete").click(function() {
                     // remove messageDiv
                     $("#messageDiv").remove();
                     // reset password input
                     $("#password").val('');
+                    $('#delete-confirm').modal();
 
                     var id = $(this).attr('id');
-                    $('#delete-confirm').modal();
                     $("#groupID").val(id);
                     return false;
                 });

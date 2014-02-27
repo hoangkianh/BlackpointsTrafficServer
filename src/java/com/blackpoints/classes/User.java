@@ -23,7 +23,12 @@ public class User implements Serializable {
     private String createdOnDate;
     private String activatedOnDate;
     private String updatedOnDate;
+    private UserGroupDAO userGroupDAO;
 
+    public User() {
+        this.userGroupDAO = new UserGroupDAO();
+    }
+    
     public int getUserID() {
         return userID;
     }
@@ -137,10 +142,18 @@ public class User implements Serializable {
     }
     
     public int getLevel() {
-        UserGroup ug = new UserGroupDAO().getUserGroupByID(groupID);
+        UserGroup ug = this.userGroupDAO.getUserGroupByID(groupID);
         if (ug != null) {
             return ug.getLevel();
         }
         return 0;
+    }
+    
+    public String getGroupName () {
+        UserGroup ug = this.userGroupDAO.getUserGroupByID(groupID);
+        if (ug != null) {
+            return ug.getName();
+        }
+        return "";
     }
 }

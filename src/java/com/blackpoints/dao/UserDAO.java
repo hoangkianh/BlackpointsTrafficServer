@@ -24,13 +24,10 @@ public class UserDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String query = getNormalUsers ?
-                "SELECT * FROM user" :
-                "SELECT B.* \n"
-                + "FROM usergroup A\n"
-                + "INNER JOIN user B\n"
-                + "ON A.userGroupID = B.groupID\n"
-                + "WHERE A.level = 1 OR A.level = 2";
+        String query = "SELECT B.* FROM usergroup A\n"
+                + "INNER JOIN user B "
+                + "ON A.userGroupID = B.groupID ";
+        query += getNormalUsers ? "WHERE A.level = 3" : "WHERE A.level = 1 OR A.level = 2";
         try {
             stm = conn.prepareStatement(query);
             rs = stm.executeQuery();

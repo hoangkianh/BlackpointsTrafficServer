@@ -38,6 +38,7 @@
         <script type="text/javascript">
             var oTable;
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
                     "aaSorting": [[6, 'asc']],
@@ -46,7 +47,7 @@
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
-                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.user'/>",
                                         "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
                                         "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.user'/>",
                                         "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
@@ -80,6 +81,7 @@
                                     <th><bean:message key='admin.user.list.username'/></th>
                                     <th><bean:message key='admin.user.list.displayname'/></th>
                                     <th><bean:message key='admin.user.list.email'/></th>
+                                    <th><bean:message key="admin.usergroup.list.groupName" /></th>
                                     <th><bean:message key='admin.user.list.description'/></th>
                                     <th><bean:message key='admin.user.list.lastLogin'/></th>
                                     <th><bean:message key='admin.user.list.registerDate'/></th>
@@ -91,14 +93,15 @@
                                 <logic:iterate id="row" name="UserForm" property="userList">                                    
                                     <tr>
                                         <logic:equal name="row" property="activated" value="true">
-                                            <td class="center"><i class="fa fa-check-circle" title="<bean:message key="admin.table.activated"/>"></i></td>
-                                        </logic:equal>
-                                        <logic:equal name="row" property="activated" value="false">
+                                            <td class="center"><i class="fa fa-check-circle" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.activated"/>"></i></td>
+                                            </logic:equal>
+                                            <logic:equal name="row" property="activated" value="false">
                                             <td class="center"></td>
                                         </logic:equal>
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="displayName"/></td>
                                         <td><bean:write name="row" property="email"/></td>
+                                        <td><bean:write name="row" property="groupName"/></td>
                                         <td><bean:write name="row" property="description"/></td>
                                         <td><bean:write name="row" property="lastLogin"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>

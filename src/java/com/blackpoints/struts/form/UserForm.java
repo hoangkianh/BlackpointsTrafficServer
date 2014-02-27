@@ -1,7 +1,9 @@
 package com.blackpoints.struts.form;
 
 import com.blackpoints.classes.User;
+import com.blackpoints.classes.UserGroup;
 import com.blackpoints.dao.UserDAO;
+import com.blackpoints.dao.UserGroupDAO;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +34,12 @@ public class UserForm extends org.apache.struts.action.ActionForm {
     private String updatedOnDate;
     private List<User> userList;
     private int level;
+    private UserGroupDAO userGroupDAO;
 
+    public UserForm() {
+        userGroupDAO = new UserGroupDAO();
+    }
+    
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors err = new ActionErrors();
@@ -226,5 +233,13 @@ public class UserForm extends org.apache.struts.action.ActionForm {
 
     public void setActivatedOnDate(String activatedOnDate) {
         this.activatedOnDate = activatedOnDate;
+    }
+    
+    public List<UserGroup> getNormalUserGroup () {
+        return userGroupDAO.getUserGroups(true);
+    }
+    
+    public List<UserGroup> getAdminGroup () {
+        return userGroupDAO.getUserGroups(false);
     }
 }

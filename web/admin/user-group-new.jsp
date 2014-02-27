@@ -75,7 +75,7 @@
                                         <label for="description" class="error"><html:errors property="description" /></label>
                                     </div>
                                 </div>
-                                <a href="usergroup.do" title="<bean:message key="admin.usergroup.form.back"/>"><bean:message key="admin.usergroup.form.back"/></a>
+                                <a href="usergroup.do" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.usergroup.form.back"/>"><bean:message key="admin.usergroup.form.back"/></a>
                                 <input type="reset" id="reset" class="btn pull-right" value="<bean:message key="admin.usergroup.form.reset"/>" />
                                 <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.new.submit"/>" />
                             </html:form>
@@ -90,6 +90,7 @@
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
         <script type="text/javascript">
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 $.validator.addMethod("checkSelectLevel", function(value, element) {
                     return this.optional(element) || value !== "0";
                 }, "<bean:message key="errors.select" arg0="level cho nhóm" />");

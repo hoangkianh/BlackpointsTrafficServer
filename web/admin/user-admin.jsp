@@ -38,6 +38,7 @@
         <script type="text/javascript">
             var oTable;
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
                     "aaSorting": [[5, 'asc']],
@@ -46,7 +47,7 @@
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
-                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.admin'/>",
                                         "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
                                         "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.user'/>",
                                         "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
@@ -73,7 +74,7 @@
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
                         <c:if test="${userStr[3] eq 1}">
-                            <a href="#" class="btn btn-primary"><bean:message key="admin.useradmin.list.addNewAdmin"/></a>
+                            <a href="newadmin.do" class="btn btn-primary"><bean:message key="admin.useradmin.list.addNewAdmin"/></a>
                         </c:if>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
                             <caption><bean:message key="admin.useradmin.list.caption"/></caption>
@@ -83,13 +84,13 @@
                                     <th class="sorting_disabled"></th>
                                     <th><bean:message key="admin.user.list.username"/></th>
                                     <th><bean:message key="admin.usergroup.list.level"/></th>
+                                    <th><bean:message key="admin.usergroup.list.groupName" /></th>
                                     <th><bean:message key="admin.user.list.displayname"/></th>
                                     <th><bean:message key="admin.user.list.email"/></th>
                                     <th><bean:message key="admin.user.list.description"/></th>
                                     <th><bean:message key="admin.user.list.lastLogin"/></th>
                                     <th><bean:message key="admin.user.list.registerDate"/></th>
                                     <th><bean:message key="admin.user.list.updatedDate"/></th>
-                                    <th><bean:message key="admin.user.list.activateddate"/></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,33 +98,33 @@
                                     <tr>
                                         <td class="center">
                                             <c:choose>
-                                                <c:when test="${(userStr[3] ne 1) or (row.level eq 1)}">
-                                                    <i class="fa fa-pencil muted" title="<bean:message key="admin.table.editDisable"/>"></i>
+                                                <c:when test="${(userStr[3] ne 1) or (userStr[0] eq row.userID) or (row.userID eq 1)}">
+                                                    <i class="fa fa-pencil muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.editDisable"/>"></i>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="#"><i class="fa fa-pencil" title="<bean:message key="admin.table.edit"/>"></i></a>
+                                                    <a href="#"><i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i></a>
                                                     </c:otherwise>
                                                 </c:choose>
                                         </td>
                                         <td class="center delete">
                                             <c:choose>
-                                                <c:when test="${(userStr[3] ne 1) or (row.level eq 1)}">
-                                                    <i class="fa fa-times muted" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
+                                                <c:when test="${(userStr[3] ne 1) or (userStr[0] eq row.userID) or (row.userID eq 1)}">
+                                                    <i class="fa fa-times muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdminDisable"/>"></i>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="#" class="delete"><i class="fa fa-times" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
+                                                    <a href="#" class="delete"><i class="fa fa-times" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.removeAdmin"/>"></i></a>
                                                     </c:otherwise>
                                                 </c:choose>
                                         </td>
                                         <td><bean:write name="row" property="userName"/></td>
                                         <td><bean:write name="row" property="level"/></td>
+                                        <td><bean:write name="row" property="groupName"/></td>
                                         <td><bean:write name="row" property="displayName"/></td>
                                         <td><bean:write name="row" property="email"/></td>
                                         <td><bean:write name="row" property="description"/></td>
                                         <td><bean:write name="row" property="lastLogin"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="updatedOnDate"/></td>
-                                        <td><bean:write name="row" property="activatedOnDate"/></td>
                                     </tr>
                                 </logic:iterate>
                             </tbody>
