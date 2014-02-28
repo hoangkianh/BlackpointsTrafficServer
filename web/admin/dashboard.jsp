@@ -32,7 +32,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
         <link type="text/css" rel="stylesheet" href="css/morris.css">
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/highcharts.js"></script>
         <script type="text/javascript" src="js/data.js"></script>

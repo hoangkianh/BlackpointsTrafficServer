@@ -31,13 +31,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
         <script type="text/javascript">
             var oTable;
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
                     "aaSorting": [[0, 'asc']],
@@ -72,33 +73,28 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="#" class="btn btn-primary">Thêm loại điểm đen mới</a>
+                        <a href="newcategory.do" class="btn btn-primary"><bean:message key="admin.category.list.addNewBtn"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption>Danh sách các loại điểm đen</caption>
+                            <caption><bean:message key="admin.category.list.caption"/></caption>
                             <thead>
                                 <tr>
-                                    <th>Tên</th>
-                                    <th>Mô tả</th>
-                                    <th>Icon</th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
+                                    <th><bean:message key="admin.category.list.name"/></th>
+                                    <th><bean:message key="admin.category.list.icon"/></th>
+                                    <th><bean:message key="admin.category.list.description"/></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td><img src="img/marker.png" alt="A"/></td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times-circle" title="Xóa"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td>D</td>
-                                    <td>E</td>
-                                    <td>F</td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times-circle" title="Xóa"></i></a></td>
-                                </tr>
+                                <logic:iterate id="row" name="CategoryForm" property="categoryList">                                    
+                                    <tr>
+                                        <td class="center"><a href="#"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-pencil" title="<bean:message key='admin.table.edit'/>"></i></a></td>
+                                        <td class="center delete"><a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle" title="<bean:message key='admin.table.delete'/>"></i></a></td>
+                                        <td><bean:write name="row" property="name"/></td>
+                                        <td><img src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>"/></td>
+                                        <td><bean:write name="row" property="description"/></td>
+                                    </tr>
+                                </logic:iterate>
                             </tbody>
                         </table>
                     </div>

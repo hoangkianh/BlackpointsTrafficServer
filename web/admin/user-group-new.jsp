@@ -77,7 +77,7 @@
                                 </div>
                                 <a href="usergroup.do" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.usergroup.form.back"/>"><bean:message key="admin.usergroup.form.back"/></a>
                                 <input type="reset" id="reset" class="btn pull-right" value="<bean:message key="admin.usergroup.form.reset"/>" />
-                                <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.new.submit"/>" />
+                                <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.new.submit"/>" />
                             </html:form>
                             <div id="loading"></div>
                         </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </section>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
         <script type="text/javascript">

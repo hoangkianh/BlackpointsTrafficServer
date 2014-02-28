@@ -28,7 +28,6 @@
     </global-forwards>
 
     <action-mappings>
-        <action input="/" name="CategoryForm" path="/GetAllCategoriesAction" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction"/>
         <action input="/" name="POIForm" path="/GetAllPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction"/>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
@@ -84,40 +83,46 @@
         <action path="/home" forward="/" />
         <!--admin-->
         <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
+        <!--poi management-->
         <action path="/poilist" forward="/admin/poi-list.jsp" />
         <action path="/deletedlist" forward="/admin/poi-deleted-list.jsp" />
         <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
-        <action path="/category" forward="/admin/poi-category.jsp" />
-        <!--user-->
+        
+        <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
+            <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
+        </action>
+        <action path="/newcategory" forward="/admin/poi-category-new.jsp" />
+        <action input="/newcategory.do" name="CategoryForm" path="/AddNewCategoryAction" scope="request" type="com.blackpoints.struts.action.AddNewCategoryAction"/>
+        <!--user management-->
         <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        
             <forward name="getAllUsersOK" path="/admin/user-list.jsp" />
         </action>
-        <!--user group-->
+        <!--user group management-->
         <action input="/" name="UserGroupForm" validate="false" path="/usergroup" scope="session" type="com.blackpoints.struts.action.GetAllUserGroupsAction">
             <forward name="getAllUserGroupsOK" path="/admin/user-group.jsp" />
         </action>
-        <action input="/admin/user-group-new.jsp" name="UserGroupForm" path="/AddNewUserGroupAction" scope="request" type="com.blackpoints.struts.action.AddNewUserGroupAction"/>
+        <action path="/newgroup" forward="/admin/user-group-new.jsp" />        
+        <action input="/newgroup.do" name="UserGroupForm" path="/AddNewUserGroupAction" scope="request" type="com.blackpoints.struts.action.AddNewUserGroupAction"/>
         <action input="/" name="UserGroupForm" validate="false" path="/editgroup" scope="request" type="com.blackpoints.struts.action.GetUserGroupDetailsAction">
             <forward name="getUserGroupDetailsFailure" path="/failure.do?f=9" />
             <forward name="getUserGroupDetailsSuccess" path="/admin/user-group-edit.jsp" />
         </action>
-        <action path="/newgroup" forward="/admin/user-group-new.jsp" />        
         <action input="/admin/user-group-edit.jsp" name="UserGroupForm" path="/UpdateUserGroupAction" scope="request" type="com.blackpoints.struts.action.UpdateUserGroupAction"/>
         <action input="/usergroup.do" name="UserForm" validate="false" path="/DeleteUserGroupAction" scope="session" type="com.blackpoints.struts.action.DeleteUserGroupAction"/>
-        <!--admin manager-->
+        <!--admin management-->
         <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdminAction">
             <forward name="getAllAdminOK" path="/admin/user-admin.jsp" />
         </action>
         <action input="/" name="UserForm" validate="false" path="/newadmin" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">
             <forward name="getAllUsersOK" path="/admin/user-admin-new.jsp" />
         </action>
+        <action input="/newadmin.do" name="UserForm" validate="false" path="/AddNewAdminAction" scope="session" type="com.blackpoints.struts.action.AddNewAdminAction"/>
         <action input="/" name="UserForm" path="/group" scope="session" type="com.blackpoints.struts.action.GetAllUserInGroupAction" validate="false">
             <forward name="getAllUserGroupsSuccess" path="/admin/user-in-group.jsp" />                        
             <forward name="getAllUserInGroupFailure" path="/failure.do?f=9" />
         </action>
         <action input="/admin.do" name="UserForm" path="/RemoveAdminAction" scope="session" type="com.blackpoints.struts.action.RemoveAdminAction" validate="false"/>
         <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAminAction" scope="session" type="com.blackpoints.struts.action.UpdateAminAction"/>
-        <action input="/" name="UserForm" validate="false" path="/AddNewAdminAction" scope="session" type="com.blackpoints.struts.action.AddNewAdminAction"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

@@ -36,7 +36,10 @@ public class AddNewUserGroupAction extends org.apache.struts.action.Action {
             throws Exception {
         UserGroupForm userGroupForm = (UserGroupForm) form;
         UserGroup ug = new UserGroup();
+        String kq = "success";
+        
         BeanUtils.copyProperties(ug, userGroupForm);
+        
         HttpSession session = request.getSession(true);
         String str = (String) session.getAttribute("blackpoints");
         if (str == null) {
@@ -44,18 +47,21 @@ public class AddNewUserGroupAction extends org.apache.struts.action.Action {
             str = c.getValue();
         }
         
-        ug.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
+        try {
+            ug.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
+        } catch (Exception e) {
+            kq = "failure";
+        }
         
         response.setContentType("text/text;charset=utf-8");
         response.setHeader("cache-control", "no-cache");
         PrintWriter out = response.getWriter();
         
-        if (new UserGroupDAO().addNewUserGroup(ug)) {
-            out.println("success");
-        } else {
-            out.println("failure");
+        if (!new UserGroupDAO().addNewUserGroup(ug)) {
+            kq = "failure";
         }
         
+        out.print(kq);
         out.flush();
         
         return null;
