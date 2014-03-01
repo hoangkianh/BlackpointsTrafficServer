@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.title.category" /> | <bean:message key="admin.category.new.title" /></title>
+        <title><bean:message key="admin.title.category" /> | <bean:message key="admin.category.edit.title" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -40,8 +40,8 @@
                 <div class="row-fluid">
                     <div class="span12 form-admin border-red">
                         <div class="span8 offset2">
-                            <h3><bean:message key="admin.category.new.caption" /></h3>
-                            <html:form styleId="categoryForm" method="POST" action="/AddNewCategoryAction"
+                            <h3><bean:message key="admin.category.edit.caption" /></h3>
+                            <html:form styleId="categoryForm" method="POST" action="/UpdateCategoryAction"
                                        styleClass="form-horizontal my-form" enctype="multipart/form-data">
                                 <div class="control-group">
                                     <label class="control-label" for="name">
@@ -60,7 +60,10 @@
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <html:file styleId="file" name="CategoryForm" property="file" accept="image/png" />
+                                        <img src="<bean:write name="CategoryForm" property="image"/>" alt="<bean:write name="CategoryForm" property="name"/>"/>
+                                        <bean:message key="admin.category.edit.file"/>
+                                        <%--<html:file styleId="file" name="CategoryForm" property="file" accept="image/png" />--%>
+                                        <input type="file" name="file" value="" id="file" />
                                         <label for="file" class="error"><html:errors property="file" /></label>
                                     </div>
                                 </div>
@@ -73,7 +76,7 @@
                                 </div>
                                 <a href="category.do" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.category.form.back"/>"><bean:message key="admin.category.form.back"/></a>
                                 <input type="reset" id="reset" class="btn pull-right" value="<bean:message key="admin.category.form.reset"/>" />
-                                <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.category.new.submit"/>" />
+                                <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.category.edit.submit"/>" />
                             </html:form>
                             <div id="loading"></div>
                         </div>
@@ -97,9 +100,9 @@
                             $('#loading').html('<p class="error">' + '<bean:message key="admin.category.new.failure"/>' + '</p>');
                         }
                     }, 2000);
-                    setTimeout(function() {
-                        window.location.href = "category.do";
-                    }, 3500);
+//                    setTimeout(function() {
+//                        window.location.href = "category.do";
+//                    }, 3500);
                 }
 
                 function onProgress() {
@@ -146,7 +149,6 @@
                             maxlength: 30
                         },
                         file: {
-                            required: true,
                             checkFileType: true,
                             checkFileSize: true
                         },
@@ -159,9 +161,6 @@
                             required: "<bean:message key="errors.required" arg0="Tên loại" />",
                             minlength: "<bean:message key="errors.minlength" arg0="Tên loại" arg1="4" />",
                             maxlength: "<bean:message key="errors.maxlength" arg0="Tên loại" arg1="30" />"
-                        },
-                        file: {
-                            required: "<bean:message key="errors.file.required" />",
                         },
                         description: {
                             maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="200" />"

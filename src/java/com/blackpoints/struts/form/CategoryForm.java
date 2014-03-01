@@ -37,7 +37,7 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
         }
         
         // validate file upload
-        if (file.getFileSize() == 0) {
+        if (file != null && file.getFileSize() == 0) {
             err.add("file", new ActionMessage("errors.file.required"));
         } else {
             // only image file upload
@@ -87,11 +87,10 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
     public FormFile getFile() {
         return file;
     }
-
     public void setFile(FormFile file) {
         this.file = file;
     }
-
+    
     public List<Category> getCategoryList() {
         return categoryList;
     }

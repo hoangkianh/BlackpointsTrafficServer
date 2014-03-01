@@ -93,6 +93,12 @@
         </action>
         <action path="/newcategory" forward="/admin/poi-category-new.jsp" />
         <action input="/newcategory.do" name="CategoryForm" path="/AddNewCategoryAction" scope="request" type="com.blackpoints.struts.action.AddNewCategoryAction"/>
+        <action input="/" name="CategoryForm" validate="false" path="/editcategory" scope="session" type="com.blackpoints.struts.action.GetCategoryDetailsAction">
+            <forward name="getCategoryDetailsSuccess" path="/admin/poi-category-edit.jsp"/>
+            <forward name="getCategoryDetailsFailure" path="/failure.do?f=9"/>
+        </action>
+        <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoryAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoryAction"/>
+        <action input="/category.do" name="CategoryForm" path="/DeleteCategoryAction" scope="session" type="com.blackpoints.struts.action.DeleteCategoryAction" validate="false"/>
         <!--user management-->
         <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        
             <forward name="getAllUsersOK" path="/admin/user-list.jsp" />
@@ -107,7 +113,7 @@
             <forward name="getUserGroupDetailsFailure" path="/failure.do?f=9" />
             <forward name="getUserGroupDetailsSuccess" path="/admin/user-group-edit.jsp" />
         </action>
-        <action input="/admin/user-group-edit.jsp" name="UserGroupForm" path="/UpdateUserGroupAction" scope="request" type="com.blackpoints.struts.action.UpdateUserGroupAction"/>
+        <action input="/editgroup.do" name="UserGroupForm" path="/UpdateUserGroupAction" scope="request" type="com.blackpoints.struts.action.UpdateUserGroupAction"/>
         <action input="/usergroup.do" name="UserForm" validate="false" path="/DeleteUserGroupAction" scope="session" type="com.blackpoints.struts.action.DeleteUserGroupAction"/>
         <!--admin management-->
         <action input="/" name="UserForm" validate="false" path="/admin" scope="session" type="com.blackpoints.struts.action.GetAllAdminAction">

@@ -79,7 +79,7 @@ public class POIDAO implements Serializable {
                 list.add(p);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -139,7 +139,7 @@ public class POIDAO implements Serializable {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -174,7 +174,7 @@ public class POIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -210,7 +210,7 @@ public class POIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -232,7 +232,7 @@ public class POIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -254,7 +254,7 @@ public class POIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -318,7 +318,7 @@ public class POIDAO implements Serializable {
                 list.add(p);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -338,7 +338,7 @@ public class POIDAO implements Serializable {
                 count = rs.getInt("count");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -358,7 +358,7 @@ public class POIDAO implements Serializable {
                 count = rs.getInt("count");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -379,7 +379,7 @@ public class POIDAO implements Serializable {
                 map.put(city, count);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -409,7 +409,7 @@ public class POIDAO implements Serializable {
                 subMap.put(district, count);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }

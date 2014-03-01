@@ -35,7 +35,7 @@ public class POIPropertyDAO implements Serializable {
                 list.add(p);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -61,7 +61,7 @@ public class POIPropertyDAO implements Serializable {
                 p.setDescription(rs.getString("description"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -83,7 +83,7 @@ public class POIPropertyDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -105,7 +105,7 @@ public class POIPropertyDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -125,7 +125,7 @@ public class POIPropertyDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }

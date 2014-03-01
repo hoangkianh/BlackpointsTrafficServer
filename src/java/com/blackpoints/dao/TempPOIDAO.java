@@ -55,7 +55,7 @@ public class TempPOIDAO implements Serializable {
                 list.add(tp);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -98,7 +98,7 @@ public class TempPOIDAO implements Serializable {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -126,7 +126,7 @@ public class TempPOIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -155,7 +155,7 @@ public class TempPOIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -174,7 +174,7 @@ public class TempPOIDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -193,7 +193,7 @@ public class TempPOIDAO implements Serializable {
                 count = rs.getInt("count");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -212,7 +212,7 @@ public class TempPOIDAO implements Serializable {
                 count = rs.getInt("count");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }

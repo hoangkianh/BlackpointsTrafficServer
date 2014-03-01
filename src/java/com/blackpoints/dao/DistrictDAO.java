@@ -34,7 +34,7 @@ public class DistrictDAO implements Serializable {
                 list.add(d);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -60,7 +60,7 @@ public class DistrictDAO implements Serializable {
                 list.add(d);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -84,7 +84,7 @@ public class DistrictDAO implements Serializable {
                 d.setCity(rs.getInt("city"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -109,7 +109,7 @@ public class DistrictDAO implements Serializable {
                 d.setCity(rs.getInt("city"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }

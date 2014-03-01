@@ -50,7 +50,7 @@ public class UserGroupDAO implements Serializable {
                 list.add(ug);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -90,7 +90,7 @@ public class UserGroupDAO implements Serializable {
                 list.add(ug);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -127,7 +127,7 @@ public class UserGroupDAO implements Serializable {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }
@@ -150,7 +150,7 @@ public class UserGroupDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -174,7 +174,7 @@ public class UserGroupDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -193,7 +193,7 @@ public class UserGroupDAO implements Serializable {
                 kq = true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, null);
         }
@@ -214,7 +214,7 @@ public class UserGroupDAO implements Serializable {
                 count = rs.getInt("count");
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
         } finally {
             DBUtil.closeAll(conn, stm, rs);
         }

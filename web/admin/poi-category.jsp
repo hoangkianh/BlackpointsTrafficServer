@@ -67,6 +67,38 @@
         </script>
     </head>
     <body>
+        <c:if test="${userStr[3] eq 1}">
+            <div id="delete-confirm" class="modal fade hide">
+                <html:form styleId="deleteForm" method="POST" action="/DeleteCategoryAction" styleClass="form-horizontal my-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3><bean:message key="admin.category.delete.h3" /></h3>
+                    </div>
+                    <div class="modal-body">
+                        <html:hidden styleId="categoryID" name="CategoryForm" property="categoryID"/>
+                        <div class="alert alert-holder">
+                            <span><bean:message key="admin.category.delete.warning" /></span>
+                        </div>
+                        <ul>
+                            <li><bean:message key="admin.category.delete.warningMSG1" /></li>
+                            <li><bean:message key="admin.category.delete.warningMSG2" /></li>
+                        </ul>
+                        <div class="control-group">
+                            <label class="control-label" for="name">
+                                <bean:message key="admin.category.delete.password" />
+                                <span class="asterisk">*</span>
+                            </label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="<bean:message key="admin.category.delete.password" />"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.category.form.delete" />" />
+                    </div>
+                </html:form>
+            </div>
+        </c:if>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <section>
@@ -88,8 +120,14 @@
                             <tbody>
                                 <logic:iterate id="row" name="CategoryForm" property="categoryList">                                    
                                     <tr>
-                                        <td class="center"><a href="#"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-pencil" title="<bean:message key='admin.table.edit'/>"></i></a></td>
-                                        <td class="center delete"><a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle" title="<bean:message key='admin.table.delete'/>"></i></a></td>
+                                        <td class="center">
+                                            <html:link action="editcategory" paramId="id" paramName="row" paramProperty="categoryID">
+                                                <i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-pencil" title="<bean:message key='admin.table.edit'/>"></i>
+                                            </html:link>
+                                        </td>
+                                        <td class="center delete">
+                                            <a href="#delete-confirm" id="<bean:write name="row" property="categoryID"/>" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle" title="<bean:message key='admin.table.delete'/>"></i></a>
+                                        </td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><img src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>"/></td>
                                         <td><bean:write name="row" property="description"/></td>
@@ -101,5 +139,65 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            $(function() {
+                $('[rel=tooltip]').tooltip();
+                $("a.delete").click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+                    // reset password input
+                    $("#password").val('');
+                    $('#delete-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#categoryID").val(id);
+                    return false;
+                });
+
+                $("#deleteForm").submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "DeleteCategoryAction.do",
+                        data: $("#deleteForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.category.delete.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "category.do";
+                                    }, 1000);
+                                    break;
+                                case "cannotDelete":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.category.delete.cannotDelete"/>');
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.category.delete.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.category.delete.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.category.delete.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+            });
+        </script>
     </body>
 </html>
