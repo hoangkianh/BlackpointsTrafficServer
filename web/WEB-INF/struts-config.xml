@@ -98,6 +98,7 @@
             <forward name="getCategoryDetailsFailure" path="/failure.do?f=9"/>
         </action>
         <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoryAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoryAction"/>
+        <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoyImageAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoyImageAction" validate="false"/>
         <action input="/category.do" name="CategoryForm" path="/DeleteCategoryAction" scope="session" type="com.blackpoints.struts.action.DeleteCategoryAction" validate="false"/>
         <!--user management-->
         <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        

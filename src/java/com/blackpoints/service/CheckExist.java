@@ -1,5 +1,6 @@
 package com.blackpoints.service;
 
+import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.dao.UserDAO;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Path;

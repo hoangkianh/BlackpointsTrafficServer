@@ -35,6 +35,26 @@
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
+        <div id="upload-new-image" class="modal fade hide">
+            <html:form styleId="updateImageForm" method="POST" action="/UpdateCategoyImageAction" styleClass="form-horizontal my-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3><bean:message key="admin.category.edit.h3" /></h3>
+                </div>
+                <div class="modal-body">
+                    <html:hidden styleId="categoryID" name="CategoryForm" property="categoryID"/>
+                    <div class="alert alert-holder">
+                        <span><bean:message key="admin.category.edit.warning" /></span>
+                    </div>
+                    <div class="controls">
+                        <input type="file" id="file" name="file" accept="image/png" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.category.form.upload" />" />
+                </div>
+            </html:form>
+        </div>
         <section>
             <div class="container">
                 <div class="row-fluid">
@@ -60,10 +80,10 @@
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <img src="<bean:write name="CategoryForm" property="image"/>" alt="<bean:write name="CategoryForm" property="name"/>"/>
-                                        <bean:message key="admin.category.edit.file"/>
-                                        <%--<html:file styleId="file" name="CategoryForm" property="file" accept="image/png" />--%>
-                                        <input type="file" name="file" value="" id="file" />
+                                        <a id="upload" href="#upload-new-image" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.category.edit.file"/>">
+                                            <img src="<bean:write name="CategoryForm" property="image"/>" alt="<bean:write name="CategoryForm" property="name"/>"/>
+                                        </a>
+                                        <small><bean:message key="admin.category.edit.file"/></small>
                                         <label for="file" class="error"><html:errors property="file" /></label>
                                     </div>
                                 </div>
@@ -92,17 +112,46 @@
             $(function() {
                 $('[rel=tooltip]').tooltip();
 
+                $('#upload').click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+
+                    $('#upload-new-image').modal();
+                    return false;
+                });
+
+                function afterUpdateImageSuccess(data) {
+                    if ($("#messageDiv").length === 0) {
+                        $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                    }
+                    switch (data.trim())
+                    {
+                        case "success":
+                            $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                            $("#message").html('<bean:message key="admin.category.edit.success"/>');
+                            // redirect
+                            setTimeout(function() {
+                                window.location.href = "editcategory.do?id=<bean:write name="CategoryForm" property="categoryID" />";
+                            }, 1000);
+                            break;
+                        default:
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.category.edit.failure"/>');
+                            break;
+                    }
+                }
+
                 function afterSuccess(data) {
                     setTimeout(function() {
                         if (data.trim() === "success") {
-                            $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="admin.category.new.success"/>' + '</p>');
+                            $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="admin.category.edit.success"/>' + '</p>');
                         } else {
-                            $('#loading').html('<p class="error">' + '<bean:message key="admin.category.new.failure"/>' + '</p>');
+                            $('#loading').html('<p class="error">' + '<bean:message key="admin.category.edit.failure"/>' + '</p>');
                         }
                     }, 2000);
-//                    setTimeout(function() {
-//                        window.location.href = "category.do";
-//                    }, 3500);
+                    setTimeout(function() {
+                        window.location.href = "category.do";
+                    }, 3500);
                 }
 
                 function onProgress() {
@@ -140,6 +189,28 @@
                     return this.optional(element) || kq;
                 }, "<bean:message key="errors.file.size" />");
 
+                $("#updateImageForm").validate({
+                    errorClass: "error",
+                    rules: {
+                        file: {
+                            required: true,
+                            checkFileType: true,
+                            checkFileSize: true
+                        }
+                    },
+                    messages: {
+                        file: {
+                            required: "<bean:message key="errors.file.required" />"
+                        }
+                    },
+                    submitHandler: function(form) {
+                        var options = {
+                            success: afterUpdateImageSuccess
+                        };
+                        $('#updateImageForm').ajaxSubmit(options);
+                    }
+                });
+                
                 $("#categoryForm").validate({
                     errorClass: "error",
                     rules: {

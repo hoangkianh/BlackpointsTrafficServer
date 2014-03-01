@@ -50,10 +50,10 @@ public class GetCategoryDetailsAction extends org.apache.struts.action.Action {
             BeanUtils.copyProperties(categoryForm, c);
 
             // get the servers upload directory real path name
-//            String filePath = getServlet().getServletContext().getRealPath("/") + c.getImage();
-//            File file = new File(filePath);
-//            FormFile formFile = new FileWrapper(file);
-//            categoryForm.setFile(formFile);            
+            String filePath = getServlet().getServletContext().getRealPath("/") + c.getImage();
+            File file = new File(filePath);
+            FormFile formFile = new FileWrapper(file);
+            categoryForm.setFile(formFile);            
         } catch (Exception e) {
             return mapping.findForward("getCategoryDetailsFailure");
         }

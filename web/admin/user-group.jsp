@@ -39,6 +39,7 @@
             var oTable;
 
             $(function() {
+                $('[rel=tooltip]').tooltip(); 
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
                     "aaSorting": [[3, 'asc']],
@@ -166,7 +167,6 @@
         </section>
         <script type="text/javascript">
             $(function() {
-                $('[rel=tooltip]').tooltip(); 
                 $("a.delete").click(function() {
                     // remove messageDiv
                     $("#messageDiv").remove();

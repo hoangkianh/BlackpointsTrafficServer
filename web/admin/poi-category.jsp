@@ -141,7 +141,6 @@
         </section>
         <script type="text/javascript">
             $(function() {
-                $('[rel=tooltip]').tooltip();
                 $("a.delete").click(function() {
                     // remove messageDiv
                     $("#messageDiv").remove();
