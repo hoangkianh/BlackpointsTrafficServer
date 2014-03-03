@@ -1,5 +1,9 @@
 package com.blackpoints.classes;
 
+import com.blackpoints.dao.CategoryDAO;
+import com.blackpoints.dao.CityDAO;
+import com.blackpoints.dao.DistrictDAO;
+import com.blackpoints.dao.UserDAO;
 import java.io.Serializable;
 
 /**
@@ -205,5 +209,61 @@ public class POI implements Serializable {
 
     public void setRestoreByUserID(int restoreByUserID) {
         this.restoreByUserID = restoreByUserID;
+    }
+    
+    public String getCityName () {
+        City c = new CityDAO().getCityByID(city);
+        if (c != null) {
+            return c.getName();
+        }
+        return "";
+    }
+    
+    public String getDistrictName () {
+        District d = new DistrictDAO().getDistrictByID(district);
+        if (d != null) {
+            return d.getName();
+        }
+        return "";
+    }
+    
+    public String getCategoryName () {
+        Category c = new CategoryDAO().getCategoryById(categoryID);
+        if (c != null) {
+            return c.getName();
+        }
+        return "";
+    }
+    
+    public String getCreatedByUserName () {
+        User u = new UserDAO().getUserByID(createdByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "";
+    }
+    
+    public String getUpdatedByUserName () {
+        User u = new UserDAO().getUserByID(updatedByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "";
+    }
+    
+    public String getDeletedByUserName () {
+        User u = new UserDAO().getUserByID(deletedByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "";
+    }
+    
+    public String getRestoredByUserName () {
+        User u = new UserDAO().getUserByID(restoreByUserID);
+        if (u != null) {
+            return u.getUserName();
+        }
+        return "";
     }
 }

@@ -3,6 +3,7 @@ package com.blackpoints.struts.action;
 import com.blackpoints.classes.POI;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.struts.form.POIForm;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +31,14 @@ public class GetAllPOIsAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         POIForm pf = (POIForm) form;
+        List<POI> poiList = new ArrayList<POI>();
         List<POI> list = new POIDAO().getAllPOIs(true);
-        pf.setPoiList(list);
+        for (POI poi : list) {
+            if (!poi.isDeleted()) {
+                poiList.add(poi);
+            }
+        }
+        pf.setPoiList(poiList);
         return mapping.findForward("getAllPOIsOK");
     }
 }

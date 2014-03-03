@@ -1422,6 +1422,11 @@ table .headerSortUp:after {
     opacity: 0.6;
 }
 
+.sub-table span {
+    font-size: 14px;
+    color: #999;
+}
+
 /*form admin style*/
 .form-admin h3 {
     text-transform: uppercase;

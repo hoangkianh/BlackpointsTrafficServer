@@ -28,7 +28,6 @@
     </global-forwards>
 
     <action-mappings>
-        <action input="/" name="POIForm" path="/GetAllPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction"/>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
         <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
@@ -62,7 +61,7 @@
             <forward name="forgotPassFailure" path="/failure.do?f=5" />
             <forward name="sendingEmailFailure" path="/failure.do?f=1" />
         </action>
-        <action input="/" name="POIForm" path="/details" scope="request" type="com.blackpoints.struts.action.GetPOIDetailsAction">
+        <action input="/" name="POIForm" validate="false" path="/details" scope="request" type="com.blackpoints.struts.action.GetPOIDetailsAction">
             <forward name="getPOIDetailsSuccess" path="/pages/poidetails.jsp" />
             <forward name="getPOIDetailsFailure" path="/failure.do?f=7" />
         </action>
@@ -77,16 +76,19 @@
         <action path="/poi" forward="/pages/poi.jsp"/>
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
         <action path="/reactivate" forward="/pages/reactivate.jsp"/>
-        <action path="/map" forward="/pages/map.jsp" name="POIForm" />
+        <action path="/map" validate="false" forward="/pages/map.jsp" name="POIForm" />
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />
         <action path="/home" forward="/" />
         <!--admin-->
         <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
         <!--poi management-->
-        <action path="/poilist" forward="/admin/poi-list.jsp" />
         <action path="/deletedlist" forward="/admin/poi-deleted-list.jsp" />
         <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
+        
+        <action input="/" name="POIForm" validate="false" path="/poilist" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction">
+            <forward name="getAllPOIsOK" path="/admin/poi-list.jsp"/>
+        </action>
         
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
@@ -98,7 +100,7 @@
             <forward name="getCategoryDetailsFailure" path="/failure.do?f=9"/>
         </action>
         <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoryAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoryAction"/>
-        <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoyImageAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoyImageAction" validate="false"/>
+        <action input="/editcategory.do" name="CategoryForm" path="/UpdateCategoryImageAction" scope="session" type="com.blackpoints.struts.action.UpdateCategoryImageAction" validate="false"/>
         <action input="/category.do" name="CategoryForm" path="/DeleteCategoryAction" scope="session" type="com.blackpoints.struts.action.DeleteCategoryAction" validate="false"/>
         <!--user management-->
         <action input="/" name="UserForm" validate="false" path="/user" scope="session" type="com.blackpoints.struts.action.GetAllUsersAction">        

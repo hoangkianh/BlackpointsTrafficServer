@@ -36,7 +36,7 @@
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
         <div id="upload-new-image" class="modal fade hide">
-            <html:form styleId="updateImageForm" method="POST" action="/UpdateCategoyImageAction" styleClass="form-horizontal my-form">
+            <html:form styleId="updateImageForm" method="POST" action="/UpdateCategoryImageAction" styleClass="form-horizontal my-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3><bean:message key="admin.category.edit.h3" /></h3>
