@@ -32,6 +32,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
+        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
@@ -109,6 +112,15 @@
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
+        <div id="map-modal" class="modal fade hide" style="width: 800px; margin-left: -400px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3><bean:message key="admin.poi.list.h3" /></h3>
+            </div>
+            <div class="modal-body">
+                <div id="map-canvas" style="height: 400px;"></div>
+            </div>
+        </div>
         <section>
             <div class="container">
                 <div class="row-fluid">
@@ -140,14 +152,15 @@
                                     <th class="invisible"></th>
                                     <th class="invisible"></th>
                                     <th class="invisible"></th>
+                                    <th class="invisible"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <logic:iterate id="row" name="POIForm" property="poiList">
                                     <tr>
                                         <td class="center"><i title="<bean:message key="admin.poi.form.viewDetails" />" rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-angle-double-down"></i></td>
-                                        <td class="center"><a href="#"  target="_blank"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a></td>
-                                        <td class="center"><a href="#"><i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i></a></td>
+                                        <td class="center"><a class="view-in-map" href="#map-modal" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a></td>
+                                        <td class="center"><a href="#" id="<bean:write name="row" property="id"/> "><i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i></a></td>
                                         <td class="center delete"><a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a></td>
                                         <td><img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" /></td>
                                         <td><bean:write name="row" property="name"/></td>
@@ -165,6 +178,7 @@
                                         <td><bean:write name="row" property="restoreOnDate"/></td>
                                         <td><bean:write name="row" property="restoredByUserName"/></td>
                                         <td><bean:write name="row" property="description"/></td>
+                                        <td><bean:write name="row" property="geometry"/></td>
                                     </tr>
                                 </logic:iterate>
                             </tbody>
@@ -173,5 +187,22 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            $(function() {
+                MapsLib.initialize();
+                $("a.view-in-map").click(function() {
+                    $("#map-modal").modal();
+
+                    var id = $(this).attr('id');
+                    MapsLib.getPOIByID(id);
+                });
+
+                $('#map-modal').on('shown', function() {
+                    var currentCenter = map.getCenter();
+                    google.maps.event.trigger(map, "resize");
+                    map.setCenter(currentCenter);
+                });
+            });
+        </script>                                    
     </body>
 </html>
