@@ -3,10 +3,10 @@ package com.blackpoints.struts.action;
 import com.blackpoints.classes.Category;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.struts.form.CategoryForm;
-import com.blackpoints.utils.StringUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,11 +58,11 @@ public class AddNewCategoryAction extends org.apache.struts.action.Action {
             folder.mkdir();
         }
 
-
+        // set file name
+        Date date = new Date();
         if (!file.getFileName().equals("")) {
             String fileName
-                    = StringUtil.removeSignVietnameseString(categoryForm.getName())
-                    + "." + FilenameUtils.getExtension(file.getFileName());
+                    = date.getTime() + "." + FilenameUtils.getExtension(file.getFileName());
             
             File newFile = new File(filePath, fileName);
 

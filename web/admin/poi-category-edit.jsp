@@ -210,7 +210,7 @@
                         $('#updateImageForm').ajaxSubmit(options);
                     }
                 });
-                
+
                 $("#categoryForm").validate({
                     errorClass: "error",
                     rules: {

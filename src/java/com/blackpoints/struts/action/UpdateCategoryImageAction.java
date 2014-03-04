@@ -3,21 +3,15 @@ package com.blackpoints.struts.action;
 import com.blackpoints.classes.Category;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.struts.form.CategoryForm;
-import com.blackpoints.utils.StringUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
-import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -41,42 +35,30 @@ public class UpdateCategoryImageAction extends org.apache.struts.action.Action {
             throws Exception {
         CategoryForm categoryForm = (CategoryForm) form;
         Category category = new CategoryDAO().getCategoryById(categoryForm.getCategoryID());
-        HttpSession session = request.getSession(true);
-        MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
-        Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
-        String categoryDir = mr.getMessage(locale, "dir.category");
         String kq = "failure";
 
         if (category != null) {
-            FormFile file = categoryForm.getFile();
 
-            // get the servers upload directory real path name
-            String filePath = getServlet().getServletContext().getRealPath("/") + categoryDir;
+            FormFile newFile = categoryForm.getFile();
+            String oldFilePath = getServlet().getServletContext().getRealPath("/") + categoryForm.getImage();
+            File oldFile = new File(oldFilePath);
 
-            if (!file.getFileName().equals("")) {
-                String fileName
-                        = StringUtil.removeSignVietnameseString(categoryForm.getName())
-                        + "." + FilenameUtils.getExtension(file.getFileName());
-
-                File oldFile = new File(filePath, fileName);
-
-                // upload file
-                if (oldFile.exists()) {
-                    // delete old file if exist
-                    if (oldFile.delete()) {
-                        FileOutputStream fos = new FileOutputStream(oldFile);
-                        fos.write(file.getFileData());
-                        fos.flush();
-                        fos.close();
-                    }
+            // upload file
+            if (oldFile.exists()) {
+                // delete old file if exist
+                if (oldFile.delete()) {
+                    FileOutputStream fos = new FileOutputStream(oldFile);
+                    fos.write(newFile.getFileData());
+                    fos.flush();
+                    fos.close();
                 }
             }
             kq = "success";
-        } 
+        }
         PrintWriter out = response.getWriter();
         out.print(kq);
         out.flush();
-        
+
         return null;
     }
 }

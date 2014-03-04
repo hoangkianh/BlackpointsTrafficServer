@@ -36,14 +36,13 @@ public class UpdateCategoryAction extends org.apache.struts.action.Action {
         PrintWriter out = response.getWriter();
         String kq = "success";
         BeanUtils.copyProperties(c, categoryForm);
-        
         if (!new CategoryDAO().updateCategory(c)) {
             kq = "failure";
-        }        
-            
+        }
         out.print(kq);
+
         out.flush();
-        
+
         return null;
     }
 }
