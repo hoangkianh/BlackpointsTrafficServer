@@ -108,39 +108,6 @@ var MapsLib = {
             });
         }
     },
-    doSearchNoAddrMarker: function() {
-        MapsLib.clearSearch();
-
-        MapsLib.address = $("#search_address").val();
-        MapsLib.searchRadius = $("#search_radius").val();
-
-        if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
-            MapsLib.getPOIInRadius();
-            return;
-        }
-
-        if (MapsLib.oldaddress !== MapsLib.address) {
-            MapsLib.newPinpoint = null;
-        }
-
-        if (MapsLib.address !== "") {
-            geocoder.geocode({'address': MapsLib.address}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    MapsLib.currentPinpoint = results[0].geometry.location;
-
-                    if (MapsLib.newPinpoint !== null) {
-                        MapsLib.currentPinpoint = MapsLib.newPinpoint;
-                    }
-                    map.setCenter(MapsLib.currentPinpoint);
-                    map.setZoom(15);
-                    MapsLib.getPOIInRadius();
-                }
-                else {
-                    console.log("Không tìm thấy địa chỉ của bạn: " + status);
-                }
-            });
-        }
-    },
     getPOIByID: function(id) {
         $.ajax({
             type: "GET",
@@ -230,15 +197,16 @@ var MapsLib = {
         return latLngArr;
     },
     drawPOI: function(obj) {
-        var infoContent = "<div class='content'>" +
-                "<img src='" + obj.image + "' height='100' width='100' />" +
-                "<h2>" + obj.name + "</h2>" +
-                "<ul><li><b>Địa chỉ: </b>" + obj.address + "</li>" +
-                "<li><b>Mô tả: </b>" + obj.description + "</li>" +
-                "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>" +
-                "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>" +
-                "</ul>" +
-                "</div>";
+        var infoContent = "<div class='content'>";
+        infoContent += "<img src='" + obj.image + "' height='100' width='100' />";
+        infoContent += "<h2>" + obj.name + "</h2>";
+        infoContent += "<ul><li><b>Địa chỉ: </b>" + obj.address + "</li>";
+        if (obj.description !== undefined) {
+            infoContent += "<li><b>Mô tả: </b>" + obj.description + "</li>";
+        }
+        infoContent += "<li><b>Mức độ nguy hiểm: </b>" + obj.rating + "</li>";
+        infoContent += "<li><b>Thêm vào từ ngày: </b>" + obj.createdOnDate + "</li>";
+        infoContent += "</ul></div>";
 
         var marker = new google.maps.Marker({
             position: MapsLib.parseGeomString(obj.geometry)[0][0],
@@ -252,8 +220,10 @@ var MapsLib = {
             }
             MapsLib.infoWindow = new InfoBubble({
                 content: infoContent,
-                minWidth: 300,
-                maxWidth: 500
+                minWidth: 200,
+                maxWidth: 400,
+                minHeight: 100,
+                maxHeight: 200
             });
             MapsLib.infoWindow.open(map, marker);
         });

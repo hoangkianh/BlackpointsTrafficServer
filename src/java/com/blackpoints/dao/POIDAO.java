@@ -154,7 +154,7 @@ public class POIDAO implements Serializable {
             stm = conn.prepareStatement("INSERT INTO poi (name, address, city, district, description"
                     + ", image, geometry, categoryID, rating, bbox, geoJson"
                     + ", isDeleted, createdOnDate, createdByUserID)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + " VALUES(?, ?, ?, ?, ?, ?, GEOMFROMTEXT(?, 0), ?, ?, ?, ?, ?, NOW(), ?)");
             stm.setString(1, p.getName());
             stm.setString(2, p.getAddress());
             stm.setInt(3, p.getCity());
@@ -167,8 +167,7 @@ public class POIDAO implements Serializable {
             stm.setString(10, p.getBbox());
             stm.setString(11, p.getGeoJson());
             stm.setBoolean(12, p.isDeleted());
-            stm.setString(13, p.getCreatedOnDate());
-            stm.setInt(14, p.getCreatedByUserID());
+            stm.setInt(13, p.getCreatedByUserID());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
@@ -188,7 +187,7 @@ public class POIDAO implements Serializable {
         try {
             stm = conn.prepareStatement("UPDATE poi SET name=?, address=?, city=?, district=?, description=?"
                     + ", image=?, geometry=?, categoryID=?, rating=?, bbox=?, geoJson=?"
-                    + ", isDeleted=?, updatedOnDate=?, updatedByUserID=?"
+                    + ", isDeleted=?, updatedOnDate=NOW(), updatedByUserID=?"
                     + " WHERE id=?");
             stm.setString(1, p.getName());
             stm.setString(2, p.getAddress());
@@ -202,9 +201,8 @@ public class POIDAO implements Serializable {
             stm.setString(8, p.getBbox());
             stm.setString(9, p.getGeoJson());
             stm.setBoolean(10, p.isDeleted());
-            stm.setString(11, p.getUpdatedOnDate());
-            stm.setInt(12, p.getUpdatedByUserID());
-            stm.setInt(13, p.getId());
+            stm.setInt(11, p.getUpdatedByUserID());
+            stm.setInt(12, p.getId());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

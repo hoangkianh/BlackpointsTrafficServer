@@ -33,11 +33,12 @@
         <%@include file="../includes/includeCSS.jsp" %>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
-        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+        <script type="text/javascript" src="js/infobubble.min.js"></script>
         <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="js/jquery.form.js"></script>
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
@@ -62,7 +63,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div id="map-canvas" style="height: 400px;"></div>
+                <div id="map-canvas" style="height: 300px;"></div>
             </div>
             <div class="modal-footer">
                 <a data-dismiss="modal" id="close-map" href="#"><bean:message key="admin.poi.form.close"/></a>
@@ -133,7 +134,7 @@
                                         <span class="asterisk">*</span>
                                     </label>
                                     <div class="controls">
-                                        <html:file styleId="file" name="POIForm" property="file" accept="image/png" />
+                                        <html:file styleId="file" name="POIForm" property="file" accept="image/*" />
                                         <label for="file" class="error"><html:errors property="file" /></label>
                                     </div>
                                 </div>
@@ -183,7 +184,8 @@
             $(function() {
                 $('[rel=tooltip]').tooltip();
                 MapsLib.initializeDisableDoubleClickZoom();
-                MapsLib.doSearchNoAddrMarker();
+                MapsLib.findMe();
+                MapsLib.doSearch();
                 
                 $("#search_address").geocomplete({
                     country: "vn",
@@ -200,7 +202,7 @@
                 });
                 
                 $('#search').click(function() {
-                    MapsLib.doSearchNoAddrMarker();
+                    MapsLib.doSearch();
                 });
                 
                 $("#city").change(function() {
@@ -248,7 +250,7 @@
                         }
                     }, 2000);
                     setTimeout(function() {
-                        window.location.href = "category.do";
+                        window.location.href = "poilist.do";
                     }, 3500);
                 }
 
@@ -266,7 +268,9 @@
                     if (window.File && window.FileReader && window.FileList && window.Blob) {
                         var ftype = $('#file')[0].files[0].type; // get file type
 
-                        if (ftype !== 'image/png') {
+                        if (ftype !== 'image/png' &&
+                                ftype !== 'image/jpeg' &&
+                                ftype !== 'image/bmp') {
                             kq = false;
                         }
                     }
@@ -274,7 +278,7 @@
                         kq = false;
                     }
                     return this.optional(element) || kq;
-                }, "<bean:message key="errors.file.extension" arg0=".png" />");
+                }, "<bean:message key="errors.file.extension" arg0=".png, .jpg, .jpeg, .bmp" />");
 
                 $.validator.addMethod("checkFileSize", function(value, element) {
                     var kq = true;
@@ -295,7 +299,8 @@
                     rules: {
                         name: {
                             required: true,
-                            minlength: 10, maxlength: 100
+                            minlength: 4,
+                            maxlength: 100
                         },
                         address: {
                             required: true,
@@ -323,7 +328,7 @@
                     messages: {
                         name: {
                             required: "<bean:message key="errors.required" arg0="Tên điểm đen" />",
-                            minlength: "<bean:message key="errors.minlength" arg0="Tên điểm đen" arg1="10" />",
+                            minlength: "<bean:message key="errors.minlength" arg0="Tên điểm đen" arg1="4" />",
                             maxlength: "<bean:message key="errors.maxlength" arg0="Tên điểm đen" arg1="100" />"
                         },
                         address: {

@@ -37,7 +37,7 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
         }
         
         // validate file upload
-        if (file != null && file.getFileSize() == 0) {
+        if (file == null || (file != null && file.getFileSize() == 0)) {
             err.add("file", new ActionMessage("errors.file.required"));
         } else {
             // only image file upload

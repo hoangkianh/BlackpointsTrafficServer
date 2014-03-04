@@ -42,7 +42,7 @@
                 $('[rel=tooltip]').tooltip(); 
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[3, 'asc']],
+                    "aaSorting": [[4, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],

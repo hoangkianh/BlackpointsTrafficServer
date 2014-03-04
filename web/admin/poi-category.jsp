@@ -41,7 +41,7 @@
                 $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[0, 'asc']],
+                    "aaSorting": [[2, 'desc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
@@ -129,7 +129,7 @@
                                             <a href="#delete-confirm" id="<bean:write name="row" property="categoryID"/>" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle" title="<bean:message key='admin.table.delete'/>"></i></a>
                                         </td>
                                         <td><bean:write name="row" property="name"/></td>
-                                        <td><img src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>"/></td>
+                                        <td><img height="32" width="32" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>"/></td>
                                         <td><bean:write name="row" property="description"/></td>
                                     </tr>
                                 </logic:iterate>

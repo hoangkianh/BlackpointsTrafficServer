@@ -7,16 +7,18 @@ import com.blackpoints.utils.StringUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Set;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
+import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -40,16 +42,16 @@ public class AddNewCategoryAction extends org.apache.struts.action.Action {
             throws Exception {
         CategoryForm categoryForm = (CategoryForm) form;
         Category c = new Category();
+        HttpSession session = request.getSession(true);
+        MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
+        Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
+        String categoryDir = mr.getMessage(locale, "dir.category");
         String kq = "success";
-        Set<Map.Entry<String, String[]>> entrySet = request.getParameterMap().entrySet();
-        for (Map.Entry<String, String[]> entry : entrySet) {
-            System.out.println(entry.getKey() + ": " + entry.getValue()[0]);
-        }
-
+        
         FormFile file = categoryForm.getFile();
 
         // get the servers upload directory real path name
-        String filePath = getServlet().getServletContext().getRealPath("/") + "img/category";
+        String filePath = getServlet().getServletContext().getRealPath("/") + categoryDir;
         // create the upload folder if not exists
         File folder = new File(filePath);
         if (!folder.exists()) {
@@ -71,7 +73,7 @@ public class AddNewCategoryAction extends org.apache.struts.action.Action {
                 fos.flush();
                 fos.close();
             }
-            categoryForm.setImage("img/category/" + fileName);
+            categoryForm.setImage(categoryDir + "/" + fileName);
         }
 
         BeanUtils.copyProperties(c, categoryForm);

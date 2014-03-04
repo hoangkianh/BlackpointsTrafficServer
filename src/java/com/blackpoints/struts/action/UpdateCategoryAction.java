@@ -3,18 +3,13 @@ package com.blackpoints.struts.action;
 import com.blackpoints.classes.Category;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.struts.form.CategoryForm;
-import com.blackpoints.utils.StringUtil;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.upload.FormFile;
 
 /**
  *
