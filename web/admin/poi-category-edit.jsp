@@ -81,7 +81,7 @@
                                     </label>
                                     <div class="controls">
                                         <a id="upload" href="#upload-new-image" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.category.edit.file"/>">
-                                            <img src="<bean:write name="CategoryForm" property="image"/>" alt="<bean:write name="CategoryForm" property="name"/>"/>
+                                            <img height="32" width="32" src="<bean:write name="CategoryForm" property="image"/>" alt="<bean:write name="CategoryForm" property="name"/>"/>
                                         </a>
                                         <small><bean:message key="admin.category.edit.file"/></small>
                                         <label for="file" class="error"><html:errors property="file" /></label>

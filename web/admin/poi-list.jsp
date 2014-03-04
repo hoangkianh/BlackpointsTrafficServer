@@ -33,7 +33,7 @@
         <%@include file="../includes/includeCSS.jsp" %>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
-        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+        <script type="text/javascript" src="js/infobubble.min.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
@@ -47,8 +47,8 @@
                 var aData = oTable.fnGetData(nTr);
                 var sOut = '<table class="table sub-table">';
                 sOut += '<tr><td rowspan="6" class="center">' + aData[4] + '</td></tr>';
-                if (aData[20] !== undefined) {
-                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[20] + '</span></td></tr>';
+                if (aData[19] !== undefined) {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[19] + '</span></td></tr>';
                 }
                 sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.createdBy"/>: <span>' + aData[12] + '</span></td></tr>';
                 if (aData[13] !== '') {
@@ -67,7 +67,7 @@
                 $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[7, 'asc']],
+                    "aaSorting": [[11, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
                     "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
@@ -152,7 +152,6 @@
                                     <th class="invisible"></th>
                                     <th class="invisible"></th>
                                     <th class="invisible"></th>
-                                    <th class="invisible"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -178,7 +177,6 @@
                                         <td><bean:write name="row" property="restoreOnDate"/></td>
                                         <td><bean:write name="row" property="restoredByUserName"/></td>
                                         <td><bean:write name="row" property="description"/></td>
-                                        <td><bean:write name="row" property="geometry"/></td>
                                     </tr>
                                 </logic:iterate>
                             </tbody>

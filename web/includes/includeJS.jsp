@@ -5,6 +5,6 @@
 <script type="text/javascript" src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
 <script type="text/javascript" src="js/site.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
-<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
+<script type="text/javascript" src="js/infobubble.min.js"></script>
 <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
 <script type="text/javascript" src="js/map.js"></script>

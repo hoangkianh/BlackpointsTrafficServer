@@ -56,20 +56,45 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors err = new ActionErrors();
         if (name == null || name.trim().length() == 0) {
-            err.add("name", new ActionMessage("errors.required", "Tên (hoặc địa chỉ) điểm đen"));
+            err.add("name", new ActionMessage("errors.required", "Tên điểm đen"));
         } else {
-            if (name.trim().length() < 10 || name.trim().length() > 100) {
-                err.add("name", new ActionMessage("errors.range", "Tên (hoặc địa chỉ) điểm đen có độ dài", "10", "100", "kí tự"));
+            if (name.trim().length() < 4 || name.trim().length() > 100) {
+                err.add("name", new ActionMessage("errors.range", "Tên điểm đen có độ dài", "4", "100", "kí tự"));
             }
         }
-        if (description.trim().length() > 200) {
-            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
+        if (address == null || address.trim().length() == 0) {
+            err.add("address", new ActionMessage("errors.required", "Địa chỉ"));
+        } else {
+            if (address.trim().length() < 10 || address.trim().length() > 100) {
+                err.add("address", new ActionMessage("errors.range", "Địa chỉ", "10", "100", "kí tự"));
+            }
         }
-        if (geometry == null || geometry.trim().length() == 0) {
-            err.add("geometry", new ActionMessage("errors.select", "điểm đen trên bản đồ"));
+        if (longitude < 0.0) {
+            err.add("longitude", new ActionMessage("errors.required", "Kinh độ", "10", "100", "kí tự"));
+        }
+        if (latitude < 0.0) {
+            err.add("latitude", new ActionMessage("errors.required", "Vĩ độ", "10", "100", "kí tự"));
+        }
+        // validate file upload
+        if (file == null || (file != null && file.getFileSize() == 0)) {
+            err.add("file", new ActionMessage("errors.file.required"));
+        } else {
+            // only image file upload
+            if (!file.getContentType().equals("image/png")
+                    && !file.getContentType().equals("image/jpeg")
+                    && !file.getContentType().equals("image/bmp")) {
+                err.add("file", new ActionMessage("errors.file.extension", ".png, .jpg, .jpeg, .bmp"));
+            } else {
+                if (getFile().getFileSize() > 1048576) { //1 MB
+                    err.add("file", new ActionMessage("errors.file.size"));
+                }
+            }
         }
         if (categoryID <= 0) {
             err.add("categoryID", new ActionMessage("errors.select", "kiểu điểm đen"));
+        }
+        if (description.trim().length() > 200) {
+            err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
         }
         return err;
     }
