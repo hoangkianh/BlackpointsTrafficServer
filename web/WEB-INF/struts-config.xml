@@ -71,7 +71,6 @@
         </action>
         <action input="/updateinfo.do" name="UpdateInfoForm" path="/UpdateInfoAction" scope="request" type="com.blackpoints.struts.action.UpdateInfoAction"/>
         <action input="/updateinfo.do" name="ChangePassForm" path="/ChangePassAction" scope="request" type="com.blackpoints.struts.action.ChangePassAction"/>
-        <action input="/" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
         <action input="/poi.do" name="TempPOIForm" path="/AddNewTempPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewTempPOIAction"/>
         <action path="/poi" forward="/pages/poi.jsp"/>
         <action path="/forgotpass" forward="/pages/forgotpass.jsp"/>
@@ -89,7 +88,9 @@
         <action input="/" name="POIForm" validate="false" path="/poilist" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction">
             <forward name="getAllPOIsOK" path="/admin/poi-list.jsp"/>
         </action>
-        
+        <action path="/newpoi" forward="/admin/poi-new.jsp"/>
+        <action input="/" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
+                
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
         </action>

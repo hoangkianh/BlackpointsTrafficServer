@@ -415,6 +415,10 @@ section#map .entry-content {
     float:right;
 }
 
+.pac-container {
+    z-index: 1051;
+}
+
 /* section footer*/
 #footer {
     background: #ddd;

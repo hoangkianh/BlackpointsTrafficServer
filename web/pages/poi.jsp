@@ -170,9 +170,6 @@
                             minlength: "<bean:message key="errors.minlength" arg0="Địa chỉ" arg1="10" />",
                             maxlength: "<bean:message key="errors.maxlength" arg0="Địa chỉ" arg1="100" />"
                         },
-                        categoryID: {
-                            checkSelectCategory: "<bean:message key="errors.required" arg0="Kiểu điểm đen" />"
-                        },
                         description: {
                             maxlength: "<bean:message key="errors.maxlength" arg0="Thông tin thêm" arg1="500" />"
                         }

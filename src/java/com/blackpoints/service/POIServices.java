@@ -100,11 +100,13 @@ public class POIServices {
     public String getPOIInDistrict(@PathParam("district") String district, @PathParam("city") String city) {
         List<POI> inDistrictList = new ArrayList<POI>();
         City c = new CityDAO().getCityByName(city);
-        District d = new DistrictDAO().getDistrictByName(district, c.getId());
-        if (c != null && d != null) {
-            for (POI poi : pois) {
-                if (poi.getCity() == c.getId() && poi.getDistrict() == d.getId()) {
-                    inDistrictList.add(poi);
+        if (c != null) {
+            District d = new DistrictDAO().getDistrictByName(district, c.getId());
+            if (d != null) {
+                for (POI poi : pois) {
+                    if (poi.getCity() == c.getId() && poi.getDistrict() == d.getId()) {
+                        inDistrictList.add(poi);
+                    }
                 }
             }
         }

@@ -125,7 +125,7 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <a href="#" class="btn btn-primary"><bean:message key="admin.poi.list.addNewBtn"/></a>
+                        <a href="newpoi.do" class="btn btn-primary"><bean:message key="admin.poi.list.addNewBtn"/></a>
                         <i class="fa fa-times"></i> <a href="deletedlist.do" class="other-link"><bean:message key="admin.poi.list.deleteBtn"/></a> |
                         <i class="fa fa-user"></i> <a href="fromuser.do" class="other-link"><bean:message key="admin.poi.list.fromUserBtn"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
@@ -195,6 +195,8 @@
 
                     var id = $(this).attr('id');
                     MapsLib.getPOIByID(id);
+                    
+                    return false;
                 });
 
                 $('#map-modal').on('shown', function() {

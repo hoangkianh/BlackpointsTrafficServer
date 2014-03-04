@@ -923,19 +923,19 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     margin-left: 10px;
 }
 .input-mini {
-    width: 60px;
+    width: 60px !important;
 }
 .input-small {
-    width: 90px;
+    width: 90px !important;
 }
 .input-medium {
-    width: 150px;
+    width: 150px !important;
 }
 .input-large {
-    width: 210px;
+    width: 210px !important;
 }
 .input-xlarge {
-    width: 270px;
+    width: 270px !important;
 }
 .input-xxlarge {
     width: 530px;

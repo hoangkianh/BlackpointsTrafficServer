@@ -24,6 +24,26 @@ var MapsLib = {
         // reset
         $("#search_radius").val(MapsLib.searchRadius);
     },
+    initializeDisableDoubleClickZoom: function() {
+        geocoder = new google.maps.Geocoder();
+
+        var mapOptions = {
+            mapTypeControl: false,
+            disableDoubleClickZoom: true,
+            scaleControl: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.LARGE
+            },
+            zoom: MapsLib.defaultZoom,
+            center: MapsLib.map_centroid,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        // reset
+        $("#search_radius").val(MapsLib.searchRadius);
+    },
     doSearch: function() {
         MapsLib.clearSearch();
 
@@ -83,7 +103,40 @@ var MapsLib = {
                     });
                 }
                 else {
-                    alert("Không tìm thấy địa chỉ của bạn: " + status);
+                    console.log("Không tìm thấy địa chỉ của bạn: " + status);
+                }
+            });
+        }
+    },
+    doSearchNoAddrMarker: function() {
+        MapsLib.clearSearch();
+
+        MapsLib.address = $("#search_address").val();
+        MapsLib.searchRadius = $("#search_radius").val();
+
+        if (MapsLib.address === undefined && MapsLib.searchRadius === undefined) {
+            MapsLib.getPOIInRadius();
+            return;
+        }
+
+        if (MapsLib.oldaddress !== MapsLib.address) {
+            MapsLib.newPinpoint = null;
+        }
+
+        if (MapsLib.address !== "") {
+            geocoder.geocode({'address': MapsLib.address}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    MapsLib.currentPinpoint = results[0].geometry.location;
+
+                    if (MapsLib.newPinpoint !== null) {
+                        MapsLib.currentPinpoint = MapsLib.newPinpoint;
+                    }
+                    map.setCenter(MapsLib.currentPinpoint);
+                    map.setZoom(15);
+                    MapsLib.getPOIInRadius();
+                }
+                else {
+                    console.log("Không tìm thấy địa chỉ của bạn: " + status);
                 }
             });
         }
@@ -283,7 +336,7 @@ var MapsLib = {
                     callback(district, city);
                 }
             } else {
-                alert("Có lỗi xảy ra: " + status);
+                console.log("Có lỗi xảy ra: " + status);
             }
         });
     },
@@ -296,7 +349,7 @@ var MapsLib = {
                     MapsLib.doSearch();
                 }
             } else {
-                alert("Không tìm thấy địa chi này: " + status);
+                console.log("Không tìm thấy địa chi này: " + status);
             }
         });
     },
@@ -408,5 +461,27 @@ var MapsLib = {
     },
     openInfoWindow: function(idx) {
         google.maps.event.trigger(MapsLib.markerArr[idx], 'click');
+    },
+    getLatLng: function(position) {
+        map.panTo(position);
+        if (MapsLib.markerToGetLatLng) {
+            MapsLib.markerToGetLatLng.setPosition(position);
+        } else {
+            MapsLib.markerToGetLatLng = new google.maps.Marker({
+                position: position,
+                map: map,
+                draggable: true
+            });
+        }
+        var content = "<b>Kinh độ:</b> " + position.lng() + "<br/><b>Vĩ độ:</b> " + position.lat();
+        if (!MapsLib.infoWindowToGetLatLng) {
+            MapsLib.infoWindowToGetLatLng = new InfoBubble({
+                content: content,
+                minWidth: 150,
+            });
+        }
+        MapsLib.infoWindowToGetLatLng.open(map, MapsLib.markerToGetLatLng);
+        $("#longitude").val(position.lng());
+        $("#latitude").val(position.lat());
     }
 };

@@ -1,13 +1,18 @@
 package com.blackpoints.struts.form;
 
 import com.blackpoints.classes.Category;
+import com.blackpoints.classes.City;
+import com.blackpoints.classes.District;
 import com.blackpoints.classes.POI;
 import com.blackpoints.dao.CategoryDAO;
+import com.blackpoints.dao.CityDAO;
+import com.blackpoints.dao.DistrictDAO;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -40,6 +45,9 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private String districtName;
     private String categoryName;
     private String ratingName;
+    private FormFile file;
+    private double longitude;
+    private double latitude;
 
     private List<POI> poiList;
     private List<POI> poiListInDistrict;
@@ -284,5 +292,40 @@ public class POIForm extends org.apache.struts.action.ActionForm {
 
     public void setPoiListInDistrict(List<POI> poiListInDistrict) {
         this.poiListInDistrict = poiListInDistrict;
+    }
+
+    public List<City> getCityList() {
+        return new CityDAO().getAllCities();
+    }
+
+    public List<District> getDistrictList() {
+        if (city == 0) {
+            city = 1;
+        }
+        return new DistrictDAO().getAllDistrictsInCity(city);
+    }
+
+    public FormFile getFile() {
+        return file;
+    }
+
+    public void setFile(FormFile file) {
+        this.file = file;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }
