@@ -38,7 +38,7 @@ public class TempPOIDAO implements Serializable {
                 tp.setDistrict(rs.getInt("district"));
                 tp.setDescription(rs.getString("description"));
                 tp.setCategoryID(rs.getInt("categoryID"));
-                tp.setRating(rs.getDouble("rating"));
+                tp.setRating(rs.getInt("rating"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 
@@ -83,7 +83,7 @@ public class TempPOIDAO implements Serializable {
                 tp.setDistrict(rs.getInt("district"));
                 tp.setDescription(rs.getString("description"));
                 tp.setCategoryID(rs.getInt("categoryID"));
-                tp.setRating(rs.getDouble("rating"));
+                tp.setRating(rs.getInt("rating"));
                 tp.setCreatedByUserID(rs.getInt("createdByUserID"));
                 tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
 

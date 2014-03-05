@@ -2,6 +2,7 @@ package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.POI;
 import com.blackpoints.dao.POIDAO;
+import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.struts.form.POIForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.File;
@@ -97,6 +98,14 @@ public class AddNewPOIAction extends org.apache.struts.action.Action {
 
         if (!new POIDAO().addNewPOI(p)) {
             kq = "failure";
+        } else {
+            // delete temppoi if exists
+            int tempPOIId = poiForm.getTempPOIId();
+            if (tempPOIId > 0) {
+                if (!new TempPOIDAO().deletePOI(tempPOIId)) {
+                    kq = "failure";
+                }
+            }
         }
 
         out.print(kq);

@@ -26,7 +26,7 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
     private int district;
     private String description;
     private int categoryID;
-    private double rating;
+    private int rating;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
@@ -120,11 +120,11 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
         this.categoryID = categoryID;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
     

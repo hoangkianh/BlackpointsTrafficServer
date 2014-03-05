@@ -19,7 +19,7 @@ public class TempPOI implements Serializable {
     private int district;
     private String description;
     private int categoryID;
-    private double rating;
+    private int rating;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
@@ -81,11 +81,11 @@ public class TempPOI implements Serializable {
         this.categoryID = categoryID;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

@@ -105,6 +105,10 @@
         <action input="/" name="TempPOIForm" validate="false" path="/fromuser" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction">
             <forward name="getAllTempPOIsOK" path="/admin/poi-from-user.jsp"/>
         </action>
+        <action input="/" name="TempPOIForm" path="/savepoi" scope="session" type="com.blackpoints.struts.action.GetTempPOIDetailsAction" validate="false">
+            <forward name="getTempPOIDetailsSuccess" path="/admin/poi-save.jsp" />
+            <forward name="getTempPOIDetailsFailure" path="/failure.do?f=8" />
+        </action>
         
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>

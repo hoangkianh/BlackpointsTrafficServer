@@ -103,7 +103,7 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <i class="fa fa-list"></i> <a href="poilist.do" class="other-link">Danh sách điểm đen trên toàn quốc</a>
+                        <i class="fa fa-list"></i> <a href="poilist.do" class="other-link"><bean:message key="admin.poi.list.caption"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
                             <caption><bean:message key="admin.tempPOI.caption"/></caption>
                             <thead>
@@ -127,12 +127,12 @@
                                     <tr>
                                         <td class="center"><i class="fa fa-angle-double-down"></i></td>
                                         <td class="center">
-                                            <a href="#">
+                                            <html:link action="savepoi" paramId="id" paramName="row" paramProperty="id">
                                                 <i class="fa fa-save" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.temPOI.form.save"/>"></i>
-                                            </a>
+                                            </html:link>
                                         </td>
                                         <td class="center delete">
-                                            <a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.temPOI.form.delete" />"></i></a>
+                                            <a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.tempPOI.form.delete" />"></i></a>
                                         </td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="address"/></td>
