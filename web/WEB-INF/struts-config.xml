@@ -29,7 +29,6 @@
 
     <action-mappings>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
-        <action input="/" name="TempPOIForm" path="/GetAllTempPOIsAction" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction"/>
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
             <forward name="normalUser_loginSuccess" path="/" redirect="true" />
             <forward name="admin_loginSuccess" path="/dashboard.do" redirect="true" />
@@ -81,9 +80,7 @@
         <action path="/home" forward="/" />
         <!--admin-->
         <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
-        <!--poi management-->
-        <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
-        
+        <!--poi management-->       
         <action input="/" name="POIForm" validate="false" path="/poilist" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction">
             <forward name="getAllPOIsOK" path="/admin/poi-list.jsp"/>
         </action>
@@ -100,6 +97,13 @@
         <!-- deleted poi list -->
         <action input="/" name="POIForm" path="/deletedlist" scope="session" type="com.blackpoints.struts.action.GetAllDeletedPOIsAction" validate="false">
             <forward name="getAllPOIsOK" path="/admin/poi-deleted-list.jsp" />
+        </action>
+        <action input="/deletedlist.do" name="POIForm" path="/DeletePermanentlyAction" scope="session" type="com.blackpoints.struts.action.DeletePermanentlyAction" validate="false"/>
+        <action input="/deletedlist.do" name="POIForm" path="/RestorePOIAction" scope="session" type="com.blackpoints.struts.action.RestorePOIAction" validate="false"/>
+        
+        <!-- temp POI -->
+        <action input="/" name="TempPOIForm" validate="false" path="/fromuser" scope="session" type="com.blackpoints.struts.action.GetAllTempPOIsAction">
+            <forward name="getAllTempPOIsOK" path="/admin/poi-from-user.jsp"/>
         </action>
         
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
@@ -142,8 +146,6 @@
             <forward name="getAllUserGroupsSuccess" path="/admin/user-in-group.jsp" />                        
             <forward name="getAllUserInGroupFailure" path="/failure.do?f=9" />
         </action>
-        <action input="/deletedlist.do" name="POIForm" path="/DeletePermanentlyAction" scope="session" type="com.blackpoints.struts.action.DeletePermanentlyAction" validate="false"/>
-        <action input="/deletedlist.do" name="POIForm" path="/RestorePOIAction" scope="session" type="com.blackpoints.struts.action.RestorePOIAction" validate="false"/>
         <action input="/admin.do" name="UserForm" path="/RemoveAdminAction" scope="session" type="com.blackpoints.struts.action.RemoveAdminAction" validate="false"/>
         <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAdminAction" scope="session" type="com.blackpoints.struts.action.UpdateAdminAction"/>
     </action-mappings>

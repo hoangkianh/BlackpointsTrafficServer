@@ -42,21 +42,22 @@
             function fnFormatDetails(nTr)
             {
                 var aData = oTable.fnGetData(nTr);
-                var sOut = '<table class="table">';
-                sOut += '<tr class="info"><td>'+'Ảnh (image)'+':</td><td>' + aData[2] + ' ' + aData[5] + '</td></tr>';
-                sOut += '<tr class="info"><td>'+'Thêm vào bởi (createdByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
-                sOut += '<tr class="info"><td>'+'Thông tin thêm (description)'+':</td><td>Could provide a link here</td></tr>';
+                var sOut = '<table class="table sub-table">';
+                sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.createdBy"/>: <span>' + aData[10] + '</span></td></tr>';
+                if (aData[11] !== '') {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[11] + '</span></td></tr>';
+                }
                 sOut += '</table>';
-
                 return sOut;
             }
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[7, 'asc']],
+                    "aaSorting": [[9, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
-                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
+                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
                         "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
@@ -75,7 +76,7 @@
                                         }
                                     }
                                 });
-                                $('#myTable tbody td i').bind('click', function() {
+                                $('#myTable tbody td i.fa-angle-double-down').bind('click', function() {
                                     var nTr = $(this).parents('tr')[0];
                                     if (oTable.fnIsOpen(nTr))
                                     {
@@ -104,51 +105,53 @@
                     <div class="span12 table-list border-red">
                         <i class="fa fa-list"></i> <a href="poilist.do" class="other-link">Danh sách điểm đen trên toàn quốc</a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption>Danh sách điểm đen từ người dùng</caption>
+                            <caption><bean:message key="admin.tempPOI.caption"/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
-                                    <th>Tên</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Tỉnh/Thành</th>
-                                    <th>Quận/Huyện</th>
-                                    <th>Phân loại</th>
-                                    <th>Xếp hạng</th>
-                                    <th>Ngày thêm vào</th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
+                                    <th><bean:message key="admin.tempPOI.form.name"/></th>
+                                    <th><bean:message key="admin.tempPOI.form.address"/></th>
+                                    <th><bean:message key="admin.tempPOI.form.city" /></th>
+                                    <th><bean:message key="admin.tempPOI.form.district" /></th>
+                                    <th><bean:message key="admin.tempPOI.form.category" /></th>
+                                    <th><bean:message key="admin.tempPOI.form.rating" /></th>
+                                    <th><bean:message key="admin.tempPOI.form.createdOnDate" /></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="center"><i class="fa fa-angle-double-down"></i></td>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td class="center"><a href="#"><i class="fa fa-save" title="Lưu lại vào CSDL"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times-circle" title="Xóa"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="center"><i class="fa fa-angle-double-down"></i></td>
-                                    <td>D</td>
-                                    <td>E</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td class="center"><a href="#"><i class="fa fa-save" title="Lưu lại vào CSDL"></i></a></td>
-                                    <td class="center delete"><a href="#" class="delete"><i class="fa fa-times-circle" title="Xóa"></i></a></td>
-                                </tr>
+                                <logic:iterate id="row" name="TempPOIForm" property="tempPOIList">
+                                    <tr>
+                                        <td class="center"><i class="fa fa-angle-double-down"></i></td>
+                                        <td class="center">
+                                            <a href="#">
+                                                <i class="fa fa-save" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.temPOI.form.save"/>"></i>
+                                            </a>
+                                        </td>
+                                        <td class="center delete">
+                                            <a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.temPOI.form.delete" />"></i></a>
+                                        </td>
+                                        <td><bean:write name="row" property="name"/></td>
+                                        <td><bean:write name="row" property="address"/></td>
+                                        <td><bean:write name="row" property="cityName"/></td>
+                                        <td><bean:write name="row" property="districtName"/></td>
+                                        <td><bean:write name="row" property="categoryName"/></td>
+                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="createdOnDate"/></td>
+                                        <td><bean:write name="row" property="createdByUserName"/></td>
+                                        <td><bean:write name="row" property="description"/></td>
+                                    </tr>
+                                </logic:iterate>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+        </script>
     </body>
 </html>
