@@ -235,6 +235,25 @@ public class POIDAO implements Serializable {
         }
         return kq;
     }
+    
+    public boolean deletePermanentlyPOI(POI p) {
+        boolean kq = false;
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        try {
+            stm = conn.prepareStatement("DELETE FROM poi WHERE id=?");
+            stm.setInt(1, p.getId());
+
+            if (stm.executeUpdate() > 0) {
+                kq = true;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, null);
+        }
+        return kq;
+    }
 
     public boolean restorePOI(POI p) {
         boolean kq = false;
@@ -242,10 +261,9 @@ public class POIDAO implements Serializable {
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("UPDATE poi SET isDeleted=False"
-                    + ", restoreOnDate=?, restoreByUserID=? WHERE id=?");
-            stm.setString(1, p.getRestoreOnDate());
-            stm.setInt(2, p.getRestoreByUserID());
-            stm.setInt(3, p.getId());
+                    + ", restoreOnDate=NOW(), restoreByUserID=? WHERE id=?");
+            stm.setInt(1, p.getRestoreByUserID());
+            stm.setInt(2, p.getId());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

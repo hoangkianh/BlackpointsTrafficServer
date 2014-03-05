@@ -55,8 +55,9 @@ public class POIServices {
     @Produces("application/json; charset=UTF-8")
     public String getPOIByID(@PathParam("id") int id) {
         String json = "";
+        List<POI> allPOIs = new POIDAO().getAllPOIs(true);
         CategoryDAO categoryDAO = new CategoryDAO();
-        for (POI poi : pois) {
+        for (POI poi : allPOIs) {
             if (poi.getId() == id) {
                 poi.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
                 json = new Gson().toJson(poi);

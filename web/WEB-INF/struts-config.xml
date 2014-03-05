@@ -82,7 +82,6 @@
         <!--admin-->
         <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
         <!--poi management-->
-        <action path="/deletedlist" forward="/admin/poi-deleted-list.jsp" />
         <action path="/fromuser" forward="/admin/poi-from-user.jsp" />
         
         <action input="/" name="POIForm" validate="false" path="/poilist" scope="session" type="com.blackpoints.struts.action.GetAllPOIsAction">
@@ -97,7 +96,12 @@
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIAction"/>
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIImageAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIImageAction" validate="false"/>
         <action input="/poilist.do" name="POIForm" path="/DeletePOIAction" scope="session" type="com.blackpoints.struts.action.DeletePOIAction" validate="false"/>        
-                
+        
+        <!-- deleted poi list -->
+        <action input="/" name="POIForm" path="/deletedlist" scope="session" type="com.blackpoints.struts.action.GetAllDeletedPOIsAction" validate="false">
+            <forward name="getAllPOIsOK" path="/admin/poi-deleted-list.jsp" />
+        </action>
+        
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
         </action>
@@ -138,6 +142,8 @@
             <forward name="getAllUserGroupsSuccess" path="/admin/user-in-group.jsp" />                        
             <forward name="getAllUserInGroupFailure" path="/failure.do?f=9" />
         </action>
+        <action input="/deletedlist.do" name="POIForm" path="/DeletePermanentlyAction" scope="session" type="com.blackpoints.struts.action.DeletePermanentlyAction" validate="false"/>
+        <action input="/deletedlist.do" name="POIForm" path="/RestorePOIAction" scope="session" type="com.blackpoints.struts.action.RestorePOIAction" validate="false"/>
         <action input="/admin.do" name="UserForm" path="/RemoveAdminAction" scope="session" type="com.blackpoints.struts.action.RemoveAdminAction" validate="false"/>
         <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAdminAction" scope="session" type="com.blackpoints.struts.action.UpdateAdminAction"/>
     </action-mappings>

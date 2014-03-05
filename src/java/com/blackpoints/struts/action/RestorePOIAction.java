@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class DeletePOIAction extends org.apache.struts.action.Action {
+public class RestorePOIAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -71,8 +71,8 @@ public class DeletePOIAction extends org.apache.struts.action.Action {
                 } else {
                     POI p = poiDAO.getPOIByID(poif.getId());
                     // delete userID
-                    p.setDeletedByUserID(userID);
-                    if (!poiDAO.deletePOI(p)) {
+                    p.setRestoreByUserID(userID);
+                    if (!poiDAO.restorePOI(p)) {
                         kq = "failure";
                     }
                 }
@@ -83,7 +83,6 @@ public class DeletePOIAction extends org.apache.struts.action.Action {
 
         out.print(kq);
         out.flush();
-
         return null;
     }
 }

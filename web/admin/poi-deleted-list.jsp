@@ -32,6 +32,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
+        <script type="text/javascript" src="js/infobubble.min.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
@@ -42,24 +45,32 @@
             function fnFormatDetails(nTr)
             {
                 var aData = oTable.fnGetData(nTr);
-                var sOut = '<table class="table">';
-                sOut += '<tr class="info"><td>'+'Ảnh (image)'+':</td><td>' + aData[2] + ' ' + aData[5] + '</td></tr>';
-                sOut += '<tr class="info"><td>'+'Xóa bởi (deletedByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
-                sOut += '<tr class="info"><td>'+'Thông tin thêm (description)'+':</td><td>Could provide a link here</td></tr>';
-                sOut += '<tr class="info"><td>'+'Ngày thêm vào (createdOnDate) bởi (createdByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
-                sOut += '<tr class="info"><td>'+'Ngày cập nhật gần nhất (updatedOnDate) bởi (updatedByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
-                sOut += '<tr class="info"><td>'+'Ngày khôi phục lại (restoreOnDate) bởi (restoreByUserID)'+':</td><td>And any further details here (images etc)</td></tr>';
+                var sOut = '<table class="table sub-table">';
+                sOut += '<tr><td rowspan="6" class="center">' + aData[5] + '</td></tr>';
+                if (aData[20] !== undefined) {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[20] + '</span></td></tr>';
+                }
+                sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.createdBy"/>: <span>' + aData[13] + '</span></td></tr>';
+                if (aData[14] !== '') {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.updatedOnDate"/>: <span>' + aData[14] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[15] + '</span>';
+                }
+                if (aData[16] !== '') {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.deletedOnDate"/>: <span>' + aData[16] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[17] + '</span>';
+                }
+                if (aData[18] !== '') {
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.restoredOnDate"/>: <span>' + aData[18] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[19] + '</span>';
+                }
                 sOut += '</table>';
-
                 return sOut;
             }
             $(function() {
+                $('[rel=tooltip]').tooltip();
                 oTable = $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[7, 'asc']],
+                    "aaSorting": [[12, 'asc']],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
-                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
+                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
                         "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
@@ -78,7 +89,7 @@
                                         }
                                     }
                                 });
-                                $('#myTable tbody td i').bind('click', function() {
+                                $('#myTable tbody td i.fa-angle-double-down').bind('click', function() {
                                     var nTr = $(this).parents('tr')[0];
                                     if (oTable.fnIsOpen(nTr))
                                     {
@@ -101,60 +112,271 @@
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
         <%@include  file="../includes/navbar-admin-alter.jsp" %>
+        <div id="map-modal" class="modal fade hide" style="width: 800px; margin-left: -400px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3><bean:message key="admin.poi.list.h3" /></h3>
+            </div>
+            <div class="modal-body">
+                <div id="map-canvas" style="height: 400px;"></div>
+            </div>
+        </div>
+        <c:if test="${userStr[3] eq 1}">
+            <div id="restore-confirm" class="modal fade hide">
+                <html:form styleId="restoreForm" method="POST" action="/RestorePOIAction" styleClass="form-horizontal my-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3><bean:message key="admin.poi.restore.h3" /></h3>
+                    </div>
+                    <div class="modal-body">
+                        <html:hidden styleId="poiID" name="POIForm" property="id"/>
+                        <div class="alert alert-holder">
+                            <span><bean:message key="admin.poi.restore.warning" /></span>
+                        </div>
+                        <ul>
+                            <li><bean:message key="admin.poi.restore.warningMSG1" /></li>
+                        </ul>
+                        <div class="control-group">
+                            <label class="control-label" for="password">
+                                <bean:message key="admin.poi.restore.password" />
+                                <span class="asterisk">*</span>
+                            </label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="<bean:message key="admin.poi.restore.password" />"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.poi.form.restore" />" />
+                    </div>
+                </html:form>
+            </div>
+            <div id="delete-confirm" class="modal fade hide">
+                <html:form styleId="deleteForm" method="POST" action="/DeletePermanentlyAction" styleClass="form-horizontal my-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3><bean:message key="admin.poi.deletePermanently.h3" /></h3>
+                    </div>
+                    <div class="modal-body">
+                        <html:hidden styleId="poiID" name="POIForm" property="id"/>
+                        <div class="alert alert-holder">
+                            <span><bean:message key="admin.poi.deletePermanently.warning" /></span>
+                        </div>
+                        <ul>
+                            <li><bean:message key="admin.poi.deletePermanently.warningMSG1" /></li>
+                        </ul>
+                        <div class="control-group">
+                            <label class="control-label" for="password">
+                                <bean:message key="admin.poi.delete.password" />
+                                <span class="asterisk">*</span>
+                            </label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="<bean:message key="admin.poi.delete.password" />"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.poi.form.delete" />" />
+                    </div>
+                </html:form>
+            </div>
+        </c:if>
         <section>
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <i class="fa fa-list"></i> <a href="poilist.do" class="other-link">Danh sách điểm đen trên toàn quốc</a>
+                        <i class="fa fa-list"></i> <a href="poilist.do" class="other-link"><bean:message key="admin.poi.list.poiList"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption>Danh sách điểm đen đã xóa</caption>
+                            <caption><bean:message key="admin.poi.deletedList.caption"/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
-                                    <th>Tên</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Tỉnh/Thành</th>
-                                    <th>Quận/Huyện</th>
-                                    <th>Phân loại</th>
-                                    <th>Xếp hạng</th>
-                                    <th>Ngày xóa</th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
                                     <th class="sorting_disabled"></th>
+                                    <th class="sorting_disabled"></th>
+                                    <th class="invisible"></th>
+                                    <th><bean:message key="admin.poi.form.name" /></th>
+                                    <th><bean:message key="admin.poi.form.address" /></th>
+                                    <th><bean:message key="admin.poi.form.city" /></th>
+                                    <th><bean:message key="admin.poi.form.district" /></th>
+                                    <th><bean:message key="admin.poi.form.category" /></th>
+                                    <th><bean:message key="admin.poi.form.rating" /></th>
+                                    <th><bean:message key="admin.poi.table.details.createdOnDate" /></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
+                                    <th class="invisible"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="center"><i class="fa fa-angle-double-down"></i></td>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td class="center"><a href="#" target="_blank"><i class="fa fa-map-marker" title="Xem trên bản đồ"></i></a></td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center"><a href="#"><i class="fa fa-rotate-left" title="Khôi phục lại"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="center"><i class="fa fa-angle-double-down"></i></td>
-                                    <td>D</td>
-                                    <td>E</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td class="center"><a href="#" target="_blank"><i class="fa fa-map-marker" title="Xem trên bản đồ"></i></a></td>
-                                    <td class="center"><a href="#"><i class="fa fa-pencil" title="Sửa"></i></a></td>
-                                    <td class="center"><a href="#"><i class="fa fa-rotate-left" title="Khôi phục lại"></i></a></td>
-                                </tr>
+                                <logic:iterate id="row" name="POIForm" property="poiList">
+                                    <tr>
+                                        <td class="center"><i title="<bean:message key="admin.poi.form.viewDetails" />" rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-angle-double-down"></i></td>
+                                        <td class="center">
+                                            <a class="view-in-map" href="#map-modal" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a>
+                                        </td>
+                                        <td class="center">
+                                            <html:link action="editpoi" paramId="id" paramName="row" paramProperty="id">
+                                                <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i>
+                                            </html:link>
+                                        </td>
+                                        <td class="center">
+                                            <a href="#restore-confirm" class="restore" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-rotate-left"  title="<bean:message key="admin.poi.form.restore" />"></i></a>
+                                        </td>
+                                        <td class="center delete">
+                                            <a href="#delete-confirm" class="delete" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.deletePermanently" />"></i></a>
+                                        </td>
+                                        <td><img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" /></td>
+                                        <td><bean:write name="row" property="name"/></td>
+                                        <td><bean:write name="row" property="address"/></td>
+                                        <td><bean:write name="row" property="cityName"/></td>
+                                        <td><bean:write name="row" property="districtName"/></td>
+                                        <td><bean:write name="row" property="categoryName"/></td>
+                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="createdOnDate"/></td>
+                                        <td><bean:write name="row" property="createdByUserName"/></td>
+                                        <td><bean:write name="row" property="updatedOnDate"/></td>
+                                        <td><bean:write name="row" property="updatedByUserName"/></td>
+                                        <td><bean:write name="row" property="deletedOnDate"/></td>
+                                        <td><bean:write name="row" property="deletedByUserName"/></td>
+                                        <td><bean:write name="row" property="restoreOnDate"/></td>
+                                        <td><bean:write name="row" property="restoredByUserName"/></td>
+                                        <td><bean:write name="row" property="description"/></td>
+                                    </tr>
+                                </logic:iterate>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </section>
+        <script type="text/javascript">
+            $(function() {
+                MapsLib.initialize();
+                $("a.view-in-map").click(function() {
+                    $("#map-modal").modal();
+
+                    var id = $(this).attr('id');
+                    MapsLib.getPOIByID(id);
+
+                    return false;
+                });
+
+                $('#map-modal').on('shown', function() {
+                    var currentCenter = map.getCenter();
+                    google.maps.event.trigger(map, "resize");
+                    map.setCenter(currentCenter);
+                });
+
+                $("a.delete").click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+                    // reset password input
+                    $("#password").val('');
+                    $('#delete-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#poiID").val(id);
+                    return false;
+                });
+
+                $("#deleteForm").submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "DeletePermanentlyAction.do",
+                        data: $("#deleteForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $("#delete-confirm .modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.poi.delete.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "deletedlist.do";
+                                    }, 1000);
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.delete.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+
+                $("a.restore").click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+                    // reset password input
+                    $("#password").val('');
+                    $('#restore-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#poiID").val(id);
+                    return false;
+                });
+
+                $("#restoreForm").submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "RestorePOIAction.do",
+                        data: $("#restoreForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $("#restore-confirm .modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.poi.restore.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "deletedlist.do";
+                                    }, 1000);
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.restore.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.restore.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.poi.restore.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
+                });
+            });
+        </script>                                    
     </body>
 </html>
