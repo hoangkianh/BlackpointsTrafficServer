@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author HKA
  */
-public class GetAllPOIInCity extends org.apache.struts.action.Action {
+public class GetAllPOIByCategory extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -31,16 +31,16 @@ public class GetAllPOIInCity extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         POIForm poif = (POIForm) form;
-        int city = 0;
+        int categoryID = 0;
         try {
-            city = Integer.parseInt(request.getParameter("id"));
-            List<POI> allPOIsInCity = new POIDAO().getAllPOIsInCity(city);
-            poif.setPoiList(allPOIsInCity);
-            poif.setCity(city);
+            categoryID = Integer.parseInt(request.getParameter("id"));
+            List<POI> list = new POIDAO().getAllPOIByCategory(categoryID);
+            poif.setPoiList(list);
+            poif.setCategoryID(categoryID);
         } catch (Exception e) {
-            return mapping.findForward("getAllPOIInCityFailure");
+            return mapping.findForward("getAllPOIByCategoryFailure");
         }
-
-        return mapping.findForward("getAllPOIInCitySuccess");
+        
+        return mapping.findForward("getAllPOIByCategorySuccess");
     }
 }

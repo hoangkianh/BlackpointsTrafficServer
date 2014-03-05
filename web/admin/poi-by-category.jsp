@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:write name="POIForm" property="cityName"/> | <bean:message key="admin.title.poilist" /></title>
+        <title><bean:message key="admin.title.poilist" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -157,9 +157,11 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12 table-list border-red">
-                        <i class="fa fa-list"></i> <a href="poilist.do" class="other-link"><bean:message key="admin.poi.list.caption"/></a>
+                        <a href="newpoi.do" class="btn btn-primary"><bean:message key="admin.poi.list.addNewBtn"/></a>
+                        <i class="fa fa-times"></i> <a href="deletedlist.do" class="other-link"><bean:message key="admin.poi.list.deleteBtn"/></a> |
+                        <i class="fa fa-user"></i> <a href="fromuser.do" class="other-link"><bean:message key="admin.poi.list.fromUserBtn"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption><bean:message key="admin.poi.list.city.caption"/> <bean:write name="POIForm" property="cityName"/></caption>
+                            <caption><bean:message key="admin.poi.list.caption"/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
@@ -211,7 +213,7 @@
                                             <html:link action="district" paramId="id" paramName="row" paramProperty="district">
                                                 <bean:write name="row" property="districtName"/>
                                             </html:link>
-                                        </td>
+                                        </td>                                        
                                         <td>
                                             <html:link action="poibycategory" paramId="id" paramName="row" paramProperty="categoryID">
                                                 <bean:write name="row" property="categoryName"/>

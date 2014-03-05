@@ -214,7 +214,11 @@
                                                 <bean:write name="row" property="districtName"/>
                                             </html:link>
                                         </td>
-                                        <td><bean:write name="row" property="categoryName"/></td>
+                                        <td>
+                                            <html:link action="poibycategory" paramId="id" paramName="row" paramProperty="categoryID">
+                                                <bean:write name="row" property="categoryName"/>
+                                            </html:link>
+                                        </td>
                                         <td><bean:write name="row" property="rating"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>

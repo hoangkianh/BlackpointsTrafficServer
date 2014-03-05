@@ -95,12 +95,16 @@
         <action input="/poilist.do" name="POIForm" path="/DeletePOIAction" scope="session" type="com.blackpoints.struts.action.DeletePOIAction" validate="false"/>
         <action input="/" name="POIForm" path="/city" scope="session" type="com.blackpoints.struts.action.GetAllPOIInCity" validate="false">
             <forward name="getAllPOIInCitySuccess" path="/admin/poi-in-city.jsp" />
-            <forward name="getAllPOIInCityFailure" path="/failure.do?f=8" />            
+            <forward name="getAllPOIInCityFailure" path="/failure.do?f=8" />        
         </action>
         <action input="/" name="POIForm" path="/district" scope="session" type="com.blackpoints.struts.action.GetAllPOIInDistrict" validate="false">
             <forward name="getAllPOIInDistrictSuccess" path="/admin/poi-in-district.jsp" />
-            <forward name="getAllPOIInDistrictFailure" path="/failure.do?f=8" />            
-        </action>        
+            <forward name="getAllPOIInDistrictFailure" path="/failure.do?f=8" />
+        </action>
+        <action input="/" name="POIForm" path="/poibycategory" scope="session" type="com.blackpoints.struts.action.GetAllPOIByCategory" validate="false">
+            <forward name="getAllPOIByCategorySuccess" path="/admin/poi-in-district.jsp" />
+            <forward name="getAllPOIByCategoryFailure" path="/failure.do?f=8" />            
+        </action>
         
         <!-- deleted poi list -->
         <action input="/" name="POIForm" path="/deletedlist" scope="session" type="com.blackpoints.struts.action.GetAllDeletedPOIsAction" validate="false">

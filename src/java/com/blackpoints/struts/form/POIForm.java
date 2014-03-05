@@ -313,6 +313,10 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     }
 
     public String getCategoryName() {
+        Category c = new CategoryDAO().getCategoryById(categoryID);
+        if (c != null) {
+            return c.getName();
+        }
         return categoryName;
     }
 
