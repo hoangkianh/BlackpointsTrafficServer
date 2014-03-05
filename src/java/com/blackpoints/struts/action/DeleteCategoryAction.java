@@ -5,7 +5,6 @@ import com.blackpoints.classes.User;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.dao.UserDAO;
 import com.blackpoints.struts.form.CategoryForm;
-import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.utils.CookieUtils;
 import com.blackpoints.utils.MD5Hashing;
 import java.io.File;

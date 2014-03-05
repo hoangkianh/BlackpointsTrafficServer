@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.poi.edit.upload" />" />
+                    <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.poi.edit.upload" />" />
                 </div>
             </html:form>
         </div>

@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.update.update" />" />
+                    <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.update.update" />" />
                 </div>
             </html:form>
         </div>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.delete.remove" />" />
+                    <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.useradmin.delete.remove" />" />
                 </div>
             </html:form>
         </div>

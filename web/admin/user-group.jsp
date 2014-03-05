@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.form.delete" />" />
+                        <input type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.usergroup.form.delete" />" />
                     </div>
                 </html:form>
             </div>

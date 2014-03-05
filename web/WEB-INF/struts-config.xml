@@ -109,7 +109,9 @@
             <forward name="getTempPOIDetailsSuccess" path="/admin/poi-save.jsp" />
             <forward name="getTempPOIDetailsFailure" path="/failure.do?f=8" />
         </action>
+        <action input="/fromuser.do" name="TempPOIForm" path="/DeleteTempPOIAction" scope="session" type="com.blackpoints.struts.action.DeleteTempPOIAction" validate="false"/>
         
+        <!-- category -->
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
         </action>
