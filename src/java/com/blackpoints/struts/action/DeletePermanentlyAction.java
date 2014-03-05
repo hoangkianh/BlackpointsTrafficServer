@@ -7,6 +7,7 @@ import com.blackpoints.dao.UserDAO;
 import com.blackpoints.struts.form.POIForm;
 import com.blackpoints.utils.CookieUtils;
 import com.blackpoints.utils.MD5Hashing;
+import java.io.File;
 import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -70,8 +71,14 @@ public class DeletePermanentlyAction extends org.apache.struts.action.Action {
                     kq = "passwordNotCorrect";
                 } else {
                     POI p = poiDAO.getPOIByID(poif.getId());
-                    if (!poiDAO.deletePermanentlyPOI(p)) {
+                    String filePath = getServlet().getServletContext().getRealPath("/") + p.getImage();
+                    File file = new File(filePath);
+                    if (!file.delete()) {
                         kq = "failure";
+                    } else {
+                        if (!poiDAO.deletePermanentlyPOI(p)) {
+                            kq = "failure";
+                        }
                     }
                 }
             }

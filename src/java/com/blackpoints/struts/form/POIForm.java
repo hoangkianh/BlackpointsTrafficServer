@@ -21,6 +21,7 @@ import org.apache.struts.upload.FormFile;
 public class POIForm extends org.apache.struts.action.ActionForm {
 
     private int id;
+    private int tempPOIId;
     private String name;
     private String address;
     private int city;
@@ -97,6 +98,14 @@ public class POIForm extends org.apache.struts.action.ActionForm {
             err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "200"));
         }
         return err;
+    }
+
+    public int getTempPOIId() {
+        return tempPOIId;
+    }
+
+    public void setTempPOIId(int tempPOIId) {
+        this.tempPOIId = tempPOIId;
     }
 
     public int getId() {
