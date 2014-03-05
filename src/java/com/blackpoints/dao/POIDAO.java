@@ -186,23 +186,23 @@ public class POIDAO implements Serializable {
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("UPDATE poi SET name=?, address=?, city=?, district=?, description=?"
-                    + ", image=?, geometry=?, categoryID=?, rating=?, bbox=?, geoJson=?"
+                    + ", image=?, geometry=GEOMFROMTEXT(?, 0), categoryID=?, rating=?, bbox=?, geoJson=?"
                     + ", isDeleted=?, updatedOnDate=NOW(), updatedByUserID=?"
                     + " WHERE id=?");
             stm.setString(1, p.getName());
             stm.setString(2, p.getAddress());
             stm.setInt(3, p.getCity());
             stm.setInt(4, p.getDistrict());
-            stm.setString(3, p.getDescription());
-            stm.setString(4, p.getImage());
-            stm.setString(5, p.getGeometry());
-            stm.setInt(6, p.getCategoryID());
-            stm.setInt(7, p.getRating());
-            stm.setString(8, p.getBbox());
-            stm.setString(9, p.getGeoJson());
-            stm.setBoolean(10, p.isDeleted());
-            stm.setInt(11, p.getUpdatedByUserID());
-            stm.setInt(12, p.getId());
+            stm.setString(5, p.getDescription());
+            stm.setString(6, p.getImage());
+            stm.setString(7, p.getGeometry());
+            stm.setInt(8, p.getCategoryID());
+            stm.setInt(9, p.getRating());
+            stm.setString(10, p.getBbox());
+            stm.setString(11, p.getGeoJson());
+            stm.setBoolean(12, p.isDeleted());
+            stm.setInt(13, p.getUpdatedByUserID());
+            stm.setInt(14, p.getId());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;

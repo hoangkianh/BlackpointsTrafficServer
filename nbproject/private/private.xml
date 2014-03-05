@@ -3,23 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-list.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-category-edit.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/GetCategoryDetailsAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/struts-config.xml</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/js/map.js</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/TempPOIForm.java</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-new.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/poi.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-edit.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/POIDAO.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/GetPOIDetailsAction.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/form/POIForm.java</file>
             <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/service/POIServices.java</file>
-=======
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/js/map.js</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/dao/POIDAO.java</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-new.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/AddNewPOIAction.java</file>
->>>>>>> origin/laptop
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/UpdateCategoryAction.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/UpdatePOIAction.java</file>
         </group>
     </open-files>
 </project-private>

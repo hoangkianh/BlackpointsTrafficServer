@@ -5,9 +5,6 @@ import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.struts.form.CategoryForm;
 import com.blackpoints.utils.FileWrapper;
 import java.io.File;
-import javax.activation.FileDataSource;
-import javax.activation.FileTypeMap;
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
@@ -49,11 +46,11 @@ public class GetCategoryDetailsAction extends org.apache.struts.action.Action {
             CategoryForm categoryForm = (CategoryForm) form;
             BeanUtils.copyProperties(categoryForm, c);
 
-            // get the servers upload directory real path name
+            // get file path
             String filePath = getServlet().getServletContext().getRealPath("/") + c.getImage();
             File file = new File(filePath);
             FormFile formFile = new FileWrapper(file);
-            categoryForm.setFile(formFile);            
+            categoryForm.setFile(formFile);
         } catch (Exception e) {
             return mapping.findForward("getCategoryDetailsFailure");
         }

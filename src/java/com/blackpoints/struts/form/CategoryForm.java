@@ -35,7 +35,6 @@ public class CategoryForm extends org.apache.struts.action.ActionForm {
         if (description.trim().length() > 100) {
             err.add("description", new ActionMessage("errors.maxlength", "Mô tả điểm đen", "100"));
         }
-        
         // validate file upload
         if (file == null || (file != null && file.getFileSize() == 0)) {
             err.add("file", new ActionMessage("errors.file.required"));

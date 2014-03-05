@@ -219,10 +219,6 @@
                             minlength: 4,
                             maxlength: 30
                         },
-                        file: {
-                            checkFileType: true,
-                            checkFileSize: true
-                        },
                         description: {
                             maxlength: 200
                         }

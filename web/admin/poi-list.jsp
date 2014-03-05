@@ -159,7 +159,11 @@
                                     <tr>
                                         <td class="center"><i title="<bean:message key="admin.poi.form.viewDetails" />" rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-angle-double-down"></i></td>
                                         <td class="center"><a class="view-in-map" href="#map-modal" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a></td>
-                                        <td class="center"><a href="#" id="<bean:write name="row" property="id"/> "><i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i></a></td>
+                                        <td class="center">
+                                            <html:link action="editpoi" paramId="id" paramName="row" paramProperty="id">
+                                                <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i>
+                                            </html:link>
+                                        </td>
                                         <td class="center delete"><a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a></td>
                                         <td><img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" /></td>
                                         <td><bean:write name="row" property="name"/></td>

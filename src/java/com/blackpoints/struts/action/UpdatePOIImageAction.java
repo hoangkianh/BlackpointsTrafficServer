@@ -1,8 +1,8 @@
 package com.blackpoints.struts.action;
 
-import com.blackpoints.classes.Category;
-import com.blackpoints.dao.CategoryDAO;
-import com.blackpoints.struts.form.CategoryForm;
+import com.blackpoints.classes.POI;
+import com.blackpoints.dao.POIDAO;
+import com.blackpoints.struts.form.POIForm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import org.apache.struts.upload.FormFile;
  *
  * @author HKA
  */
-public class UpdateCategoryImageAction extends org.apache.struts.action.Action {
+public class UpdatePOIImageAction extends org.apache.struts.action.Action {
 
     /**
      * This is the action called from the Struts framework.
@@ -33,19 +33,18 @@ public class UpdateCategoryImageAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        CategoryForm categoryForm = (CategoryForm) form;
-        Category category = new CategoryDAO().getCategoryById(categoryForm.getCategoryID());
+        POIForm poif = (POIForm) form;
+        POI poi = new POIDAO().getPOIByID(poif.getId());
         String kq = "failure";
 
-        if (category != null) {
-
-            FormFile newFile = categoryForm.getFile();
-            String oldFilePath = getServlet().getServletContext().getRealPath("/") + category.getImage();
+        if (poi != null) {
+            FormFile newFile = poif.getFile();
+            String oldFilePath = getServlet().getServletContext().getRealPath("/") + poi.getImage();
             File oldFile = new File(oldFilePath);
 
-            // upload file
+            // upload new file
             if (oldFile.exists()) {
-                // delete old file if exist
+                // delete old file
                 if (oldFile.delete()) {
                     FileOutputStream fos = new FileOutputStream(oldFile);
                     fos.write(newFile.getFileData());
@@ -55,10 +54,10 @@ public class UpdateCategoryImageAction extends org.apache.struts.action.Action {
                 }
             }
         }
+        
         PrintWriter out = response.getWriter();
         out.print(kq);
         out.flush();
-
         return null;
     }
 }

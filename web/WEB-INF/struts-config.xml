@@ -90,6 +90,12 @@
         </action>
         <action path="/newpoi" forward="/admin/poi-new.jsp"/>
         <action input="/" name="POIForm" path="/AddNewPOIAction" scope="request" type="com.blackpoints.struts.action.AddNewPOIAction"/>
+        <action input="/" name="POIForm" validate="false" path="/editpoi" scope="session" type="com.blackpoints.struts.action.GetPOIDetailsAction">
+            <forward name="getPOIDetailsSuccess" path="/admin/poi-edit.jsp" />
+            <forward name="getPOIDetailsFailure" path="/failure.do?f=8" />
+        </action>
+        <action input="/editpoi.do" name="POIForm" path="/UpdatePOIAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIAction"/>
+        <action input="/editpoi.do" name="POIForm" path="/UpdatePOIImageAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIImageAction" validate="false"/>
                 
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>
@@ -132,7 +138,7 @@
             <forward name="getAllUserInGroupFailure" path="/failure.do?f=9" />
         </action>
         <action input="/admin.do" name="UserForm" path="/RemoveAdminAction" scope="session" type="com.blackpoints.struts.action.RemoveAdminAction" validate="false"/>
-        <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAminAction" scope="session" type="com.blackpoints.struts.action.UpdateAminAction"/>
+        <action input="/admin.do" name="UserForm" validate="false" path="/UpdateAdminAction" scope="session" type="com.blackpoints.struts.action.UpdateAdminAction"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

@@ -75,7 +75,8 @@
                     <div class="span12 form-admin border-red">
                         <div class="span8 offset2">
                             <h3><bean:message key="admin.poi.new.caption" /></h3>
-                            <html:form styleId="newPOIForm" method="POST" action="/AddNewPOIAction" styleClass="form-horizontal my-form">
+                            <html:form styleId="newPOIForm" method="POST" action="/AddNewPOIAction"
+                                       styleClass="form-horizontal my-form" enctype="multipart/form-data">
                                 <div class="control-group">
                                     <label class="control-label" for="name">
                                         <bean:message key="admin.poi.form.name" />
@@ -244,9 +245,9 @@
                 function afterSuccess(data) {
                     setTimeout(function() {
                         if (data.trim() === "success") {
-                            $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="admin.category.new.success"/>' + '</p>');
+                            $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="admin.poi.new.success"/>' + '</p>');
                         } else {
-                            $('#loading').html('<p class="error">' + '<bean:message key="admin.category.new.failure"/>' + '</p>');
+                            $('#loading').html('<p class="error">' + '<bean:message key="admin.poi.new.failure"/>' + '</p>');
                         }
                     }, 2000);
                     setTimeout(function() {

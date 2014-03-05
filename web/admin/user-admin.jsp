@@ -68,7 +68,7 @@
     </head>
     <body>
         <div id="update-confirm" class="modal fade hide">
-            <html:form styleId="updateForm" method="POST" action="/UpdateAminAction" styleClass="form-horizontal my-form">
+            <html:form styleId="updateForm" method="POST" action="/UpdateAdminAction" styleClass="form-horizontal my-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3><bean:message key="admin.useradmin.update.h3" /></h3>
@@ -242,7 +242,7 @@
                 $('#updateForm').submit(function(event) {
                     $.ajax({
                         type: "POST",
-                        url: "UpdateAminAction.do",
+                        url: "UpdateAdminAction.do",
                         data: $("#updateForm").serialize(),
                         success: function(data) {
                             if ($("#messageDiv").length === 0) {
