@@ -96,6 +96,7 @@
         </action>
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIAction"/>
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIImageAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIImageAction" validate="false"/>
+        <action input="/poilist.do" name="POIForm" path="/DeletePOIAction" scope="session" type="com.blackpoints.struts.action.DeletePOIAction" validate="false"/>        
                 
         <action input="/" name="CategoryForm" validate="false" path="/category" scope="session" type="com.blackpoints.struts.action.GetAllCategoriesAction">
             <forward name="getAllCategoriesOK" path="/admin/poi-category.jsp"/>

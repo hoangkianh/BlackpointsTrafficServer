@@ -121,6 +121,38 @@
                 <div id="map-canvas" style="height: 400px;"></div>
             </div>
         </div>
+        <c:if test="${userStr[3] eq 1}">
+            <div id="delete-confirm" class="modal fade hide">
+                <html:form styleId="deleteForm" method="POST" action="/DeletePOIAction" styleClass="form-horizontal my-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3><bean:message key="admin.poi.delete.h3" /></h3>
+                    </div>
+                    <div class="modal-body">
+                        <html:hidden styleId="poiID" name="POIForm" property="id"/>
+                        <div class="alert alert-holder">
+                            <span><bean:message key="admin.poi.delete.warning" /></span>
+                        </div>
+                        <ul>
+                            <li><bean:message key="admin.poi.delete.warningMSG1" /></li>
+                            <li><bean:message key="admin.poi.delete.warningMSG2" /></li>
+                        </ul>
+                        <div class="control-group">
+                            <label class="control-label" for="password">
+                                <bean:message key="admin.poi.delete.password" />
+                                <span class="asterisk">*</span>
+                            </label>
+                            <div class="controls">
+                                <input type="password" id="password" name="password" placeholder="<bean:message key="admin.poi.delete.password" />"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="step4" type="submit" class="btn btn-primary pull-right" value="<bean:message key="admin.poi.form.delete" />" />
+                    </div>
+                </html:form>
+            </div>
+        </c:if>
         <section>
             <div class="container">
                 <div class="row-fluid">
@@ -158,13 +190,17 @@
                                 <logic:iterate id="row" name="POIForm" property="poiList">
                                     <tr>
                                         <td class="center"><i title="<bean:message key="admin.poi.form.viewDetails" />" rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-angle-double-down"></i></td>
-                                        <td class="center"><a class="view-in-map" href="#map-modal" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a></td>
+                                        <td class="center">
+                                            <a class="view-in-map" href="#map-modal" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-map-marker" title="<bean:message key="admin.poi.form.viewInMap"/>"></i></a>
+                                        </td>
                                         <td class="center">
                                             <html:link action="editpoi" paramId="id" paramName="row" paramProperty="id">
                                                 <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.poi.form.edit"/>"></i>
                                             </html:link>
                                         </td>
-                                        <td class="center delete"><a href="#" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a></td>
+                                        <td class="center delete">
+                                            <a href="#delete-confirm" class="delete" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a>
+                                        </td>
                                         <td><img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" /></td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="address"/></td>
@@ -197,7 +233,7 @@
 
                     var id = $(this).attr('id');
                     MapsLib.getPOIByID(id);
-                    
+
                     return false;
                 });
 
@@ -205,6 +241,58 @@
                     var currentCenter = map.getCenter();
                     google.maps.event.trigger(map, "resize");
                     map.setCenter(currentCenter);
+                });
+
+                $("a.delete").click(function() {
+                    // remove messageDiv
+                    $("#messageDiv").remove();
+                    // reset password input
+                    $("#password").val('');
+                    $('#delete-confirm').modal();
+
+                    var id = $(this).attr('id');
+                    $("#poiID").val(id);
+                    return false;
+                });
+
+                $("#deleteForm").submit(function(event) {
+                    $.ajax({
+                        type: "POST",
+                        url: "DeletePOIAction.do",
+                        data: $("#deleteForm").serialize(),
+                        success: function(data) {
+                            if ($("#messageDiv").length === 0) {
+                                $("#delete-confirm .modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            switch (data.trim())
+                            {
+                                case "success":
+                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                    $("#message").html('<bean:message key="admin.poi.delete.success"/>');
+                                    // redirect
+                                    setTimeout(function() {
+                                        window.location.href = "poilist.do";
+                                    }, 1000);
+                                    break;
+                                case "passwordNotCorrect":
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.delete.passwordNotCorrect"/>');
+                                    break;
+                                default:
+                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                    $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
+                                    break;
+                            }
+                        },
+                        error: function(e) {
+                            if ($("#messageDiv").length === 0) {
+                                $(".modal-header").append('<bean:message key="message.messageDiv"/>');
+                            }
+                            $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                            $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
+                        }
+                    });
+                    event.preventDefault();
                 });
             });
         </script>                                    

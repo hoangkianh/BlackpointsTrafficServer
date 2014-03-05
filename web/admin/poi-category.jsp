@@ -84,7 +84,7 @@
                             <li><bean:message key="admin.category.delete.warningMSG2" /></li>
                         </ul>
                         <div class="control-group">
-                            <label class="control-label" for="name">
+                            <label class="control-label" for="password">
                                 <bean:message key="admin.category.delete.password" />
                                 <span class="asterisk">*</span>
                             </label>
@@ -171,10 +171,6 @@
                                     setTimeout(function() {
                                         window.location.href = "category.do";
                                     }, 1000);
-                                    break;
-                                case "cannotDelete":
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.category.delete.cannotDelete"/>');
                                     break;
                                 case "passwordNotCorrect":
                                     $("#messageDiv").addClass("alert-error").removeClass("alert-success");

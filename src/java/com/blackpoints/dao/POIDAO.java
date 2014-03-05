@@ -221,10 +221,9 @@ public class POIDAO implements Serializable {
         PreparedStatement stm = null;
         try {
             stm = conn.prepareStatement("UPDATE poi SET isDeleted=True"
-                    + ", deletedOnDate=?, deletedByUserID=? WHERE id=?");
-            stm.setString(1, p.getDeletedOnDate());
-            stm.setInt(2, p.getDeletedByUserID());
-            stm.setInt(3, p.getId());
+                    + ", deletedOnDate=NOW(), deletedByUserID=? WHERE id=?");
+            stm.setInt(1, p.getDeletedByUserID());
+            stm.setInt(2, p.getId());
 
             if (stm.executeUpdate() > 0) {
                 kq = true;
