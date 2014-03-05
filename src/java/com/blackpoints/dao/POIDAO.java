@@ -339,6 +339,132 @@ public class POIDAO implements Serializable {
         }
         return list;
     }
+    
+    public List<POI> getAllPOIsInCity(int city) {
+        List<POI> list = new ArrayList<POI>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "SELECT id, name, address, city, district, description, image"
+                + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
+                + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
+                + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
+                + " FROM poi WHERE city=?";
+        try {
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, city);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                POI p = new POI();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCity(rs.getInt("city"));
+                p.setDistrict(rs.getInt("district"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setGeometry(rs.getString("geometry"));
+                p.setCategoryID(rs.getInt("categoryID"));
+                p.setRating(rs.getInt("rating"));
+                p.setBbox(rs.getString("bbox"));
+                p.setGeoJson(rs.getString("geoJson"));
+                p.setDeleted(rs.getBoolean("isDeleted"));
+                p.setCreatedByUserID(rs.getInt("createdByUserID"));
+                p.setUpdatedByUserID(rs.getInt("updatedByUserID"));
+                p.setDeletedByUserID(rs.getInt("deletedByUserID"));
+                p.setRestoreByUserID(rs.getInt("restoreByUserID"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
+                Timestamp restoreDateTimeStamp = rs.getTimestamp("restoreOnDate");
+                if (lastLoginTimeStamp != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(lastLoginTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
+                }
+                if (deletedDateTimeStamp != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateTimeStamp.getTime())));
+                }
+                if (restoreDateTimeStamp != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateTimeStamp.getTime())));
+                }
+
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
+    }
+    
+    public List<POI> getAllPOIsInDistrict(int district) {
+        List<POI> list = new ArrayList<POI>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "SELECT id, name, address, city, district, description, image"
+                + ", AsText(geometry) AS geometry, categoryID, rating, bbox, geoJson"
+                + ", createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
+                + ", isDeleted, deletedOnDate, deletedByUserID, restoreOnDate, restoreByUserID"
+                + " FROM poi WHERE district=?";
+        try {
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, district);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                POI p = new POI();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setAddress(rs.getString("address"));
+                p.setCity(rs.getInt("city"));
+                p.setDistrict(rs.getInt("district"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setGeometry(rs.getString("geometry"));
+                p.setCategoryID(rs.getInt("categoryID"));
+                p.setRating(rs.getInt("rating"));
+                p.setBbox(rs.getString("bbox"));
+                p.setGeoJson(rs.getString("geoJson"));
+                p.setDeleted(rs.getBoolean("isDeleted"));
+                p.setCreatedByUserID(rs.getInt("createdByUserID"));
+                p.setUpdatedByUserID(rs.getInt("updatedByUserID"));
+                p.setDeletedByUserID(rs.getInt("deletedByUserID"));
+                p.setRestoreByUserID(rs.getInt("restoreByUserID"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp lastLoginTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedDateTimeStamp = rs.getTimestamp("updatedOnDate");
+                Timestamp deletedDateTimeStamp = rs.getTimestamp("deletedOnDate");
+                Timestamp restoreDateTimeStamp = rs.getTimestamp("restoreOnDate");
+                if (lastLoginTimeStamp != null) {
+                    p.setCreatedOnDate(sdf.format(new Date(lastLoginTimeStamp.getTime())));
+                }
+                if (updatedDateTimeStamp != null) {
+                    p.setUpdatedOnDate(sdf.format(new Date(updatedDateTimeStamp.getTime())));
+                }
+                if (deletedDateTimeStamp != null) {
+                    p.setDeletedOnDate(sdf.format(new Date(deletedDateTimeStamp.getTime())));
+                }
+                if (restoreDateTimeStamp != null) {
+                    p.setRestoreOnDate(sdf.format(new Date(restoreDateTimeStamp.getTime())));
+                }
+
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
+    }
 
     public int countPOI(boolean isDeleted) {
         int count = 0;

@@ -289,6 +289,10 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     }
 
     public String getCityName() {
+        City c = new CityDAO().getCityByID(city);
+        if (c != null) {
+            return c.getName();
+        }
         return cityName;
     }
 
@@ -297,6 +301,10 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     }
 
     public String getDistrictName() {
+        District d = new DistrictDAO().getDistrictByID(district);
+        if (d != null) {
+            return d.getName();
+        }
         return districtName;
     }
 
