@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message  key="detail.title"/> | <bean:message key="welcome.title"/></title>
+        <title><bean:write name="POIForm" property="cityName"/> | <bean:message key="welcome.title"/></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -24,11 +24,17 @@
             $(function() {
                 $("a[rel^='fancybox']").fancybox();
                 MapsLib.initialize();
-                MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
+                MapsLib.getPOIInCity(<bean:write name="POIForm" property="city"/>, '<bean:write name="POIForm" property="cityName"/>');
 
                 $('body').removeClass('noscript');
                 $('.disable').remove();
-                $("#tabs").tabs();
+                $('#tabs').tabs();
+
+                $('#city').change(function() {
+                    var city = $(this).val();
+                    var cityName = '"' + $(this).find(":selected").text() + '"';
+                    MapsLib.getPOIInCity(city, cityName);
+                });
             });
         </script>
     </head>
@@ -42,17 +48,13 @@
             <div class="container">
                 <div class="row">
                     <div class="info-box span12">
-                        <ul class="breadcrumb">
-                            <li class="active">
-                                Toàn quốc
-                                <span class="divider">/</span>
-                            </li>
-                            <li class="active"><bean:write name="POIForm" property="cityName"/></li>
-                        </ul>
-                        <a href="poi.do" target="_blank" class="btn btn-primary" title="Thêm điểm đen mới" style="position: absolute; top: 15px; right: 0; width: auto;"><bean:message key="detail.addnewPOI" /></a>
+                        <html:select style="margin:10px;" name="POIForm" property="city" styleId="city">
+                            <html:optionsCollection name="POIForm" property="cityList" label="name" value="id"/>
+                        </html:select>
+                        <a href="poi.do" target="_blank" class="btn btn-primary" title="Thêm điểm đen mới" style="width: auto;"><bean:message key="detail.addnewPOI" /></a>
                     </div>
                     <div class="span12">
-                        <div id="map-canvas" style="height: 500px;"></div>
+                        <div id="map-canvas" style="height: 550px;"></div>
                     </div>
                 </div>
             </div>

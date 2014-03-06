@@ -44,7 +44,7 @@
                     <div class="info-box span12">
                         <ul class="breadcrumb">
                             <li>
-                                <html:link action="poi-in-city" paramId="id" paramName="POIForm" paramProperty="id">
+                                <html:link action="poi-in-city" paramId="id" paramName="POIForm" paramProperty="city">
                                     <bean:write name="POIForm" property="cityName"/>
                                 </html:link>
                                 <span class="divider">/</span>

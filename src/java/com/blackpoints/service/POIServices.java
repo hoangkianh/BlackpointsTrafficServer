@@ -96,6 +96,19 @@ public class POIServices {
     }
 
     @GET
+    @Path("getPOIInCity/{city}")
+    @Produces("application/json; charset=UTF-8")
+    public String getPOIInCity(@PathParam("city") int city) {
+        List<POI> list = new POIDAO().getAllPOIsInCity(city);
+        CategoryDAO categoryDAO = new CategoryDAO();
+        for (POI poi : list) {
+            poi.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
+        }
+        return new Gson().toJson(list);
+    }
+    
+    
+    @GET
     @Path("getPOIInDistrict/{district}/{city}")
     @Produces("application/json; charset=UTF-8")
     public String getPOIInDistrict(@PathParam("district") String district, @PathParam("city") String city) {

@@ -153,6 +153,25 @@ var MapsLib = {
             }
         });
     },
+    getPOIInCity: function(city, cityName) {
+        $.ajax({
+            type: "GET",
+            url: "service/POI/getPOIInCity/" + city,
+            dataType: "json",
+            success: function(json) {
+                $.each(json, function(idx, obj) {
+                    MapsLib.drawPOI(obj);
+                    MapsLib.appendPOIToDiv(idx, obj);
+                });
+                geocoder.geocode({'address': cityName}, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        var cityLocation = results[0].geometry.location;
+                        map.panTo(cityLocation);
+                    }
+                });
+            }
+        });
+    },
     getPOIInDistrict: function(district, city) {
         $.ajax({
             type: "GET",
