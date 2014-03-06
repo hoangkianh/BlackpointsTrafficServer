@@ -12,14 +12,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
+        <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css"/>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=vi"></script>
         <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble-compiled.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
+        <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
         <script type="text/javascript">
             $(function() {
+                $("a[rel^='fancybox']").fancybox();
                 MapsLib.initialize();
                 MapsLib.getPOIByID(<bean:write name="POIForm" property="id" />);
 
@@ -47,7 +50,9 @@
                     </div>
                     <div class="poi-details span12">
                         <div class="main-image">
-                            <img alt="<bean:write name="POIForm" property="name" />" src="<bean:write name="POIForm" property="image" />" width="220" height="280" />
+                            <a rel="fancybox" href="<bean:write name="POIForm" property="image" />" title="<bean:write name="POIForm" property="name" />">
+                                <img alt="<bean:write name="POIForm" property="name" />" src="<bean:write name="POIForm" property="image" />" width="220" height="280" />
+                            </a>
                         </div>
                         <div class="info-wrapper span9">
                             <div class="main-info span4">

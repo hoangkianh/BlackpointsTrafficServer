@@ -199,7 +199,7 @@ var MapsLib = {
     drawPOI: function(obj) {
         var infoContent = "<div class='content'>";
         infoContent += "<img src='" + obj.image + "' height='100' width='100' />";
-        infoContent += "<h2>" + obj.name + "</h2>";
+        infoContent += "<h2><a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>" + obj.name + "</a></h2>";
         infoContent += "<ul><li><b>Địa chỉ: </b>" + obj.address + "</li>";
         if (obj.description !== undefined) {
             infoContent += "<li><b>Mô tả: </b>" + obj.description + "</li>";
@@ -381,12 +381,12 @@ var MapsLib = {
         liToAppend += "<li onclick='MapsLib.openInfoWindow(" + idx + ");'>";
         liToAppend += "<div class='item-img'>";
         liToAppend += "<a href='javascript:void(0)' onclick='MapsLib.openInfoWindow(" + idx + ")' title='" + obj.name + "'>";
-        liToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "' />";
+        liToAppend += "<a rel='fancybox' href='" + obj.image + "' title='" + obj.name + "'><img alt='" + obj.name + "' src='" + obj.image + "' /></a>";
         liToAppend += "</a>";
         liToAppend += "</div>";
         liToAppend += "<div class='item-content'>";
         liToAppend += "<div class='item-name'>";
-        liToAppend += "<a href='javascript:void(0)' onclick='MapsLib.openInfoWindow(" + idx + ")' title='" + obj.name + "'>";
+        liToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
         liToAppend += obj.name;
         liToAppend += "</a>";
         liToAppend += "</div>";
@@ -410,7 +410,7 @@ var MapsLib = {
                 divToAppend += "<div class='district-item'>";
                 divToAppend += "<div class='district-image'>";
                 divToAppend += "<a href='details.do?id=" + obj.id + "' title='" + obj.name + "'>";
-                divToAppend += "<img alt='" + obj.name + "' src='" + obj.image + "'/>";
+                divToAppend += "<a rel='fancybox' href='" + obj.image + "' title='" + obj.name + "'><img alt='" + obj.name + "' src='" + obj.image + "'/></a>";
                 divToAppend += "</a>";
                 divToAppend += "</div>";
                 divToAppend += "<div class='district-info'>";

@@ -38,7 +38,9 @@
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
+        <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
         <script type="text/javascript">
+            $("a[rel^='fancybox']").fancybox();
             var oTable;
 
             /* Formating function for row details */
@@ -231,13 +233,28 @@
                                         <td class="center delete">
                                             <a href="#delete-confirm" class="delete" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.deletePermanently" />"></i></a>
                                         </td>
-                                        <td><img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" /></td>
+                                        <td>
+                                            <a rel="fancybox" href="<bean:write name="row" property="image" />" title="<bean:write name="row" property="name" />">
+                                                <img width="200" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>" />
+                                            </a>
+                                        </td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><bean:write name="row" property="address"/></td>
-                                        <td><bean:write name="row" property="cityName"/></td>
-                                        <td><bean:write name="row" property="districtName"/></td>
-                                        <td><bean:write name="row" property="categoryName"/></td>
-                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td>
+                                            <html:link action="city" paramId="id" paramName="row" paramProperty="city">
+                                                <bean:write name="row" property="cityName"/>
+                                            </html:link>
+                                        </td>
+                                        <td>
+                                            <html:link action="district" paramId="id" paramName="row" paramProperty="district">
+                                                <bean:write name="row" property="districtName"/>
+                                            </html:link>
+                                        </td>
+                                        <td>
+                                            <html:link action="poibycategory" paramId="id" paramName="row" paramProperty="categoryID">
+                                                <bean:write name="row" property="categoryName"/>
+                                            </html:link>
+                                        </td><td><bean:write name="row" property="rating"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>
                                         <td><bean:write name="row" property="updatedOnDate"/></td>

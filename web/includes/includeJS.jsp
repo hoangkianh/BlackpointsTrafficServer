@@ -8,3 +8,4 @@
 <script type="text/javascript" src="js/infobubble.min.js"></script>
 <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>

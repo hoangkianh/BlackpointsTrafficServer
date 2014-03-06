@@ -16,6 +16,7 @@
         <%@include file="../includes/includeJS.jsp" %>
         <script type="text/javascript">
             $(function() {
+                $("a[rel^='fancybox']").fancybox();
                 $('body').removeClass('noscript');
                 $('.disable').remove();
                 $("#tabs").tabs();
