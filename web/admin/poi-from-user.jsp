@@ -154,7 +154,7 @@
                                         <td><bean:write name="row" property="cityName"/></td>
                                         <td><bean:write name="row" property="districtName"/></td>
                                         <td><bean:write name="row" property="categoryName"/></td>
-                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="rating"/> - <bean:write name="row" property="ratingName"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>
                                         <td><bean:write name="row" property="description"/></td>

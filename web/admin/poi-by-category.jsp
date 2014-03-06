@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:message key="admin.title.poilist" /></title>
+        <title><bean:write name="POIForm" property="categoryName"/> | <bean:message key="admin.title.poilist" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -163,7 +163,7 @@
                         <i class="fa fa-times"></i> <a href="deletedlist.do" class="other-link"><bean:message key="admin.poi.list.deleteBtn"/></a> |
                         <i class="fa fa-user"></i> <a href="fromuser.do" class="other-link"><bean:message key="admin.poi.list.fromUserBtn"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption><bean:message key="admin.poi.list.caption"/></caption>
+                            <caption><bean:write name="POIForm" property="categoryName"/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
@@ -225,7 +225,7 @@
                                                 <bean:write name="row" property="categoryName"/>
                                             </html:link>
                                         </td>
-                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="rating"/> - <bean:write name="row" property="ratingName"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>
                                         <td><bean:write name="row" property="updatedOnDate"/></td>

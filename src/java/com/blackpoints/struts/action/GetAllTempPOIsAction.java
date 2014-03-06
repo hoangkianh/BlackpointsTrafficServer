@@ -4,11 +4,15 @@ import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.struts.form.TempPOIForm;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -32,6 +36,12 @@ public class GetAllTempPOIsAction extends org.apache.struts.action.Action {
         TempPOIForm tempPOIForm = (TempPOIForm) form;
         List<TempPOI> list = new TempPOIDAO().getAllTempPOIs();
         tempPOIForm.setTempPOIList(list);
+        HttpSession session = request.getSession(true);
+        MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
+        Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
+        for (TempPOI tempPOI : list) {
+            tempPOI.setRatingName(mr.getMessage(locale, "poi.rating." + tempPOI.getRating()));
+        }
         return mapping.findForward("getAllTempPOIsOK");
     }
 }

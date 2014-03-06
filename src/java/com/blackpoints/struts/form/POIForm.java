@@ -42,9 +42,9 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int deletedByUserID;
     private String restoreOnDate;
     private int restoreByUserID;
-    private String cityName;
-    private String districtName;
-    private String categoryName;
+//    private String cityName;
+//    private String districtName;
+//    private String categoryName;
     private String ratingName;
     private FormFile file;
     private double longitude;
@@ -293,11 +293,7 @@ public class POIForm extends org.apache.struts.action.ActionForm {
         if (c != null) {
             return c.getName();
         }
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+        return "";
     }
 
     public String getDistrictName() {
@@ -305,25 +301,17 @@ public class POIForm extends org.apache.struts.action.ActionForm {
         if (d != null) {
             return d.getName();
         }
-        return districtName;
+        return "";
     }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
+    
     public String getCategoryName() {
         Category c = new CategoryDAO().getCategoryById(categoryID);
         if (c != null) {
             return c.getName();
         }
-        return categoryName;
+        return "";
     }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
+    
     public void setRatingName(String ratingName) {
         this.ratingName = ratingName;
     }

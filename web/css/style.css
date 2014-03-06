@@ -1137,7 +1137,7 @@ legend {
     font-weight: 700;
     float: left;
     padding: 5px 0 2px 0;
-    font-size: 19px;
+    font-size: 18px;
 }
 .main-info-title h3 {
     color: #888;
@@ -1311,6 +1311,10 @@ legend {
     height: 300px;
 }
 /*table style */
+.table {
+    font-size: 14px;
+}
+
 .table-list, .form-admin {
     margin-top: 15px;
     padding: 15px;

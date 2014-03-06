@@ -44,7 +44,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+<!--                            <li class="dropdown">
                                 <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                                     <bean:message key="navbar.admin.other" />
                                     <b class="caret"></b>
@@ -54,7 +54,7 @@
                                         <a href="#"><bean:message key="navbar.admin.other.service" /></a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li><a href="dashboard.do" title="<bean:message key="navbar.admin.backToDashBoard"/>">&leftarrow;<bean:message key="navbar.admin.backToDashBoard"/></a></li>
                         </ul>
                     </div>

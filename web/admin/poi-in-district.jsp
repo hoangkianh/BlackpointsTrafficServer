@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><bean:write name="POIForm" property="categoryName"/> | <bean:message key="admin.title.poilist" /></title>
+        <title><bean:write name="POIForm" property="districtName"/> | <bean:message key="admin.title.poilist" /></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="../includes/includeCSS.jsp" %>
@@ -161,7 +161,7 @@
                     <div class="span12 table-list border-red">
                         <i class="fa fa-list"></i> <a href="poilist.do" class="other-link"><bean:message key="admin.poi.list.caption"/></a>
                         <table id="myTable" class="table table-striped table-bordered table-hover table-condensed">
-                            <caption><bean:write name="POIForm" property="categoryName"/></caption>
+                            <caption><bean:message key="admin.poi.list.city.caption"/> <bean:write name="POIForm" property="districtName"/> - <bean:write name="POIForm" property="cityName"/></caption>
                             <thead>
                                 <tr>
                                     <th class="sorting_disabled"></th>
@@ -223,7 +223,7 @@
                                                 <bean:write name="row" property="categoryName"/>
                                             </html:link>
                                         </td>
-                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="rating"/> - <bean:write name="row" property="ratingName"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>
                                         <td><bean:write name="row" property="updatedOnDate"/></td>

@@ -64,9 +64,6 @@ public class GetPOIDetailsAction extends org.apache.struts.action.Action {
             
             poiForm.setLongitude(location.getLng());
             poiForm.setLatitude(location.getLat());
-            poiForm.setCityName((new CityDAO().getCityByID(poiForm.getCity())).getName());
-            poiForm.setDistrictName((new DistrictDAO().getDistrictByID(poiForm.getDistrict())).getName());
-            poiForm.setCategoryName((new CategoryDAO().getCategoryById(poiForm.getCategoryID()).getName()));
 
             // set file path
             String filePath = getServlet().getServletContext().getRealPath("/") + poi.getImage();

@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/admin/poi-in-city.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/GetAllPOIInCityAction.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/poi-in-city.jsp</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/WEB-INF/struts-config.xml</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/js/map.js</file>
+        </group>
     </open-files>
 </project-private>

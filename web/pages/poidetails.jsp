@@ -43,7 +43,12 @@
                 <div class="row">
                     <div class="info-box span12">
                         <ul class="breadcrumb">
-                            <li><a href="#"><bean:write name="POIForm" property="cityName"/></a><span class="divider">/</span></li>
+                            <li>
+                                <html:link action="poi-in-city" paramId="id" paramName="POIForm" paramProperty="id">
+                                    <bean:write name="POIForm" property="cityName"/>
+                                </html:link>
+                                <span class="divider">/</span>
+                            </li>
                             <li class="active"><bean:write name="POIForm" property="districtName"/></li>
                         </ul>
                         <a href="poi.do" target="_blank" class="btn btn-primary" title="Thêm điểm đen mới" style="position: absolute; top: 15px; right: 0; width: auto;"><bean:message key="detail.addnewPOI" /></a>

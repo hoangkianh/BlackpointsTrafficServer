@@ -20,6 +20,7 @@ public class TempPOI implements Serializable {
     private String description;
     private int categoryID;
     private int rating;
+    private String ratingName;
     private String createdOnDate;
     private int createdByUserID;
     private String updatedOnDate;
@@ -159,5 +160,13 @@ public class TempPOI implements Serializable {
             return u.getUserName();
         }
         return "";
+    }
+
+    public String getRatingName() {
+        return ratingName;
+    }
+
+    public void setRatingName(String ratingName) {
+        this.ratingName = ratingName;
     }
 }

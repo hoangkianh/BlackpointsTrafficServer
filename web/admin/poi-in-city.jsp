@@ -222,7 +222,7 @@
                                                 <bean:write name="row" property="categoryName"/>
                                             </html:link>
                                         </td>
-                                        <td><bean:write name="row" property="rating"/></td>
+                                        <td><bean:write name="row" property="rating"/> - <bean:write name="row" property="ratingName"/></td>
                                         <td><bean:write name="row" property="createdOnDate"/></td>
                                         <td><bean:write name="row" property="createdByUserName"/></td>
                                         <td><bean:write name="row" property="updatedOnDate"/></td>

@@ -29,6 +29,7 @@
 
     <action-mappings>
         <action input="/" name="POIPropertyForm" path="/GetAllPOIPropertiesAction" scope="session" type="com.blackpoints.struts.action.GetAllPOIPropertiesAction"/>
+        <!-- front end -->
         <action input="/" name="LoginForm" path="/LoginAction" scope="session" type="com.blackpoints.struts.action.LoginAction">
             <forward name="normalUser_loginSuccess" path="/" redirect="true" />
             <forward name="admin_loginSuccess" path="/dashboard.do" redirect="true" />
@@ -64,6 +65,10 @@
             <forward name="getPOIDetailsSuccess" path="/pages/poidetails.jsp" />
             <forward name="getPOIDetailsFailure" path="/failure.do?f=7" />
         </action>
+        <action input="/" name="POIForm" path="/poi-in-city" scope="session" type="com.blackpoints.struts.action.GetAllPOIInCityAction" validate="false">
+            <forward name="getAllPOIInCitySuccess" path="/pages/poi-in-city.jsp" />
+            <forward name="getAllPOIInCityFailure" path="/failure.do?f=8" />        
+        </action>
         <action input="/" name="UserForm" path="/updateinfo" scope="request" type="com.blackpoints.struts.action.GetUserDetailsAction" validate="false">
             <forward name="getUserDetailsSuccess" path="/pages/userdetails.jsp" />
             <forward name="getUserDetailsFailure" path="/failure.do?f=6" />
@@ -93,16 +98,16 @@
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIAction"/>
         <action input="/editpoi.do" name="POIForm" path="/UpdatePOIImageAction" scope="session" type="com.blackpoints.struts.action.UpdatePOIImageAction" validate="false"/>
         <action input="/poilist.do" name="POIForm" path="/DeletePOIAction" scope="session" type="com.blackpoints.struts.action.DeletePOIAction" validate="false"/>
-        <action input="/" name="POIForm" path="/city" scope="session" type="com.blackpoints.struts.action.GetAllPOIInCity" validate="false">
+        <action input="/" name="POIForm" path="/city" scope="session" type="com.blackpoints.struts.action.GetAllPOIInCityAction" validate="false">
             <forward name="getAllPOIInCitySuccess" path="/admin/poi-in-city.jsp" />
             <forward name="getAllPOIInCityFailure" path="/failure.do?f=8" />        
         </action>
-        <action input="/" name="POIForm" path="/district" scope="session" type="com.blackpoints.struts.action.GetAllPOIInDistrict" validate="false">
+        <action input="/" name="POIForm" path="/district" scope="session" type="com.blackpoints.struts.action.GetAllPOIInDistrictAction" validate="false">
             <forward name="getAllPOIInDistrictSuccess" path="/admin/poi-in-district.jsp" />
             <forward name="getAllPOIInDistrictFailure" path="/failure.do?f=8" />
         </action>
-        <action input="/" name="POIForm" path="/poibycategory" scope="session" type="com.blackpoints.struts.action.GetAllPOIByCategory" validate="false">
-            <forward name="getAllPOIByCategorySuccess" path="/admin/poi-in-district.jsp" />
+        <action input="/" name="POIForm" path="/poibycategory" scope="session" type="com.blackpoints.struts.action.GetAllPOIByCategoryAction" validate="false">
+            <forward name="getAllPOIByCategorySuccess" path="/admin/poi-by-category.jsp" />
             <forward name="getAllPOIByCategoryFailure" path="/failure.do?f=8" />            
         </action>
         
