@@ -17,7 +17,7 @@
                     <html:link action="/home"><bean:message key="navbar.webLogo"/></html:link>
                     </h1>
                     <nav class="pull-right nav-collapse collapse">
-                        <ul id="menu-main" class="nav">                                
+                        <ul id="menu-main" class="nav">
                             <li>
                             <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
                             </li>
@@ -42,6 +42,11 @@
                                             </c:otherwise>
                                         </c:choose>
                                         ${userStr[2]}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="my-poi.do">
+                                        <bean:message key="navbar.mypoi"/>
                                     </a>
                                 </li>
                                 <c:if test="${userStr[3] ne 3}">

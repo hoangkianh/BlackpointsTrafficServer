@@ -144,7 +144,7 @@
                     rules: {
                         name: {
                             required: true,
-                            minlength: 10,
+                            minlength: 4,
                             maxlength: 100
                         },
                         address: {
@@ -162,7 +162,7 @@
                     messages: {
                         name: {
                             required: "<bean:message key="errors.required" arg0="Tên" />",
-                            minlength: "<bean:message key="errors.minlength" arg0="Tên điểm đen" arg1="10" />",
+                            minlength: "<bean:message key="errors.minlength" arg0="Tên điểm đen" arg1="4" />",
                             maxlength: "<bean:message key="errors.maxlength" arg0="Tên điểm đen" arg1="100" />"
                         },
                         address: {

@@ -32,8 +32,7 @@
 
                 $('#city').change(function() {
                     var city = $(this).val();
-                    var cityName = '"' + $(this).find(":selected").text() + '"';
-                    MapsLib.getPOIInCity(city, cityName);
+                    window.location.href = "poi-in-city.do?id=" + city;
                 });
             });
         </script>

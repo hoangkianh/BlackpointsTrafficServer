@@ -39,8 +39,8 @@ public class TempPOIForm extends org.apache.struts.action.ActionForm {
         if (name == null || name.trim().length() == 0) {
             err.add("name", new ActionMessage("errors.required", "Tên điểm đen"));
         } else {
-            if (name.trim().length() < 10 || name.trim().length() > 100) {
-                err.add("name", new ActionMessage("errors.range", "Tên điểm đen có độ dài", "10", "100", "kí tự"));
+            if (name.trim().length() < 4 || name.trim().length() > 100) {
+                err.add("name", new ActionMessage("errors.range", "Tên điểm đen có độ dài", "4", "100", "kí tự"));
             }
         }
         if (address == null || address.trim().length() == 0) {

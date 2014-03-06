@@ -69,6 +69,10 @@
             <forward name="getAllPOIInCitySuccess" path="/pages/poi-in-city.jsp" />
             <forward name="getAllPOIInCityFailure" path="/failure.do?f=8" />        
         </action>
+        <action input="/" name="TempPOIForm" path="/my-poi" scope="session" type="com.blackpoints.struts.action.GetPOIByUser" validate="false">
+            <forward name="getPOIByUserSuccess" path="/pages/poi-by-user.jsp" />
+            <forward name="getPOIByUserFailure" path="/failure.do?f=8" />            
+        </action>
         <action input="/" name="UserForm" path="/updateinfo" scope="request" type="com.blackpoints.struts.action.GetUserDetailsAction" validate="false">
             <forward name="getUserDetailsSuccess" path="/pages/userdetails.jsp" />
             <forward name="getUserDetailsFailure" path="/failure.do?f=6" />

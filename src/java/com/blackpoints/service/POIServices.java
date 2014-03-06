@@ -4,10 +4,12 @@ import com.blackpoints.classes.City;
 import com.blackpoints.classes.District;
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
+import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.CategoryDAO;
 import com.blackpoints.dao.CityDAO;
 import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.POIDAO;
+import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.utils.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -95,6 +97,14 @@ public class POIServices {
         return new Gson().toJson(inRadiusList);
     }
 
+    @GET
+    @Path("getPOIByUser/{userID}")
+    @Produces("application/json; charset=UTF-8")
+    public String getPOIByUser(@PathParam("userID") int userID) {
+        List<TempPOI> list = new TempPOIDAO().getTempPOIByUserID(userID);
+        return new Gson().toJson(list);
+    }
+    
     @GET
     @Path("getPOIInCity/{city}")
     @Produces("application/json; charset=UTF-8")

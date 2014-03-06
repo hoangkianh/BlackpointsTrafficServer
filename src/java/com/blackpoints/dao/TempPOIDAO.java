@@ -51,7 +51,7 @@ public class TempPOIDAO implements Serializable {
                 if (updatedTimeStamp != null) {
                     tp.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
                 }
-                
+
                 list.add(tp);
             }
         } catch (SQLException ex) {
@@ -103,6 +103,51 @@ public class TempPOIDAO implements Serializable {
             DBUtil.closeAll(conn, stm, rs);
         }
         return tp;
+    }
+
+    public List<TempPOI> getTempPOIByUserID(int userID) {
+        List<TempPOI> list = new ArrayList<TempPOI>();
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.prepareStatement("SELECT id, name, address, city, district, description"
+                    + ", categoryID, rating, createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
+                    + " FROM tempPoi WHERE createdByUserID=?");
+            stm.setInt(1, userID);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                TempPOI tp = new TempPOI();
+                tp.setId(rs.getInt("id"));
+                tp.setName(rs.getString("name"));
+                tp.setAddress(rs.getString("address"));
+                tp.setCity(rs.getInt("city"));
+                tp.setDistrict(rs.getInt("district"));
+                tp.setDescription(rs.getString("description"));
+                tp.setCategoryID(rs.getInt("categoryID"));
+                tp.setRating(rs.getInt("rating"));
+                tp.setCreatedByUserID(rs.getInt("createdByUserID"));
+                tp.setUpdatedByUserID(rs.getInt("updatedByUserID"));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Timestamp createdTimeStamp = rs.getTimestamp("createdOnDate");
+                Timestamp updatedTimeStamp = rs.getTimestamp("updatedOnDate");
+                if (createdTimeStamp != null) {
+                    tp.setCreatedOnDate(sdf.format(new Date(createdTimeStamp.getTime())));
+                }
+                if (updatedTimeStamp != null) {
+                    tp.setUpdatedOnDate(sdf.format(new Date(updatedTimeStamp.getTime())));
+                }
+
+                list.add(tp);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getErrorCode() + ": " + ex.getSQLState() + ": " + ex.getMessage());
+        } finally {
+            DBUtil.closeAll(conn, stm, rs);
+        }
+        return list;
     }
 
     public boolean addNewTempPOI(TempPOI tp) {
@@ -180,7 +225,7 @@ public class TempPOIDAO implements Serializable {
         }
         return kq;
     }
-    
+
     public int countTempPOI() {
         int count = 0;
         Connection conn = DBUtil.getConnection();
@@ -199,7 +244,7 @@ public class TempPOIDAO implements Serializable {
         }
         return count;
     }
-    
+
     public int countNewTempPOI() {
         int count = 0;
         Connection conn = DBUtil.getConnection();
