@@ -25,7 +25,7 @@ public class UserGroupDAO implements Serializable {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM userGroup");
+            stm = conn.prepareStatement("SELECT * FROM usergroup");
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -62,7 +62,7 @@ public class UserGroupDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM userGroup ";
+        String query = "SELECT * FROM usergroup ";
         query += getNormalUserGroup ? "WHERE level=3" :  "WHERE level=1 OR level=2";
         try {
             stm = conn.prepareStatement(query);
@@ -103,7 +103,7 @@ public class UserGroupDAO implements Serializable {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM userGroup WHERE userGroupID=?");
+            stm = conn.prepareStatement("SELECT * FROM usergroup WHERE userGroupID=?");
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -139,7 +139,7 @@ public class UserGroupDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO userGroup (name, level, description, createdOnDate, createdByUserID)"
+            stm = conn.prepareStatement("INSERT INTO usergroup (name, level, description, createdOnDate, createdByUserID)"
                     + " VALUES(?, ?, ?, NOW(), ?)");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
@@ -162,7 +162,7 @@ public class UserGroupDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE userGroup SET name=?, level=?, description=?"
+            stm = conn.prepareStatement("UPDATE usergroup SET name=?, level=?, description=?"
                     + ", updatedByUserID=?, updatedOnDate=NOW() WHERE userGroupID=?");
             stm.setString(1, ug.getName());
             stm.setInt(2, ug.getLevel());
@@ -186,7 +186,7 @@ public class UserGroupDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("DELETE FROM userGroup WHERE userGroupID=?");
+            stm = conn.prepareStatement("DELETE FROM usergroup WHERE userGroupID=?");
             stm.setInt(1, id);
 
             if (stm.executeUpdate() > 0) {
