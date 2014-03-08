@@ -5,6 +5,7 @@ import com.blackpoints.dao.CityDAO;
 import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.UserDAO;
 import java.io.Serializable;
+import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -269,11 +270,11 @@ public class POI implements Serializable {
     }
 
     public String getRatingName() {
-        return ratingName;
-    }
+        MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
+        return mr.getMessage("poi.rating." + rating);
+    }    
 
     public void setRatingName(String ratingName) {
         this.ratingName = ratingName;
-    }
-    
+    }    
 }

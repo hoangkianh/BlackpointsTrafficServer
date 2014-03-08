@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.upload.FormFile;
+import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -42,10 +43,6 @@ public class POIForm extends org.apache.struts.action.ActionForm {
     private int deletedByUserID;
     private String restoreOnDate;
     private int restoreByUserID;
-//    private String cityName;
-//    private String districtName;
-//    private String categoryName;
-    private String ratingName;
     private FormFile file;
     private double longitude;
     private double latitude;
@@ -311,13 +308,10 @@ public class POIForm extends org.apache.struts.action.ActionForm {
         }
         return "";
     }
-    
-    public void setRatingName(String ratingName) {
-        this.ratingName = ratingName;
-    }
 
     public String getRatingName() {
-        return this.ratingName;
+        MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
+        return mr.getMessage("poi.rating." + rating);
     }
 
     public List<POI> getPoiListInDistrict() {

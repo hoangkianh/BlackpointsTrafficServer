@@ -2,26 +2,19 @@ package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.GeoLocation;
 import com.blackpoints.classes.POI;
-import com.blackpoints.dao.CategoryDAO;
-import com.blackpoints.dao.CityDAO;
-import com.blackpoints.dao.DistrictDAO;
 import com.blackpoints.dao.POIDAO;
 import com.blackpoints.struts.form.POIForm;
 import com.blackpoints.utils.FileWrapper;
 import com.blackpoints.utils.GeoUtil;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
-import org.apache.struts.util.MessageResources;
 
 /**
  *
@@ -71,10 +64,6 @@ public class GetPOIDetailsAction extends org.apache.struts.action.Action {
             FormFile formFile = new FileWrapper(file);
             poiForm.setFile(formFile);
             
-            HttpSession session = request.getSession(true);
-            MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
-            Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
-            poiForm.setRatingName(mr.getMessage(locale, "poi.rating." + poiForm.getRating()));
             List<POI> allPOIsInDistrict = dao.getAllPOIsInDistrict(poiForm.getCity(), poiForm.getDistrict());
 
             for (POI p : allPOIsInDistrict) {
