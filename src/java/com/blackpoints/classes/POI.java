@@ -24,7 +24,6 @@ public class POI implements Serializable {
     private String geometry;
     private int categoryID;
     private int rating;
-    private String ratingName;
     private String bbox;
     private String geoJson;
     private String createdOnDate;
@@ -272,9 +271,5 @@ public class POI implements Serializable {
     public String getRatingName() {
         MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
         return mr.getMessage("poi.rating." + rating);
-    }    
-
-    public void setRatingName(String ratingName) {
-        this.ratingName = ratingName;
-    }    
+    } 
 }
