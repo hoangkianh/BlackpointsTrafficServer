@@ -25,6 +25,7 @@ public class ClientSvc {
     private CategoryDAO categoryDAO;
     private CityDAO cityDAO;
     private DistrictDAO districtDAO;
+    private final String urlHost = "http://blackpoints.jelastic.lunacloud.com/";
     
     public ClientSvc() {
         poiDAO = new POIDAO();
@@ -47,13 +48,13 @@ public class ClientSvc {
             POIClient poiClient = new POIClient();
             poiClient.setId(poi.getId());
             poiClient.setName(poi.getName());
-            poiClient.setName(poi.getName());
+            poiClient.setCategory(poi.getCategoryName());
             poiClient.setAddress(poi.getAddress());
             poiClient.setCity(poi.getCityName());
             poiClient.setDistrict(poi.getDistrictName());
             poiClient.setDescription(poi.getDescription());
-            poiClient.setImage(poi.getImage());
-            poiClient.setMarkerIcon(categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
+            poiClient.setImage(urlHost + poi.getImage());
+            poiClient.setMarkerIcon(urlHost + categoryDAO.getCategoryById(poi.getCategoryID()).getImage());
             poiClient.setGeometry(poi.getGeometry());
             poiClient.setRating(poi.getRatingName());
             poiClient.setCreatedOnDate(poi.getCreatedOnDate());
