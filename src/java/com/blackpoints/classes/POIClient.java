@@ -17,6 +17,7 @@ public class POIClient {
     private String category;
     private String rating;
     private String createdOnDate;
+    private double distance;
 
     public int getId() {
         return id;
@@ -112,5 +113,13 @@ public class POIClient {
 
     public void setCreatedOnDate(String createdOnDate) {
         this.createdOnDate = createdOnDate;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

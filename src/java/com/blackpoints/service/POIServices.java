@@ -30,7 +30,7 @@ import javax.ws.rs.Produces;
 @Path("POI")
 public class POIServices {
 
-    private List<POI> pois;
+    private final List<POI> pois;
 
     /**
      * Creates a new instance of GetAllPOI
