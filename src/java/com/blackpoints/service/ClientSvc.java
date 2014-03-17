@@ -8,7 +8,6 @@ import com.blackpoints.dao.POIDAO;
 import com.blackpoints.utils.GeoUtil;
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -107,7 +106,7 @@ public class ClientSvc {
 
             @Override
             public int compare(POIClient p1, POIClient p2) {
-                int kq = 0;
+                int kq;
                 if (p1.getDistance() > p2.getDistance()) {
                     kq = 1;
                 } else {
