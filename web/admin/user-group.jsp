@@ -129,7 +129,7 @@
                                     <tr>
                                         <td class="center">
                                             <c:choose>
-                                                <c:when test="${userStr[3] eq 1}">
+                                                <c:when test="${userStr[3] eq 1  and row.userGroupID ne 1 and row.userGroupID ne 2 and row.userGroupID ne 3}">
                                                     <html:link action="editgroup.do" paramId="id" paramName="row" paramProperty="userGroupID">
                                                         <i class="fa fa-pencil" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.edit"/>"></i>
                                                     </html:link>
@@ -142,8 +142,10 @@
                                         </td>
                                         <td class="center delete">
                                             <c:choose>
-                                                <c:when test="${userStr[3] eq 1}">
-                                                    <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete"><i class="fa fa-times-circle" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.delete"/>"></i></a>
+                                                <c:when test="${userStr[3] eq 1 and row.userGroupID ne 1 and row.userGroupID ne 2 and row.userGroupID ne 3}">
+                                                    <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete">
+                                                        <i class="fa fa-times-circle" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.delete"/>"></i>
+                                                    </a>
                                                     </c:when>
                                                     <c:otherwise>
                                                     <i class="fa fa-times-circle muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.deleteDisable"/>"></i>

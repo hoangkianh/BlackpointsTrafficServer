@@ -10,7 +10,7 @@
 </c:if>
 <c:if test="${not empty sessionScope.blackpoints or not empty cookie.blackpoints}">
     <c:if test="${not empty sessionScope.blackpoints}">
-        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>        
+        <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
     </c:if>
     <c:if test="${not empty cookie.blackpoints}">
         <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
