@@ -14,7 +14,7 @@
     </c:if>
     <c:choose>
         <c:when test="${userStr[3] ne 3}">
-            <c:redirect url="/admin.do" />                
+            <c:redirect url="/dashboard.do" />
         </c:when>
         <c:otherwise>
             <c:redirect url="/" />                
@@ -31,10 +31,10 @@
     </head>
     <body>
         <%@include file="../includes/navbar.jsp" %>
-            <div id="headerwrap">
-                <header class="clearfix">
-                    <div class="container">
-                        <div class="modal modal-alt">
+        <div id="headerwrap">
+            <header class="clearfix">
+                <div class="container">
+                    <div class="modal modal-alt">
                         <html:form action="/ForgotPassAction" method="POST" styleClass="form-horizontal my-form" styleId="forgotpassForm">
                             <div class="modal-header">
                                 <bean:message key="forgotpass.header" />

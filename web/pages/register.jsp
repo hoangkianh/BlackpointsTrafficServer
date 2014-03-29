@@ -14,7 +14,7 @@
     </c:if>
     <c:choose>
         <c:when test="${userStr[3] ne 3}">
-            <c:redirect url="/admin.do" />                
+            <c:redirect url="/dashboard.do" />
         </c:when>
         <c:otherwise>
             <c:redirect url="/" />                
