@@ -86,7 +86,6 @@
         <action path="/map" validate="false" forward="/pages/map.jsp" name="POIForm" />
         <action path="/success" forward="/pages/success.jsp" />
         <action path="/failure" forward="/pages/failure.jsp" />
-        <action path="/home" forward="/" />
         <!--admin-->
         <action path="/dashboard" name="StatisticForm" scope="request" forward="/admin/dashboard.jsp" />
         <!--poi management-->       

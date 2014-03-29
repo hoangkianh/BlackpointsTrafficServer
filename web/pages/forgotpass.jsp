@@ -30,25 +30,7 @@
         <%@include file="../includes/includeCSS.jsp" %>
     </head>
     <body>
-        <div class="navbar-wrapper">
-            <div class="navbar navbar-inverse navbar-static-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <h1 class="brand"><html:link action="/home"><bean:message key="navbar.webLogo"/></html:link></h1>
-                            <nav class="pull-right nav-collapse collapse">
-                                <ul id="menu-main" class="nav">                                
-                                    <li>
-                                    <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
-                                    </li>
-                                    <li>
-                                    <html:link action="login"><i class="fa fa-sign-in"></i> <bean:message key="navbar.login"/></html:link>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <%@include file="../includes/navbar.jsp" %>
             <div id="headerwrap">
                 <header class="clearfix">
                     <div class="container">

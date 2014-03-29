@@ -44,6 +44,9 @@ public class ActivateAction extends org.apache.struts.action.Action {
             }
 
             if (salt.equals(u.getSalt()) && userDAO.activateUser(email)) {
+                StringBuffer requestURL = request.getRequestURL();
+                String link = requestURL.substring(0, requestURL.lastIndexOf("/"));
+                
                 // send reactive email
                 HttpSession session = request.getSession(true);
                 MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
@@ -52,7 +55,7 @@ public class ActivateAction extends org.apache.struts.action.Action {
                 String password = mr.getMessage(locale, "emailconfig.password");
                 String subject = mr.getMessage(locale, "emailconfig.welcome.subject", u.getDisplayName());
                 StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.welcome.body", u.getDisplayName()));
-                body.append(mr.getMessage(locale, "emailconfig.welcome.link"));
+                body.append(link).append("/login.do");
                 body.append(mr.getMessage(locale, "emailconfig.help"));
                 body.append(mr.getMessage(locale, "emailconfig.sign"));
 

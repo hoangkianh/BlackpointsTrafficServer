@@ -32,87 +32,91 @@
     </head>
     <body>
         <%-- ***************** REGISTER FORM ***************** --%>
-        <div class="modal">
-            <html:form action="/RegisterAction" method="POST" styleClass="form-horizontal my-form" styleId="registerForm">
-                <div class="modal-header">
-                    <h3><i class='fa fa-check'></i> <bean:message key="register.header" /></h3>
+        <div class="container">
+            <div class="row">
+                <div class="modal" style="position: relative;">
+                    <html:form action="/RegisterAction" method="POST" styleClass="form-horizontal my-form" styleId="registerForm">
+                        <div class="modal-header">
+                            <h3><i class='fa fa-check'></i> <bean:message key="register.header" /></h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert-holder">
+                                <div class="alert alert-block alert-holder fade in">
+                                    <bean:message key="warning.javascript"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="userName">
+                                    <bean:message key="register.userName" />
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input type="text" id="userName" name="userName" placeholder="<bean:message key="register.userName" />"
+                                           value="<bean:write name="RegisterForm" property="userName" />" />
+                                    <label for="userName" class="error"><html:errors property="userName" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="displayName">
+                                    <bean:message key="register.displayName" />
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input type="text" id="displayName" name="displayName" placeholder="<bean:message key="register.displayName" />"
+                                           value="<bean:write name="RegisterForm" property="displayName" />" />
+                                    <label for="displayName" class="error"><html:errors property="displayName" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="email">
+                                    <bean:message key="register.email" />
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input type="text" id="email" name="email" placeholder="<bean:message key="register.email" />"
+                                           value="<bean:write name="RegisterForm" property="email" />" />
+                                    <label for="email" class="error"><html:errors property="email" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="password">
+                                    <bean:message key="register.password" />
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder="<bean:message key="register.password" />"
+                                           value="<bean:write name="RegisterForm" property="password" />" />
+                                    <label for="password" class="error"><html:errors property="password" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="password2">
+                                    <bean:message key="register.password2" />
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input type="password" id="password2" name="password2" placeholder="<bean:message key="register.password2" />"
+                                           value="<bean:write name="RegisterForm" property="password2" />" />
+                                    <label for="password2" class="error"><html:errors property="password2" /></label>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="description"><bean:message key="register.description" /></label>
+                                <div class="controls">
+                                    <textarea id="description" name="description" placeholder="<bean:message key="register.description" />"><bean:write name="RegisterForm" property="description" /></textarea>
+                                    <label for="description" class="error"><html:errors property="description" /></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <html:link action="login" styleClass="pull-left"><bean:message key="register.loginLabel" /></html:link><br/><br/>
+                            <html:link action="home" styleClass="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></html:link>
+                            <input type="submit" class="btn btn-primary" value="<bean:message key="register.btnRegister" />"/>
+                            <input type="reset" class="btn" value="<bean:message key="register.btnReset" />"/>
+                        </div>
+                    </html:form>
                 </div>
-                <div class="modal-body">
-                    <div class="alert-holder">
-                        <div class="alert alert-block alert-holder fade in">
-                            <bean:message key="warning.javascript"/>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="userName">
-                            <bean:message key="register.userName" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="text" id="userName" name="userName" placeholder="<bean:message key="register.userName" />"
-                                   value="<bean:write name="RegisterForm" property="userName" />" />
-                            <label for="userName" class="error"><html:errors property="userName" /></label>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="displayName">
-                            <bean:message key="register.displayName" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="text" id="displayName" name="displayName" placeholder="<bean:message key="register.displayName" />"
-                                   value="<bean:write name="RegisterForm" property="displayName" />" />
-                            <label for="displayName" class="error"><html:errors property="displayName" /></label>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="email">
-                            <bean:message key="register.email" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="text" id="email" name="email" placeholder="<bean:message key="register.email" />"
-                                   value="<bean:write name="RegisterForm" property="email" />" />
-                            <label for="email" class="error"><html:errors property="email" /></label>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password">
-                            <bean:message key="register.password" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="password" id="password" name="password" placeholder="<bean:message key="register.password" />"
-                                   value="<bean:write name="RegisterForm" property="password" />" />
-                            <label for="password" class="error"><html:errors property="password" /></label>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password2">
-                            <bean:message key="register.password2" />
-                            <span class="asterisk">*</span>
-                        </label>
-                        <div class="controls">
-                            <input type="password" id="password2" name="password2" placeholder="<bean:message key="register.password2" />"
-                                   value="<bean:write name="RegisterForm" property="password2" />" />
-                            <label for="password2" class="error"><html:errors property="password2" /></label>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="description"><bean:message key="register.description" /></label>
-                        <div class="controls">
-                            <textarea id="description" name="description" placeholder="<bean:message key="register.description" />"><bean:write name="RegisterForm" property="description" /></textarea>
-                            <label for="description" class="error"><html:errors property="description" /></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <html:link action="login" styleClass="pull-left"><bean:message key="register.loginLabel" /></html:link><br/><br/>
-                    <html:link action="home" styleClass="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></html:link>
-                    <input type="submit" class="btn btn-primary" value="<bean:message key="register.btnRegister" />"/>
-                    <input type="reset" class="btn" value="<bean:message key="register.btnReset" />"/>
-                </div>
-            </html:form>
+            </div>
         </div>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>

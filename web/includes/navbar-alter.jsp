@@ -19,7 +19,7 @@
                     <nav class="pull-right nav-collapse collapse">
                         <ul id="menu-main" class="nav">
                             <li>
-                            <html:link action="/home" ><bean:message key="navbar.home"/></html:link>
+                            <a href="/BlackpointsTrafficServer"><bean:message key="navbar.home"/></a>
                             </li>
                             <li>
                                 <a href="map.do"><bean:message key="navbar.map"/></a>                                

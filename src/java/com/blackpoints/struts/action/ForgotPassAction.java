@@ -22,6 +22,7 @@ import org.apache.struts.util.MessageResources;
  * @author HKA
  */
 public class ForgotPassAction extends org.apache.struts.action.Action {
+
     /**
      * This is the action called from the Struts framework.
      *
@@ -39,7 +40,7 @@ public class ForgotPassAction extends org.apache.struts.action.Action {
         ForgotPassForm forgotPassForm = (ForgotPassForm) form;
         UserDAO userDAO = new UserDAO();
         User u = userDAO.getUserByEmail(forgotPassForm.getEmail());
-        
+
         if (u != null) {
             // generate random password
             Random random = new SecureRandom();
@@ -51,7 +52,10 @@ public class ForgotPassAction extends org.apache.struts.action.Action {
             }
             String newPassword = new String(result);
             u.setPassword(MD5Hashing.encryptPassword(newPassword));
-            
+
+            StringBuffer requestURL = request.getRequestURL();
+            String link = requestURL.substring(0, requestURL.lastIndexOf("/"));
+
             // send reactive email
             HttpSession session = request.getSession(true);
             MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
@@ -60,19 +64,19 @@ public class ForgotPassAction extends org.apache.struts.action.Action {
             String password = mr.getMessage(locale, "emailconfig.password");
             String subject = mr.getMessage(locale, "emailconfig.forgotpass.subject");
             StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.forgotpass.body", u.getDisplayName(), newPassword));
-            body.append(mr.getMessage(locale, "emailconfig.forgotpass.link", u.getEmail(), u.getSalt()));
+            body.append(link).append("/login.do");
             body.append(mr.getMessage(locale, "emailconfig.help"));
             body.append(mr.getMessage(locale, "emailconfig.sign"));
 
             if (!SendingEmail.sendEmail(from, password, forgotPassForm.getEmail(), subject, body.toString())) {
                 return mapping.findForward("sendingEmailFailure");
             }
-            
+
             if (userDAO.updateUser(u)) {
-                return mapping.findForward("forgotPassSuccess");                
+                return mapping.findForward("forgotPassSuccess");
             }
         }
-        
+
         return mapping.findForward("forgotPassFailure");
     }
 }

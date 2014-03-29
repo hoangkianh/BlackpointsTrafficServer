@@ -43,11 +43,14 @@ public class ReActivateAction extends org.apache.struts.action.Action {
         User u = userDAO.getUserByEmail(reActivateForm.getEmail());
 
         if (u != null) {
-            
+
             // set new salt
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             u.setSalt(MD5Hashing.encryptPassword(dateFormat.format(new Date())));
-            
+
+            StringBuffer requestURL = request.getRequestURL();
+            String link = requestURL.substring(0, requestURL.lastIndexOf("/"));
+
             // send reactive email
             HttpSession session = request.getSession(true);
             MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
@@ -56,16 +59,16 @@ public class ReActivateAction extends org.apache.struts.action.Action {
             String password = mr.getMessage(locale, "emailconfig.password");
             String subject = mr.getMessage(locale, "emailconfig.reactivate.subject");
             StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.reactivate.body", u.getDisplayName(), u.getUserName()));
-            body.append(mr.getMessage(locale, "emailconfig.reactivate.link", u.getEmail(), u.getSalt()));
+            body.append(link).append("/activate.do").append(mr.getMessage(locale, "emailconfig.activate.link", u.getEmail(), u.getSalt()));
             body.append(mr.getMessage(locale, "emailconfig.help"));
             body.append(mr.getMessage(locale, "emailconfig.sign"));
 
             if (!SendingEmail.sendEmail(from, password, reActivateForm.getEmail(), subject, body.toString())) {
                 return mapping.findForward("sendingEmailFailure");
             }
-            
+
             if (userDAO.updateUser(u)) {
-                return mapping.findForward("reactivateSuccess");                
+                return mapping.findForward("reactivateSuccess");
             }
         }
         return mapping.findForward("reactivateFailure");
