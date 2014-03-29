@@ -49,6 +49,9 @@ public class RegisterAction extends org.apache.struts.action.Action {
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         u.setSalt(MD5Hashing.encryptPassword(dateFormat.format(new Date())));
+        
+        StringBuffer requestURL = request.getRequestURL();
+        String link = requestURL.substring(0, requestURL.lastIndexOf("/"));
 
         // sending email to confirm & activate
         HttpSession session = request.getSession(true);
@@ -58,7 +61,7 @@ public class RegisterAction extends org.apache.struts.action.Action {
         String password = mr.getMessage(locale, "emailconfig.password");
         String subject = mr.getMessage(locale, "emailconfig.activate.subject");
         StringBuilder body = new StringBuilder(mr.getMessage(locale, "emailconfig.activate.body", u.getDisplayName()));
-        body.append(mr.getMessage(locale, "emailconfig.activate.link", u.getEmail(), u.getSalt()));
+        body.append(link).append("/activate.do").append(mr.getMessage(locale, "emailconfig.activate.link", u.getEmail(), u.getSalt()));
         body.append(mr.getMessage(locale, "emailconfig.help"));
         body.append(mr.getMessage(locale, "emailconfig.sign"));
         
