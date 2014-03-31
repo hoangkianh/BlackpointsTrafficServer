@@ -6,6 +6,7 @@ import com.blackpoints.dao.UserDAO;
 import com.blackpoints.dao.UserGroupDAO;
 import com.blackpoints.struts.form.LoginForm;
 import com.blackpoints.utils.MD5Hashing;
+import java.net.URLEncoder;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,12 +53,11 @@ public class LoginAction extends org.apache.struts.action.Action {
         loginForm.setLevel(ug.getLevel());
         
         loginForm.setError("");
-        session.setAttribute("blackpoints",
-                u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
+        String value = u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail();
+        session.setAttribute("blackpoints", value);
 
         if (loginForm.isRememberMe()) {
-            Cookie c = new Cookie("blackpoints",
-                    u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
+            Cookie c = new Cookie("blackpoints", URLEncoder.encode(value, "UTF-8"));
             c.setMaxAge(7 * 24 * 60 * 60);
             response.addCookie(c);
         }
