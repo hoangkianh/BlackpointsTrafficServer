@@ -14,7 +14,7 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <h1 class="brand">
-                    <html:link action="/home"><bean:message key="navbar.webLogo"/></html:link>
+                    <a href="/BlackpointsTrafficServer"><bean:message key="navbar.webLogo"/></a>
                     </h1>
                     <nav class="pull-right nav-collapse collapse">
                         <ul id="menu-main" class="nav">
