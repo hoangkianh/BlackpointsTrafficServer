@@ -8,6 +8,7 @@ import com.blackpoints.struts.form.UpdateInfoForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,18 +72,20 @@ public class UpdateInfoAction extends org.apache.struts.action.Action {
             }
 
             if (kq.equals("success")) {
+                UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
+                String value = u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail();
+                
+                session.setAttribute("blackpoints", value);
+                
                 Cookie cookie = CookieUtils.getCookieByName(request, "blackpoints");
                 if (cookie != null) {
-                    UserGroup ug = new UserGroupDAO().getUserGroupByID(u.getGroupID());
-                    cookie.setValue(u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
+                    cookie.setValue(URLEncoder.encode(value, "UTF-8"));
                     cookie.setMaxAge(7 * 24 * 60 * 60);
                     response.addCookie(cookie);
 
-                    session.setAttribute("blackpoints",
-                            u.getUserID() + "~" + u.getUserName() + "~" + u.getDisplayName() + "~" + ug.getLevel() + "~" + u.getEmail());
                 }
             }
-            
+
             kq += "~" + u.getDisplayName();
         } catch (Exception ex) {
             kq = "failure";
