@@ -5,6 +5,7 @@ import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.struts.form.TempPOIForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class AddNewTempPOIAction extends org.apache.struts.action.Action {
         String str = (String) session.getAttribute("blackpoints");
         if (str == null) {
             Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
-            str = c.getValue();
+            str = URLDecoder.decode(c.getValue(), "UTF-8");
         }
 
         tempPOI.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));

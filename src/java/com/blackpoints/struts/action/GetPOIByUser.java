@@ -4,6 +4,7 @@ import com.blackpoints.classes.TempPOI;
 import com.blackpoints.dao.TempPOIDAO;
 import com.blackpoints.struts.form.TempPOIForm;
 import com.blackpoints.utils.CookieUtils;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
@@ -41,12 +42,12 @@ public class GetPOIByUser extends org.apache.struts.action.Action {
             HttpSession session = request.getSession(true);
             MessageResources mr = MessageResources.getMessageResources("com.blackpoints.struts.ApplicationResource");
             Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
-            String str = (String) session.getAttribute("blackpoints");
-            if (str == null) {
+            String s = (String) session.getAttribute("blackpoints");
+            if (s == null) {
                 Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
-                str = c.getValue();
+                s = URLDecoder.decode(c.getValue(), "UTF-8");
             }
-            int userID = Integer.parseInt(str.split("~")[0]);
+            int userID = Integer.parseInt(s.split("~")[0]);
             List<TempPOI> list = new TempPOIDAO().getTempPOIByUserID(userID);
             tempPOIForm.setTempPOIList(list);
             for (TempPOI tempPOI : list) {

@@ -8,6 +8,7 @@ import com.blackpoints.utils.CookieUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
@@ -82,7 +83,7 @@ public class AddNewPOIAction extends org.apache.struts.action.Action {
         String str = (String) session.getAttribute("blackpoints");
         if (str == null) {
             Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
-            str = c.getValue();
+            str = URLDecoder.decode(c.getValue(), "UTF-8");
         }
 
         try {

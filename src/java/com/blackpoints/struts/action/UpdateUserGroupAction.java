@@ -5,6 +5,7 @@ import com.blackpoints.dao.UserGroupDAO;
 import com.blackpoints.struts.form.UserGroupForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +55,7 @@ public class UpdateUserGroupAction extends org.apache.struts.action.Action {
                 if (cookie == null) {
                     kq = "error";
                 } else {
-                    s = cookie.getValue();
+                    s = URLDecoder.decode(cookie.getValue(), "UTF-8");
                 }
             }
             BeanUtils.copyProperties(ug, userGroupForm);

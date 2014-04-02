@@ -7,6 +7,7 @@ import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.utils.CookieUtils;
 import com.blackpoints.utils.MD5Hashing;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +52,7 @@ public class DeleteUserGroupAction extends org.apache.struts.action.Action {
             if (cookie == null) {
                 kq = "failure";
             } else {
-                s = cookie.getValue();
+                s = URLDecoder.decode(cookie.getValue(), "UTF-8");
             }
         }
         try {

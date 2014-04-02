@@ -4,6 +4,7 @@ import com.blackpoints.classes.User;
 import com.blackpoints.dao.UserDAO;
 import com.blackpoints.struts.form.UserForm;
 import com.blackpoints.utils.CookieUtils;
+import java.net.URLDecoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class GetUserDetailsAction extends org.apache.struts.action.Action {
             if (cookie == null) {
                 return mapping.findForward("getUserDetailsFailure");
             }
-            s = cookie.getValue();
+            s = URLDecoder.decode(cookie.getValue(), "UTF-8");
         }
         try {
             id = Integer.parseInt(s.split("~")[0]);

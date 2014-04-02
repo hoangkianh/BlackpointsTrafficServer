@@ -9,6 +9,7 @@ import com.blackpoints.utils.CookieUtils;
 import com.blackpoints.utils.MD5Hashing;
 import java.io.File;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +54,7 @@ public class DeleteCategoryAction extends org.apache.struts.action.Action {
             if (cookie == null) {
                 kq = "failure";
             } else {
-                s = cookie.getValue();
+                s = URLDecoder.decode(cookie.getValue(), "UTF-8");
             }
         }
 
