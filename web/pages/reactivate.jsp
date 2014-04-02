@@ -27,7 +27,9 @@
                                 <div class="control-group">
                                     <c:choose>
                                         <c:when test="${empty sessionScope.blackpoints and empty cookie.blackpoints}">
-                                            <input type="text" id="email" name="email" placeholder="<bean:message key="reactivate.email" />" />
+                                            <input type="text" id="email" name="email"
+                                                   value = "<bean:write name="ReActivateForm" property="email"/>"
+                                                   placeholder="<bean:message key="reactivate.email" />" />
                                         </c:when>
                                         <c:otherwise>
                                             <html:hidden name="ReActivateAction" property="email" value="${userStr[4]}" />
