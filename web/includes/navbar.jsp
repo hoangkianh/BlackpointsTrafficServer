@@ -35,7 +35,7 @@
                                                 <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
                                             </c:when>
                                             <c:otherwise>                                                
-                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>                                                
+                                                <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '%7E')}"/>                                                
                                             </c:otherwise>
                                         </c:choose>
                                         ${userStr[2]}

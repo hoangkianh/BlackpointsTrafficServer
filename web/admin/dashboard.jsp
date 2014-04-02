@@ -13,7 +13,7 @@
         <c:set var="userStr" value="${fn:split(sessionScope.blackpoints, '~')}"/>
     </c:if>
     <c:if test="${not empty cookie.blackpoints}">
-        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '~')}"/>
+        <c:set var="userStr" value="${fn:split(cookie.blackpoints.value, '%7E')}"/>
     </c:if>
     <c:choose>
         <c:when test="${userStr[3] eq 3}">
