@@ -126,7 +126,12 @@
                                             </html:link>
                                         </td>
                                         <td class="center delete">
+                                            <c:if test="${userStr[3] eq 1}">
                                             <a href="#delete-confirm" id="<bean:write name="row" property="categoryID"/>" class="delete"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle" title="<bean:message key='admin.table.delete'/>"></i></a>
+                                            </c:if>
+                                            <c:if test="${userStr[3] ne 1}">
+                                            <i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable" />"></i>
+                                            </c:if>
                                         </td>
                                         <td><bean:write name="row" property="name"/></td>
                                         <td><img height="32" width="32" src="<bean:write name="row" property="image"/>" alt="<bean:write name="row" property="name"/>"/></td>

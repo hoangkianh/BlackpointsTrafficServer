@@ -201,7 +201,12 @@
                                             </html:link>
                                         </td>
                                         <td class="center delete">
-                                            <a href="#delete-confirm" class="delete" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a>
+                                            <c:if test="${userStr[3] eq 1}">
+                                                <a href="#delete-confirm" class="delete" id="<bean:write name="row" property="id" />"><i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle"  title="<bean:message key="admin.poi.form.delete" />"></i></a>
+                                            </c:if>
+                                            <c:if test="${userStr[3] ne 1}">
+                                                <i rel="tooltip" data-toggle="tooltip" data-placement="top" class="fa fa-times-circle muted" title="<bean:message key="admin.table.deleteDisable" />"></i>
+                                            </c:if>
                                         </td>
                                         <td>
                                             <a rel="fancybox" href="<bean:write name="row" property="image" />" title="<bean:write name="row" property="name" />">
