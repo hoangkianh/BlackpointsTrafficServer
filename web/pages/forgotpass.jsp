@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="/BlackpointsTrafficServer" class="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></a>
+                                <a href="/" class="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></a>
                                 <input type="submit" class="btn btn-primary" value="<bean:message key="forgotpass.btnSend" />"/>
                             </div>
                         </html:form>

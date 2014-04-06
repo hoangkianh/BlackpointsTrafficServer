@@ -67,7 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <html:link action="register" styleClass="pull-left"><bean:message key="login.registerLabel" /></html:link><br/><br/>
-                    <a href="/BlackpointsTrafficServer" class="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></a>
+                    <a href="/" class="pull-left"><i class="fa fa-arrow-circle-left"></i><bean:message key="navbar.home" /></a>
                     <input type="submit" class="btn btn-primary" value="<bean:message key="login.btnLogin" />"/>
                 </div>
             </html:form>

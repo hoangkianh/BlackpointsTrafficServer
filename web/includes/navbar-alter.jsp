@@ -14,12 +14,12 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <h1 class="brand">
-                    <a href="/BlackpointsTrafficServer"><bean:message key="navbar.webLogo"/></a>
+                    <a href="/"><bean:message key="navbar.webLogo"/></a>
                     </h1>
                     <nav class="pull-right nav-collapse collapse">
                         <ul id="menu-main" class="nav">
                             <li>
-                            <a href="/BlackpointsTrafficServer"><bean:message key="navbar.home"/></a>
+                            <a href="/"><bean:message key="navbar.home"/></a>
                             </li>
                             <li>
                                 <a href="map.do"><bean:message key="navbar.map"/></a>                                
