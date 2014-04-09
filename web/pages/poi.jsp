@@ -186,7 +186,11 @@
                                     if (data.trim() === "success") {
                                         $('#loading').html('<p><i class="fa fa-check"></i> ' + '<bean:message key="poi.success"/>' + '</p>');
                                     } else {
-                                        $('#loading').html('<p class="error">' + '<bean:message key="poi.failure"/>' + '</p>');
+                                        if (data.trim() === "noActivate") {
+                                            $('#loading').html('<p class="error">' + '<bean:message key="poi.noActivate"/>' + '</p>');
+                                        } else {
+                                            $('#loading').html('<p class="error">' + '<bean:message key="poi.failure"/>' + '</p>');
+                                        }
                                     }
                                 }, 2000);
                             },

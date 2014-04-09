@@ -1,7 +1,9 @@
 package com.blackpoints.struts.action;
 
 import com.blackpoints.classes.TempPOI;
+import com.blackpoints.classes.User;
 import com.blackpoints.dao.TempPOIDAO;
+import com.blackpoints.dao.UserDAO;
 import com.blackpoints.struts.form.TempPOIForm;
 import com.blackpoints.utils.CookieUtils;
 import java.io.PrintWriter;
@@ -44,20 +46,31 @@ public class AddNewTempPOIAction extends org.apache.struts.action.Action {
             Cookie c = CookieUtils.getCookieByName(request, "blackpoints");
             str = URLDecoder.decode(c.getValue(), "UTF-8");
         }
-
-        tempPOI.setCreatedByUserID(Integer.parseInt(str.split("~")[0]));
-
-        response.setContentType("text/text;charset=utf-8");
-        response.setHeader("cache-control", "no-cache");
         PrintWriter out = response.getWriter();
 
-        if (new TempPOIDAO().addNewTempPOI(tempPOI)) {
-            out.println("success");
-        } else {
-            out.println("failure");
-        }
+        int id = 0;
+        try {
+            id = Integer.parseInt(str.split("~")[0]);
+            tempPOI.setCreatedByUserID(id);
+            response.setContentType("text/text;charset=utf-8");
+            response.setHeader("cache-control", "no-cache");
 
-        out.flush();
+            User u = new UserDAO().getUserByID(id);
+            if (u != null && !u.isActivated()) {
+                out.println("noActivate");
+                return null;
+            }
+            if (new TempPOIDAO().addNewTempPOI(tempPOI)) {
+                out.println("success");
+            } else {
+                out.println("failure");
+            }
+
+            out.flush();
+        } catch (NumberFormatException ex) {
+            out.println("failure");
+            return null;
+        }
 
         return null;
     }
