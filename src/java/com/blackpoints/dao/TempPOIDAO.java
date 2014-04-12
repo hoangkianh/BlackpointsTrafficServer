@@ -26,7 +26,7 @@ public class TempPOIDAO implements Serializable {
         ResultSet rs = null;
         try {
             stm = conn.prepareStatement("SELECT id, name, address, city, district, description"
-                    + ", categoryID, rating, createdOnDate, createdByUserID, updatedOnDate, updatedByUserID FROM tempPoi");
+                    + ", categoryID, rating, createdOnDate, createdByUserID, updatedOnDate, updatedByUserID FROM temppoi");
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -70,7 +70,7 @@ public class TempPOIDAO implements Serializable {
         try {
             stm = conn.prepareStatement("SELECT id, name, address, city, district, description"
                     + ", categoryID, rating, createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
-                    + " FROM tempPoi WHERE id=?");
+                    + " FROM temppoi WHERE id=?");
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -113,7 +113,7 @@ public class TempPOIDAO implements Serializable {
         try {
             stm = conn.prepareStatement("SELECT id, name, address, city, district, description"
                     + ", categoryID, rating, createdOnDate, createdByUserID, updatedOnDate, updatedByUserID"
-                    + " FROM tempPoi WHERE createdByUserID=?");
+                    + " FROM temppoi WHERE createdByUserID=?");
             stm.setInt(1, userID);
             rs = stm.executeQuery();
 
@@ -155,7 +155,7 @@ public class TempPOIDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("INSERT INTO tempPoi (name, address, city, district, description"
+            stm = conn.prepareStatement("INSERT INTO temppoi (name, address, city, district, description"
                     + ", categoryID, rating, createdOnDate, createdByUserID)"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
             stm.setString(1, tp.getName());
@@ -183,7 +183,7 @@ public class TempPOIDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("UPDATE tempPoi SET name=?, address=?, city=?, district=?, description=?"
+            stm = conn.prepareStatement("UPDATE temppoi SET name=?, address=?, city=?, district=?, description=?"
                     + ", categoryID=?, rating=?, updatedOnDate=NOW(), updatedByUserID=?"
                     + " WHERE id=?");
             stm.setString(1, tp.getName());
@@ -212,7 +212,7 @@ public class TempPOIDAO implements Serializable {
         Connection conn = DBUtil.getConnection();
         PreparedStatement stm = null;
         try {
-            stm = conn.prepareStatement("DELETE FROM tempPoi WHERE id=?");
+            stm = conn.prepareStatement("DELETE FROM temppoi WHERE id=?");
             stm.setInt(1, id);
 
             if (stm.executeUpdate() > 0) {
