@@ -1,31 +1,32 @@
 package com.blackpoints.utils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import org.apache.struts.action.Action;
 
 /**
  *
  * @author hka
  */
-public class DBUtil {
+public class DBUtil extends Action {
 
     public static Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String host = "jdbc:mysql://localhost:3306/blackpointstraffic_db?useUnicode=true&characterEncoding=utf-8";
-            String userName = "root";
-            String password = "";
-//            String host = "jdbc:mysql://mysql-blackpoints.jelastic.lunacloud.com/blackpointstraffic_db?useUnicode=true&characterEncoding=utf-8";
-//            String userName = "root";
-//            String password = "X7Dewpc3sK";
-            conn = DriverManager.getConnection(host, userName, password);
+            InitialContext ic = new InitialContext();
+            DataSource ds = (DataSource) ic.lookup("java:comp/env/blackpointstraffic_db");
+            conn = ds.getConnection();
         } catch (ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (NamingException ex) {
             System.out.println(ex.getMessage());
         }
 

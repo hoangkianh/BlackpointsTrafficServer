@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/BlackpointsTrafficServer"/>
+<Context antiJARLocking="true" path="/BlackpointsTrafficServer">
+    <Resource name="blackpointstraffic_db" auth="hka"
+            type="javax.sql.DataSource" username="root" password=""
+            driverClassName="com.mysql.jdbc.Driver" 
+            url="jdbc:mysql://localhost:3306/blackpointstraffic_db?useUnicode=true&amp;characterEncoding=utf-8"
+            maxActive="8" />
+</Context>

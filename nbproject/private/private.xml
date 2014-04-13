@@ -3,9 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/pages/poi.jsp</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/ApplicationResource.properties</file>
-            <file>file:/F:/GitHub/BlackpointsTrafficServer/src/java/com/blackpoints/struts/action/AddNewTempPOIAction.java</file>
+            <file>file:/F:/GitHub/BlackpointsTrafficServer/web/META-INF/context.xml</file>
         </group>
     </open-files>
 </project-private>

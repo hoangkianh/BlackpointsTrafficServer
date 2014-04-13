@@ -322,6 +322,12 @@ var MapsLib = {
                             break;
                         }
                     }
+
+                    if (district === "" || city === "") {
+                        var arr = MapsLib.address.split(',');
+                        district = arr[arr.length - 3];
+                        city = arr[arr.length - 2];
+                    }
                     callback(district, city);
                 }
             } else {

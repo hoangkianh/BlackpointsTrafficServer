@@ -22,7 +22,7 @@ public class CityDAO implements Serializable {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM city");
+            stm = conn.prepareStatement("SELECT * FROM city ORDER BY name");
             rs = stm.executeQuery();
 
             while (rs.next()) {

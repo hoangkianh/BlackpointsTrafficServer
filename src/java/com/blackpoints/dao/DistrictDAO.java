@@ -22,7 +22,7 @@ public class DistrictDAO implements Serializable {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM district");
+            stm = conn.prepareStatement("SELECT * FROM district ORDER BY name");
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -47,7 +47,7 @@ public class DistrictDAO implements Serializable {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("SELECT * FROM district WHERE city=?");
+            stm = conn.prepareStatement("SELECT * FROM district WHERE city=? ORDER BY name");
             stm.setInt(1, city);
             rs = stm.executeQuery();
 
