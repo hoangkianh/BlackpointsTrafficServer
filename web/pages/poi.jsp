@@ -200,7 +200,7 @@
                                 }, 2000);
                             }
                         });
-                         redirect
+                        // redirect
                         setTimeout(function() {
                             window.location.href = "poi.do";
                         }, 4000);

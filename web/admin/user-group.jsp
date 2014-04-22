@@ -35,37 +35,6 @@
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
-        <script type="text/javascript">
-            var oTable;
-
-            $(function() {
-                $('[rel=tooltip]').tooltip(); 
-                oTable = $('#myTable').dataTable({
-                    "bProcessing": true,
-                    "aaSorting": [[4, 'asc']],
-                    "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
-                    "sPaginationType": "bootstrap",
-                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
-                    "oLanguage": {
-                        "sProcessing": "<bean:message key='admin.table.processing'/>",
-                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.usergroup'/>",
-                                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
-                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
-                                        "sInfoPostFix": "",
-                                        "sSearch": "<bean:message key='admin.table.search'/>",
-                                        "sUrl": "",
-                                        "oPaginate": {
-                                            "sFirst": "<bean:message key='admin.table.first'/>",
-                                            "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                            "sNext": "<bean:message key='admin.table.next'/>",
-                                            "sLast": "<bean:message key='admin.table.last'/>"
-                                        }
-                                    }
-                                });
-                            });
-        </script>
     </head>
     <body>
         <c:if test="${userStr[3] eq 1}">
@@ -146,8 +115,8 @@
                                                     <a href="#delete-confirm" id="<bean:write name="row" property="userGroupID"/>" class="delete">
                                                         <i class="fa fa-times-circle" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.delete"/>"></i>
                                                     </a>
-                                                    </c:when>
-                                                    <c:otherwise>
+                                                </c:when>
+                                                <c:otherwise>
                                                     <i class="fa fa-times-circle muted" rel="tooltip" data-toggle="tooltip" data-placement="top" title="<bean:message key="admin.table.deleteDisable"/>"></i>
                                                 </c:otherwise>
                                             </c:choose>
@@ -224,7 +193,35 @@
                     });
                     event.preventDefault();
                 });
-            });
+
+
+                var oTable;
+                $('[rel=tooltip]').tooltip();
+                oTable = $('#myTable').dataTable({
+                    "bProcessing": true,
+                    "aaSorting": [[4, 'asc']],
+                    "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
+                    "sPaginationType": "bootstrap",
+                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
+                    "oLanguage": {
+                        "sProcessing": "<bean:message key='admin.table.processing'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.usergroup'/>",
+                                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.usergroup'/>",
+                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.usergroup'/>)",
+                                        "sInfoPostFix": "",
+                                        "sSearch": "<bean:message key='admin.table.search'/>",
+                                        "sUrl": "",
+                                        "oPaginate": {
+                                            "sFirst": "<bean:message key='admin.table.first'/>",
+                                            "sPrevious": "<bean:message key='admin.table.pre'/>",
+                                            "sNext": "<bean:message key='admin.table.next'/>",
+                                            "sLast": "<bean:message key='admin.table.last'/>"
+                                        }
+                                    }
+                                });
+                            });
         </script>
     </body>
 </html>

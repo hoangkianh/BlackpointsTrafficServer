@@ -39,77 +39,6 @@
         <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/jquery.dataTables.extend.js"></script>
         <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
-        <script type="text/javascript">
-            $("a[rel^='fancybox']").fancybox();
-            var oTable;
-
-            /* Formating function for row details */
-            function fnFormatDetails(nTr)
-            {
-                var aData = oTable.fnGetData(nTr);
-                var sOut = '<table class="table sub-table">';
-                sOut += '<tr><td rowspan="6" class="center">' + aData[4] + '</td></tr>';
-                if (aData[19] !== undefined) {
-                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[19] + '</span></td></tr>';
-                }
-                sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.createdBy"/>: <span>' + aData[12] + '</span></td></tr>';
-                if (aData[13] !== '') {
-                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.updatedOnDate"/>: <span>' + aData[13] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[14] + '</span>';
-                }
-                if (aData[15] !== '') {
-                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.deletedOnDate"/>: <span>' + aData[15] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[16] + '</span>';
-                }
-                if (aData[17] !== '') {
-                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.restoredOnDate"/>: <span>' + aData[17] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[18] + '</span>';
-                }
-                sOut += '</table>';
-                return sOut;
-            }
-            $(function() {
-                $('[rel=tooltip]').tooltip();
-                oTable = $('#myTable').dataTable({
-                    "bProcessing": true,
-                    "aaSorting": [[11, 'asc']],
-                    "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
-                    "sPaginationType": "bootstrap",
-                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
-                    "oLanguage": {
-                        "sProcessing": "<bean:message key='admin.table.processing'/>",
-                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
-                                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.blackpoints'/>",
-                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.blackpoints'/>)",
-                                        "sInfoPostFix": "",
-                                        "sSearch": "<bean:message key='admin.table.search'/>",
-                                        "sUrl": "",
-                                        "oPaginate": {
-                                            "sFirst": "<bean:message key='admin.table.first'/>",
-                                            "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                            "sNext": "<bean:message key='admin.table.next'/>",
-                                            "sLast": "<bean:message key='admin.table.last'/>"
-                                        }
-                                    }
-                                });
-                                $('#myTable tbody td i.fa-angle-double-down').bind('click', function() {
-                                    var nTr = $(this).parents('tr')[0];
-                                    if (oTable.fnIsOpen(nTr))
-                                    {
-                                        /* This row is already open - close it */
-                                        $(this).removeClass("fa fa-angle-double-up");
-                                        $(this).addClass("fa fa-angle-double-down");
-                                        oTable.fnClose(nTr);
-                                    }
-                                    else
-                                    {
-                                        /* Open this row */
-                                        $(this).removeClass("fa fa-angle-double-down");
-                                        $(this).addClass("fa fa-angle-double-up");
-                                        oTable.fnOpen(nTr, fnFormatDetails(nTr), 'details');
-                                    }
-                                });
-                            });
-        </script>
     </head>
     <body>
         <%@include file="../includes/navbar-alter.jsp" %>
@@ -309,7 +238,77 @@
                     });
                     event.preventDefault();
                 });
-            });
+
+                $("a[rel^='fancybox']").fancybox();
+                var oTable;
+
+                /* Formating function for row details */
+                function fnFormatDetails(nTr)
+                {
+                    var aData = oTable.fnGetData(nTr);
+                    var sOut = '<table class="table sub-table">';
+                    sOut += '<tr><td rowspan="6" class="center">' + aData[4] + '</td></tr>';
+                    if (aData[19] !== undefined) {
+                        sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.description"/>: <span>' + aData[19] + '</span></td></tr>';
+                    }
+                    sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.createdBy"/>: <span>' + aData[12] + '</span></td></tr>';
+                    if (aData[13] !== '') {
+                        sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.updatedOnDate"/>: <span>' + aData[13] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[14] + '</span>';
+                    }
+                    if (aData[15] !== '') {
+                        sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.deletedOnDate"/>: <span>' + aData[15] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[16] + '</span>';
+                    }
+                    if (aData[17] !== '') {
+                        sOut += '<tr><td>' + '<bean:message key="admin.poi.table.details.restoredOnDate"/>: <span>' + aData[17] + '</span> <bean:message key="admin.table.by"/>: <span>' + aData[18] + '</span>';
+                    }
+                    sOut += '</table>';
+                    return sOut;
+                }
+                $(function() {
+                    $('[rel=tooltip]').tooltip();
+                    oTable = $('#myTable').dataTable({
+                        "bProcessing": true,
+                        "aaSorting": [[11, 'asc']],
+                        "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
+                        "sPaginationType": "bootstrap",
+                        "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
+                        "oLanguage": {
+                            "sProcessing": "<bean:message key='admin.table.processing'/>",
+                            "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                                                "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                                                "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.blackpoints'/>",
+                                                "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                                                "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.blackpoints'/>)",
+                                                "sInfoPostFix": "",
+                                                "sSearch": "<bean:message key='admin.table.search'/>",
+                                                "sUrl": "",
+                                                "oPaginate": {
+                                                    "sFirst": "<bean:message key='admin.table.first'/>",
+                                                    "sPrevious": "<bean:message key='admin.table.pre'/>",
+                                                    "sNext": "<bean:message key='admin.table.next'/>",
+                                                    "sLast": "<bean:message key='admin.table.last'/>"
+                                                }
+                                            }
+                                        });
+                                        $('#myTable tbody td i.fa-angle-double-down').bind('click', function() {
+                                            var nTr = $(this).parents('tr')[0];
+                                            if (oTable.fnIsOpen(nTr))
+                                            {
+                                                /* This row is already open - close it */
+                                                $(this).removeClass("fa fa-angle-double-up");
+                                                $(this).addClass("fa fa-angle-double-down");
+                                                oTable.fnClose(nTr);
+                                            }
+                                            else
+                                            {
+                                                /* Open this row */
+                                                $(this).removeClass("fa fa-angle-double-down");
+                                                $(this).addClass("fa fa-angle-double-up");
+                                                oTable.fnOpen(nTr, fnFormatDetails(nTr), 'details');
+                                            }
+                                        });
+                                    });
+                                });
         </script>                                    
     </body>
 </html>
