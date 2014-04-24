@@ -91,33 +91,38 @@
         </section>
     </body>
     <script type="text/javascript">
-        $(function() {
-            var oTable;
+        $(function () {
             $('[rel=tooltip]').tooltip();
-            oTable = $('#myTable').dataTable({
+            $('#myTable').dataTable({
                 "bProcessing": true,
-                "aaSorting": [[6, 'asc']],
+                "aaSorting": [
+                    [6, 'asc']
+                ],
                 "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                 "sPaginationType": "bootstrap",
-                "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'bSearchable': false,
+                    'aTargets': ["sorting_disabled"]
+                }],
                 "oLanguage": {
                     "sProcessing": "<bean:message key='admin.table.processing'/>",
                     "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.user'/>",
-                                    "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                    "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.user'/>",
-                                    "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                    "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.user'/>)",
-                                    "sInfoPostFix": "",
-                                    "sSearch": "<bean:message key='admin.table.search'/>",
-                                    "sUrl": "",
-                                    "oPaginate": {
-                                        "sFirst": "<bean:message key='admin.table.first'/>",
-                                        "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                        "sNext": "<bean:message key='admin.table.next'/>",
-                                        "sLast": "<bean:message key='admin.table.last'/>"
-                                    }
-                                }
-                            });
-                        });
+                    "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                    "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.user'/>",
+                    "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                    "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.user'/>)",
+                    "sInfoPostFix": "",
+                    "sSearch": "<bean:message key='admin.table.search'/>",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "<bean:message key='admin.table.first'/>",
+                        "sPrevious": "<bean:message key='admin.table.pre'/>",
+                        "sNext": "<bean:message key='admin.table.next'/>",
+                        "sLast": "<bean:message key='admin.table.last'/>"
+                    }
+                }
+            });
+        });
     </script>
 </html>

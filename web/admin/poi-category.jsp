@@ -115,8 +115,9 @@
             </div>
         </section>
         <script type="text/javascript">
-            $(function() {
-                $("a.delete").click(function() {
+            $(function () {
+                $('[rel=tooltip]').tooltip();
+                $("a.delete").click(function () {
                     // remove messageDiv
                     $("#messageDiv").remove();
                     // reset password input
@@ -128,36 +129,35 @@
                     return false;
                 });
 
-                $("#deleteForm").submit(function(event) {
+                $("#deleteForm").submit(function (event) {
                     $.ajax({
                         type: "POST",
                         url: "DeleteCategoryAction.do",
                         data: $("#deleteForm").serialize(),
-                        success: function(data) {
+                        success: function (data) {
                             if ($("#messageDiv").length === 0) {
                                 $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
-                            switch (data.trim())
-                            {
-                                case "success":
-                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
-                                    $("#message").html('<bean:message key="admin.category.delete.success"/>');
-                                    // redirect
-                                    setTimeout(function() {
-                                        window.location.href = "category.do";
-                                    }, 1000);
-                                    break;
-                                case "passwordNotCorrect":
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.category.delete.passwordNotCorrect"/>');
-                                    break;
-                                default:
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.category.delete.failure"/>');
-                                    break;
+                            switch (data.trim()) {
+                            case "success":
+                                $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                $("#message").html('<bean:message key="admin.category.delete.success"/>');
+                                // redirect
+                                setTimeout(function () {
+                                    window.location.href = "category.do";
+                                }, 1000);
+                                break;
+                            case "passwordNotCorrect":
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.category.delete.passwordNotCorrect"/>');
+                                break;
+                            default:
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.category.delete.failure"/>');
+                                break;
                             }
                         },
-                        error: function(e) {
+                        error: function (e) {
                             if ($("#messageDiv").length === 0) {
                                 $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
@@ -168,33 +168,37 @@
                     event.preventDefault();
                 });
 
-                var oTable;
-                $('[rel=tooltip]').tooltip();
-                oTable = $('#myTable').dataTable({
+                $('#myTable').dataTable({
                     "bProcessing": true,
-                    "aaSorting": [[2, 'desc']],
+                    "aaSorting": [
+                        [2, 'desc']
+                    ],
                     "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
                     "sPaginationType": "bootstrap",
-                    "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ["sorting_disabled"]}],
+                    "aoColumnDefs": [{
+                        'bSortable': false,
+                        'bSearchable': false,
+                        'aTargets': ["sorting_disabled"]
+                    }],
                     "oLanguage": {
                         "sProcessing": "<bean:message key='admin.table.processing'/>",
                         "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
-                                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.category'/>",
-                                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.category'/>)",
-                                        "sInfoPostFix": "",
-                                        "sSearch": "<bean:message key='admin.table.search'/>",
-                                        "sUrl": "",
-                                        "oPaginate": {
-                                            "sFirst": "<bean:message key='admin.table.first'/>",
-                                            "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                            "sNext": "<bean:message key='admin.table.next'/>",
-                                            "sLast": "<bean:message key='admin.table.last'/>"
-                                        }
-                                    }
-                                });
-                            });
+                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.category'/>",
+                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.category'/>)",
+                        "sInfoPostFix": "",
+                        "sSearch": "<bean:message key='admin.table.search'/>",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "<bean:message key='admin.table.first'/>",
+                            "sPrevious": "<bean:message key='admin.table.pre'/>",
+                            "sNext": "<bean:message key='admin.table.next'/>",
+                            "sLast": "<bean:message key='admin.table.last'/>"
+                        }
+                    }
+                });
+            });
         </script>
     </body>
 </html>

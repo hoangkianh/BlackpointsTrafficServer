@@ -208,9 +208,13 @@
             </div>
         </section>
         <script type="text/javascript">
-            $(function() {
+            $(function () {
+
+                $("a[rel^='fancybox']").fancybox();
+                $('[rel=tooltip]').tooltip();
                 MapsLib.initialize();
-                $("a.view-in-map").click(function() {
+                
+                $("a.view-in-map").click(function () {
                     $("#map-modal").modal();
 
                     var id = $(this).attr('id');
@@ -219,13 +223,13 @@
                     return false;
                 });
 
-                $('#map-modal').on('shown', function() {
+                $('#map-modal').on('shown', function () {
                     var currentCenter = map.getCenter();
                     google.maps.event.trigger(map, "resize");
                     map.setCenter(currentCenter);
                 });
 
-                $("a.delete").click(function() {
+                $("a.delete").click(function () {
                     // remove messageDiv
                     $("#messageDiv").remove();
                     // reset password input
@@ -237,36 +241,35 @@
                     return false;
                 });
 
-                $("#deleteForm").submit(function(event) {
+                $("#deleteForm").submit(function (event) {
                     $.ajax({
                         type: "POST",
                         url: "DeletePermanentlyAction.do",
                         data: $("#deleteForm").serialize(),
-                        success: function(data) {
+                        success: function (data) {
                             if ($("#messageDiv").length === 0) {
                                 $("#delete-confirm .modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
-                            switch (data.trim())
-                            {
-                                case "success":
-                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
-                                    $("#message").html('<bean:message key="admin.poi.delete.success"/>');
-                                    // redirect
-                                    setTimeout(function() {
-                                        window.location.href = "deletedlist.do";
-                                    }, 1000);
-                                    break;
-                                case "passwordNotCorrect":
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.poi.delete.passwordNotCorrect"/>');
-                                    break;
-                                default:
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
-                                    break;
+                            switch (data.trim()) {
+                            case "success":
+                                $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                $("#message").html('<bean:message key="admin.poi.delete.success"/>');
+                                // redirect
+                                setTimeout(function () {
+                                    window.location.href = "deletedlist.do";
+                                }, 1000);
+                                break;
+                            case "passwordNotCorrect":
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.poi.delete.passwordNotCorrect"/>');
+                                break;
+                            default:
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.poi.delete.failure"/>');
+                                break;
                             }
                         },
-                        error: function(e) {
+                        error: function (e) {
                             if ($("#messageDiv").length === 0) {
                                 $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
@@ -277,7 +280,7 @@
                     event.preventDefault();
                 });
 
-                $("a.restore").click(function() {
+                $("a.restore").click(function () {
                     // remove messageDiv
                     $("#messageDiv").remove();
                     // reset password input
@@ -289,36 +292,35 @@
                     return false;
                 });
 
-                $("#restoreForm").submit(function(event) {
+                $("#restoreForm").submit(function (event) {
                     $.ajax({
                         type: "POST",
                         url: "RestorePOIAction.do",
                         data: $("#restoreForm").serialize(),
-                        success: function(data) {
+                        success: function (data) {
                             if ($("#messageDiv").length === 0) {
                                 $("#restore-confirm .modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
-                            switch (data.trim())
-                            {
-                                case "success":
-                                    $("#messageDiv").addClass("alert-success").removeClass("alert-error");
-                                    $("#message").html('<bean:message key="admin.poi.restore.success"/>');
-                                    // redirect
-                                    setTimeout(function() {
-                                        window.location.href = "deletedlist.do";
-                                    }, 1000);
-                                    break;
-                                case "passwordNotCorrect":
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.poi.restore.passwordNotCorrect"/>');
-                                    break;
-                                default:
-                                    $("#messageDiv").addClass("alert-error").removeClass("alert-success");
-                                    $("#message").html('<bean:message key="admin.poi.restore.failure"/>');
-                                    break;
+                            switch (data.trim()) {
+                            case "success":
+                                $("#messageDiv").addClass("alert-success").removeClass("alert-error");
+                                $("#message").html('<bean:message key="admin.poi.restore.success"/>');
+                                // redirect
+                                setTimeout(function () {
+                                    window.location.href = "deletedlist.do";
+                                }, 1000);
+                                break;
+                            case "passwordNotCorrect":
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.poi.restore.passwordNotCorrect"/>');
+                                break;
+                            default:
+                                $("#messageDiv").addClass("alert-error").removeClass("alert-success");
+                                $("#message").html('<bean:message key="admin.poi.restore.failure"/>');
+                                break;
                             }
                         },
-                        error: function(e) {
+                        error: function (e) {
                             if ($("#messageDiv").length === 0) {
                                 $(".modal-header").append('<bean:message key="message.messageDiv"/>');
                             }
@@ -329,13 +331,8 @@
                     event.preventDefault();
                 });
 
-
-                $("a[rel^='fancybox']").fancybox();
-                var oTable;
-
                 /* Formating function for row details */
-                function fnFormatDetails(nTr)
-                {
+                function fnFormatDetails(nTr) {
                     var aData = oTable.fnGetData(nTr);
                     var sOut = '<table class="table sub-table">';
                     sOut += '<tr><td rowspan="6" class="center">' + aData[5] + '</td></tr>';
@@ -355,51 +352,55 @@
                     sOut += '</table>';
                     return sOut;
                 }
-                $(function() {
-                    $('[rel=tooltip]').tooltip();
-                    oTable = $('#myTable').dataTable({
-                        "bProcessing": true,
-                        "aaSorting": [[12, 'asc']],
-                        "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
-                        "sPaginationType": "bootstrap",
-                        "aoColumnDefs": [{'bSortable': false, 'bSearchable': false, 'aTargets': ['sorting_disabled']}, {'bVisible': false, 'aTargets': ['invisible']}],
-                        "oLanguage": {
-                            "sProcessing": "<bean:message key='admin.table.processing'/>",
-                            "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
-                                                "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
-                                                "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.blackpoints'/>",
-                                                "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
-                                                "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.blackpoints'/>)",
-                                                "sInfoPostFix": "",
-                                                "sSearch": "<bean:message key='admin.table.search'/>",
-                                                "sUrl": "",
-                                                "oPaginate": {
-                                                    "sFirst": "<bean:message key='admin.table.first'/>",
-                                                    "sPrevious": "<bean:message key='admin.table.pre'/>",
-                                                    "sNext": "<bean:message key='admin.table.next'/>",
-                                                    "sLast": "<bean:message key='admin.table.last'/>"
-                                                }
-                                            }
-                                        });
-                                        $('#myTable tbody td i.fa-angle-double-down').bind('click', function() {
-                                            var nTr = $(this).parents('tr')[0];
-                                            if (oTable.fnIsOpen(nTr))
-                                            {
-                                                /* This row is already open - close it */
-                                                $(this).removeClass("fa fa-angle-double-up");
-                                                $(this).addClass("fa fa-angle-double-down");
-                                                oTable.fnClose(nTr);
-                                            }
-                                            else
-                                            {
-                                                /* Open this row */
-                                                $(this).removeClass("fa fa-angle-double-down");
-                                                $(this).addClass("fa fa-angle-double-up");
-                                                oTable.fnOpen(nTr, fnFormatDetails(nTr), 'details');
-                                            }
-                                        });
-                                    });
-                                });
+                $('#myTable tbody td i.fa-angle-double-down').on('click', function () {
+                    var nTr = $(this).parents('tr')[0];
+                    if (oTable.fnIsOpen(nTr)) {
+                        /* This row is already open - close it */
+                        $(this).removeClass("fa fa-angle-double-up");
+                        $(this).addClass("fa fa-angle-double-down");
+                        oTable.fnClose(nTr);
+                    } else {
+                        /* Open this row */
+                        $(this).removeClass("fa fa-angle-double-down");
+                        $(this).addClass("fa fa-angle-double-up");
+                        oTable.fnOpen(nTr, fnFormatDetails(nTr), 'details');
+                    }
+                });
+                
+                var oTable = $('#myTable').dataTable({
+                    "bProcessing": true,
+                    "aaSorting": [
+                        [12, 'asc']
+                    ],
+                    "sDom": "<'row-fluid'<'span3'l><'span5'f>r>t<'row-fluid'<'span3'i><'span9'p>>",
+                    "sPaginationType": "bootstrap",
+                    "aoColumnDefs": [{
+                        'bSortable': false,
+                        'bSearchable': false,
+                        'aTargets': ['sorting_disabled']
+                    }, {
+                        'bVisible': false,
+                        'aTargets': ['invisible']
+                    }],
+                    "oLanguage": {
+                        "sProcessing": "<bean:message key='admin.table.processing'/>",
+                        "sLengthMenu": "<bean:message key='admin.table.show' /> _MENU_ <bean:message key='admin.table.blackpoints'/>",
+                        "sZeroRecords": "<bean:message key='admin.table.zeroRecords'/>",
+                        "sInfo": "_START_ <bean:message key='admin.table.to'/> _END_ <bean:message key='admin.table.of'/> _TOTAL_ <bean:message key='admin.table.blackpoints'/>",
+                        "sInfoEmpty": "0 <bean:message key='admin.table.to'/> 0 <bean:message key='admin.table.of'/> 0 <bean:message key='admin.table.blackpoints'/>",
+                        "sInfoFiltered": "(<bean:message key='admin.table.filtered'/> <bean:message key='admin.table.from'/> _MAX_  <bean:message key='admin.table.blackpoints'/>)",
+                        "sInfoPostFix": "",
+                        "sSearch": "<bean:message key='admin.table.search'/>",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "<bean:message key='admin.table.first'/>",
+                            "sPrevious": "<bean:message key='admin.table.pre'/>",
+                            "sNext": "<bean:message key='admin.table.next'/>",
+                            "sLast": "<bean:message key='admin.table.last'/>"
+                        }
+                    }
+                });
+            });
         </script>                                    
     </body>
 </html>
