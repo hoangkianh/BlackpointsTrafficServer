@@ -5,20 +5,20 @@ My Graduated Project - Blackpoints Traffic in Vietnam
 
 Screenshot:
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/homepage.png "Homepage")
+![Homepage](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/homepage.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/map.png "Map")
+![Map](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/map.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/city.png "City")
+![City](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/city.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/details.png "Details")
+![Details](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/details.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/login.png "Login")
+![Login](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/login.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/rergister.png "Register")
+![Register](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/rergister.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/dashboard.png "Dashboard")
+![Dashboard](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/dashboard.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/list.png "List")
+![List](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/list.png)
 
-![BlackpointsTrafficServer] (https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/catlist.png "Category list")
+![Category list](https://raw.githubusercontent.com/hoangkianh/BlackpointsTrafficServer/master/screenshot/catlist.png)
